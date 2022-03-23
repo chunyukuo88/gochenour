@@ -1,6 +1,7 @@
 import { describe, test, expect } from 'vitest';
 import { removeAllDebug } from './removeDebug.js';
 
+
 describe('removeAllDebug', ()=>{
   describe('GIVEN: This function is invoked with a line of code', ()=>{
     describe('WHEN: The code does not contain debug', ()=>{
@@ -22,7 +23,7 @@ describe('removeAllDebug', ()=>{
       });
     });
     describe('WHEN: The code contains `debug` in a context that should not be deleted', ()=>{
-      it('THEN: The line is unchanged.', ()=>{
+      test('THEN: The line is unchanged.', ()=>{
         const lineOfCode = 'const debugThatShouldNotBeDeleted = "";';
 
         const result = removeAllDebug(lineOfCode);
@@ -31,16 +32,16 @@ describe('removeAllDebug', ()=>{
       });
     });
     describe.each`
-      codeSnippet                                           | expectedResult
+      lineOfCode                                           | expectedResult
       ${'const { debug } = render('}                        | ${' render('}
       ${'  const { debug } = render('}                      | ${' render('}
       ${'const { debug, component } = render('}             | ${'const { component } = render('}
       ${'const { component, debug } = render('}             | ${'const { component } = render('}
       ${'const { component, debug, getByRole } = render('}  | ${'const { component, getByRole } = render('}
-    `('WHEN: The code contains $codeSnippet, destructured from a render() invocation, ',
-      ({ codeSnippet, expectedResult })=>{
-      it(`THEN: It is removed, leaving a line that begins with "{expectedResult}".`, ()=>{
-        const result = removeAllDebug(codeSnippet);
+    `('WHEN: The code contains $lineOfCode, destructured from a render() invocation, ',
+      ({ lineOfCode, expectedResult })=>{
+      test(`THEN: It is removed, leaving a line that begins with "{expectedResult}".`, ()=>{
+        const result = removeAllDebug(lineOfCode);
 
         expect(result).toEqual(expectedResult);
       });

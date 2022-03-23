@@ -1,42 +1,54 @@
 import { describe, test, expect, vi } from 'vitest';
 import { main } from './index.js';
-import * as versionCheck from './src/nodeVersionCheck.js';
-import * as argsEval from './src/evaluateArgs.js';
+import { getCurrentNodeVersion } from './src/nodeUtils/getCurrentNodeVersion';
+import { getNodeCompatibility } from './src/nodeUtils/nodeVersionCheck.js';
+import * as versionCheck from './src/nodeUtils/nodeVersionCheck.js';
+import * as argsEval from './src/nodeUtils/evaluateArgs.js';
+
+vi.mock('./src/getCurrentNodeVersion');
+vi.mock('./src/nodeVersionCheck.js');
 
 describe('index.js', ()=>{
-  const currentNodeVersion = process.versions.node;
-  describe('main()', ()=>{
-    test('It clears the screen and logs the user\'s current version of Node.', async ()=>{
+  describe('WHEN: main() is invoked:', ()=>{
+    test('THEN: It clears the screen.', async ()=>{
+
       const spyClear = vi.spyOn(console, 'clear');
-      const spyLog = vi.spyOn(console, 'log');
 
       await main();
 
       expect(spyClear).toHaveBeenCalledTimes(1);
-      expect(spyLog).toHaveBeenCalledWith(currentNodeVersion);
     });
-    test('It determines whether the user has a compatible version of Node.', async ()=>{
-      const spy = vi.spyOn(versionCheck, "getNodeCompatibility");
+    test('THEN: It gets the user\'s version of Node.', async ()=>{
+      const nodeVersion = '1.2.3';
+      getCurrentNodeVersion.mockImplementationOnce(() => nodeVersion);
 
       await main();
 
-      expect(spy).toHaveBeenCalledWith(currentNodeVersion);
+      expect(getCurrentNodeVersion).toHaveBeenCalled();
     });
-    test('If compatible, it evaluates the arguments the user has entered.', async ()=>{
-      const spyGetNodeCompatibility = vi
-        .spyOn(versionCheck, "getNodeCompatibility")
-        .mockImplementationOnce(()=>true);
+    test('THEN: It determines whether the user has a compatible version of Node.', async ()=>{
+      const nodeVersion = '16.11.1';
+      getCurrentNodeVersion.mockImplementationOnce(() => nodeVersion);
+      const spy = vi.spyOn(versionCheck, 'getNodeCompatibility');
+
+      await main();
+
+      expect(spy).toHaveBeenCalledWith(nodeVersion);
+    });
+    test('THEN: If compatible, it invokes the callback to evaluate the arguments the user has entered.', async ()=>{
+      const nodeVersion = '16.11.1';
+      getCurrentNodeVersion.mockImplementationOnce(() => nodeVersion);
+      getNodeCompatibility.mockImplementationOnce(() => true)
       const spyEvaluateArgs = vi.spyOn(argsEval, "evaluateArgs");
 
       await main();
 
       expect(spyEvaluateArgs).toHaveBeenCalledTimes(1);
-      expect(spyEvaluateArgs).toHaveBeenCalledWith(process.argv);
     });
-    test('If incompatible, it does not evaluate user arguments.', async ()=>{
-      const spyGetNodeCompatibility = vi
-        .spyOn(versionCheck, "getNodeCompatibility")
-        .mockImplementationOnce(()=>false);
+    test('THEN: If compatible, it does NOT invoke that callback.', async ()=>{
+      const nodeVersion = '1.2.3';
+      getCurrentNodeVersion.mockImplementationOnce(() => nodeVersion);
+      getNodeCompatibility.mockImplementationOnce(() => false)
       const spyEvaluateArgs = vi.spyOn(argsEval, "evaluateArgs");
 
       await main();

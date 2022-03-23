@@ -1,14 +1,15 @@
-import 'dotenv/config'
-import { getNodeCompatibility } from './src/nodeVersionCheck.js';
-import { evaluateArgs } from './src/evaluateArgs.js';
+import 'dotenv/config';
+import { getNodeCompatibility } from './src/nodeUtils/nodeVersionCheck.js';
+import { evaluateArgs } from './src/nodeUtils/evaluateArgs.js';
+import { getCurrentNodeVersion } from './src/nodeUtils/getCurrentNodeVersion.js';
 
-const currentNodeVersion = process.versions.node;
+const userArgs = process.argv.slice(2);
 
 export async function main(){
   console.clear();
-  console.log(currentNodeVersion);
+  const currentNodeVersion = await getCurrentNodeVersion();
   const isCompatible = getNodeCompatibility(currentNodeVersion);
-  isCompatible && await evaluateArgs(process.argv);
+  isCompatible && await evaluateArgs(userArgs);
 }
 
 await main();

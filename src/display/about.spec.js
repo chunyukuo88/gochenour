@@ -11,11 +11,14 @@ describe('about.js', ()=>{
   describe('printAboutText()', ()=>{
     describe('printAboutText()', ()=>{
       test('It prints a welcome message.', async ()=>{
+        getWeatherData.mockImplementationOnce(async ()=>({
+          temp: 5
+        }));
         const spyConsoleLog = vi.spyOn(console, "log");
 
         await printAboutText();
 
-        expect(spyConsoleLog).toBeCalledTimes(2);
+        expect(spyConsoleLog).toBeCalledTimes(3);
       });
     });
   });

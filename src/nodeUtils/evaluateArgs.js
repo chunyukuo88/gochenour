@@ -1,6 +1,8 @@
-import { printAboutText } from './about.js';
-import { printHelpText } from './help.js';
-import boxen from "boxen";
+import { printAboutText } from '../display/about.js';
+import { printHelpText } from '../display/help.js';
+import { derived } from '../common/displayMethods.js';
+
+const { logBox } = derived;
 
 export async function evaluateArgs(argsArray){
   const validPair = getFirstValidFlagFunctionPair(argsArray);
@@ -10,26 +12,28 @@ export async function evaluateArgs(argsArray){
 }
 
 function getFirstValidFlagFunctionPair(argsArray){
-  const userArgsOnly = argsArray.slice(2);
   const flagFunctionPairs = Object.values(flagsAndAliases);
-  return getFirstValidPair(userArgsOnly, flagFunctionPairs);
+  const firstValidPair = getFirstValidPair(argsArray, flagFunctionPairs);
+  return firstValidPair;
 }
 
 function getFirstValidPair(userArgsOnly, flagFunctionPairs){
   for (let i = 0; i < flagFunctionPairs.length; i++){
-    if (flagFunctionPairs[i][0] === userArgsOnly[0]) return flagFunctionPairs[i];
+    if (flagFunctionPairs[i][0] === userArgsOnly[0]) {
+      return flagFunctionPairs[i];
+    }
   }
 }
 
 function printNoArgsFound(){
   const availableFlags = Object.values(flagsAndAliases).map(pair => ('\n      '+pair[0]));
-  console.log(boxen(`
+  logBox(`
     No flags or inputs detected. 
     Try running this CLI with the --help flag for detailed information or try one of the following valid flags and aliases:  \n${availableFlags}
-  `));
+  `);
 }
 
-const flagsAndAliases = {
+export const flagsAndAliases = {
   ABOUT: ['--about', printAboutText],
   ABOUT_ALIAS: ['-a', printAboutText],
   HELP: ['--help', printHelpText],
