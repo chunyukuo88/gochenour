@@ -1,5 +1,5 @@
-import { describe, test } from 'vitest'
-import { addDebugFnToRender } from './addDebug.mjs';
+import { describe, test, expect } from 'vitest';
+import { addDebugFnToRender } from './addDebug.js';
 
 describe(`GIVEN: addDebugFnToRender is invoked with a lineOfCode string`, ()=>{
   describe('WHEN: That lineOfCode does not contain a `render` invocation', ()=>{
@@ -13,7 +13,7 @@ describe(`GIVEN: addDebugFnToRender is invoked with a lineOfCode string`, ()=>{
   });
   describe('WHEN: That lineOfCode contains a `render` invocation', ()=>{
     describe('AND: That invocation already contains one of the valid `debug` patterns', ()=>{
-      it.each`
+      test.each`
         lineOfCode
         ${'const { debug } = render(Something);'}
         ${'const { component, debug } = render(Something);'}
@@ -26,7 +26,7 @@ describe(`GIVEN: addDebugFnToRender is invoked with a lineOfCode string`, ()=>{
       });
     });
     describe('AND: That invocation does not contain `debug`.', ()=>{
-      it.each`
+      test.each`
         lineOfCode                                    | modifiedLineOfCode
         ${'render(Something);'}                       | ${'const { debug } = render(Something);\ndebug();\n'}                      
         ${'render(Something, props);'}                | ${'const { debug } = render(Something, props);\ndebug();\n'}               

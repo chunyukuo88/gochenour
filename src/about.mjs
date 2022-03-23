@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import boxen from "boxen";
 import { readFileSync } from 'fs';
-import { getWeatherData } from './weather.mjs';
+import { getWeatherData } from './weather.js';
 
 export async function printAboutText(){
   printWelcome();

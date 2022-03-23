@@ -1,9 +1,10 @@
-import { removeAllDebug } from './removeDebug.mjs';
+import { describe, test, expect } from 'vitest';
+import { removeAllDebug } from './removeDebug.js';
 
 describe('removeAllDebug', ()=>{
   describe('GIVEN: This function is invoked with a line of code', ()=>{
     describe('WHEN: The code does not contain debug', ()=>{
-      it('THEN: It returns undefined.', ()=>{
+      test('THEN: It returns undefined.', ()=>{
         const lineOfCode = '';
 
         const result = removeAllDebug(lineOfCode);

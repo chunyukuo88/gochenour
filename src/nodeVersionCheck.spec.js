@@ -1,15 +1,16 @@
-import { getNodeCompatibility, buildFailureMsg } from './nodeVersionCheck.mjs';
+import { describe, test, expect } from 'vitest';
+import { getNodeCompatibility, buildFailureMsg } from './nodeVersionCheck.js';
 
 describe('getNodeCompatibility()', ()=>{
   describe('GIVEN: The minimum Node version', ()=>{
     describe('WHEN: The user\'s version is below the minimum required version,', ()=>{
       const currentNodeVersion = '1.1.1';
-      it('THEN: It returns false;', ()=>{
+      test('THEN: It returns false;', ()=>{
         const result = getNodeCompatibility(currentNodeVersion);
 
         expect(result).toEqual(false);
       });
-      it('AND: that error message is printed to the console.', ()=>{
+      test('AND: that error message is printed to the console.', ()=>{
         const spy = jest.spyOn(console, 'error');
         const currentNodeVersion = '1.2.3';
         const minimumNodeVersion = 16;
@@ -22,7 +23,7 @@ describe('getNodeCompatibility()', ()=>{
       });
     });
     describe('WHEN: The user\'s version is NOT below the minimum', ()=>{
-      it('THEN: It returns false.', ()=>{
+      test('THEN: It returns false.', ()=>{
         const currentNodeVersion = '100.0.0';
 
         const result = getNodeCompatibility(currentNodeVersion);

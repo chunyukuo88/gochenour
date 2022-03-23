@@ -1,5 +1,5 @@
 import { printAboutText } from './about.mjs';
-import { printHelpText } from './help.mjs';
+import { printHelpText } from './help.js';
 import boxen from "boxen";
 
 export async function evaluateArgs(argsArray){

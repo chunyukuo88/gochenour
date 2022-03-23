@@ -1,5 +1,5 @@
 import fs from "fs";
-import { removeAllDebug } from './testingSuite/removeDebug.mjs';
+import { removeAllDebug } from './testingSuite/removeDebug.js';
 
 export async function removeDebugFromGivenFile(givenFile = './__test__.js') {
   try {
