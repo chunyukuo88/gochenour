@@ -5,7 +5,7 @@ import { getWeatherData } from './weather.js';
 
 export async function printAboutText(){
   printWelcome();
-  // await printWeather();
+  await printWeather();
 }
 
 const { cyan, red, yellow } = chalk;
