@@ -1,4 +1,4 @@
-import { printAboutText } from './about.mjs';
+import { printAboutText } from './about.js';
 import { printHelpText } from './help.js';
 import boxen from "boxen";
 

@@ -5,11 +5,9 @@ import { getWeatherData } from './weather.js';
 
 export async function printAboutText(){
   printWelcome();
-  printSelfIntro();
-  await printWeather();
+  // await printWeather();
 }
 
-const { log } = console;
 const { cyan, red, yellow } = chalk;
 
 const pkg = JSON.parse(
@@ -19,16 +17,17 @@ const pkg = JSON.parse(
 );
 
 const printWelcome = () => {
-  log(
+  console.log(
     yellow.inverse(
  `${pkg.description} using the ${pkg.name} CLI. Version ${pkg.version}`
     )
   );
+  printSelfIntro();
 };
 
 const printSelfIntro = () => {
   const asterisk = red('*');
-  log(
+  console.log(
     cyan(
       boxen(
         `
@@ -50,12 +49,8 @@ const printSelfIntro = () => {
 const printWeather = async  () => {
   const { temp, humidity } = await getWeatherData();
   const tempInFahrenheit = convertToFahrenheit(temp);
-  log(
-    yellow(
-      `
-        It's ${tempInFahrenheit} degrees and ${humidity}% humidity in Westerville now.
-      `
-    )
+  console.log(
+    yellow(`It's ${tempInFahrenheit} degrees and ${humidity}% humidity in Westerville now.`)
   );
 };
 

@@ -16,6 +16,7 @@
   },
   "description": "Get to know the man, the myth, the legend",
   "devDependencies": {
+    "c8": "^7.11.0",
     "vite": "^2.8.0",
     "vitest": "^0.7.7"
   },
@@ -23,12 +24,17 @@
     "index.js",
     "src/*"
   ],
-  "keywords": [ "gochenour", "gouchenour", "gochenator" ],
+  "keywords": [
+    "gochenour",
+    "gouchenour",
+    "gochenator"
+  ],
   "license": "MIT",
   "main": "index.js",
   "name": "gochenour",
   "private": true,
   "scripts": {
+    "c": "vitest run --coverage",
     "coverage": "vitest run --coverage",
     "test": "vitest"
   },
