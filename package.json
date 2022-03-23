@@ -1,0 +1,37 @@
+{
+  "author": {
+    "name": "Alex Gochenour",
+    "leave the gun": "take the cannoli"
+  },
+  "bin": {
+    "gochenour": "index.js",
+    "goch": "index.js"
+  },
+  "dependencies": {
+    "boxen": "^6.2.1",
+    "chalk": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "log-symbols": "^5.1.0",
+    "node-fetch": "^3.2.3"
+  },
+  "description": "Get to know the man, the myth, the legend",
+  "devDependencies": {
+    "vite": "^2.8.0",
+    "vitest": "^0.7.7"
+  },
+  "files": [
+    "index.js",
+    "src/*"
+  ],
+  "keywords": [ "gochenour", "gouchenour", "gochenator" ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "gochenour",
+  "private": true,
+  "scripts": {
+    "coverage": "vitest run --coverage",
+    "test": "vitest"
+  },
+  "type": "module",
+  "version": "1.6.2"
+}
