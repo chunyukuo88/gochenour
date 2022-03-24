@@ -1,12 +1,12 @@
 import { describe, test, expect, vi } from 'vitest';
 import { main } from './index.js';
-import { getCurrentNodeVersion } from './src/nodeUtils/getCurrentNodeVersion';
+import * as getVersion from './src/nodeUtils/getCurrentNodeVersion.js';
 import { getNodeCompatibility } from './src/nodeUtils/nodeVersionCheck.js';
 import * as versionCheck from './src/nodeUtils/nodeVersionCheck.js';
 import * as argsEval from './src/nodeUtils/evaluateArgs.js';
 
-vi.mock('./src/getCurrentNodeVersion');
-vi.mock('./src/nodeVersionCheck.js');
+// vi.mock('./src/getCurrentNodeVersion.js');
+// vi.mock('./src/nodeVersionCheck.js');
 
 describe('index.js', ()=>{
   describe('WHEN: main() is invoked:', ()=>{
@@ -18,13 +18,12 @@ describe('index.js', ()=>{
 
       expect(spyClear).toHaveBeenCalledTimes(1);
     });
-    test('THEN: It gets the user\'s version of Node.', async ()=>{
-      const nodeVersion = '1.2.3';
-      getCurrentNodeVersion.mockImplementationOnce(() => nodeVersion);
+    test.only('THEN: It gets the user\'s version of Node.', ()=>{
+      const spy = vi.spyOn(getVersion, 'getCurrentNodeVersion').
 
-      await main();
+      main();
 
-      expect(getCurrentNodeVersion).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalled();
     });
     test('THEN: It determines whether the user has a compatible version of Node.', async ()=>{
       const nodeVersion = '16.11.1';
