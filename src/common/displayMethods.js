@@ -8,4 +8,4 @@ export const derived = {
   logYellowBox: (msg) => console.log(chalk.yellow(boxen(msg))),
   logYellowInverse: (msg) => console.log(chalk.yellow.inverse(msg)),
   underline: (msg) => chalk.underline(msg),
-}
+};
