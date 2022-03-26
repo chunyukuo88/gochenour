@@ -1,6 +1,6 @@
-import { getWeatherData } from './weather.js';
-import { printWelcome } from './printWelcome.js';
-import { derived } from "../common/displayMethods.js";
+import { getWeatherData } from '../weather/weather.js';
+import { printWelcome } from '../printWelcome.js';
+import { derived } from '../../common/displayMethods.js';
 
 export async function printAboutText(){
   printWelcome();

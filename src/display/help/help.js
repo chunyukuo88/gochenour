@@ -1,4 +1,4 @@
-import { derived } from '../common/displayMethods.js';
+import { derived } from '../../common/displayMethods.js';
 
 const { logYellowBox, underline } = derived;
 

@@ -1,6 +1,6 @@
-import { printAboutText } from '../display/about.js';
-import { printHelpText } from '../display/help.js';
-import { derived } from '../common/displayMethods.js';
+import { printAboutText } from '../../display/about/about.js';
+import { printHelpText } from '../../display/help/help.js';
+import { derived } from '../../common/displayMethods.js';
 
 const { logBox } = derived;
 

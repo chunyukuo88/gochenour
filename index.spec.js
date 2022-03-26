@@ -1,12 +1,12 @@
 import { describe, test, expect, vi } from 'vitest';
 import { main } from './index.js';
 import { getCurrentNodeVersion } from './src/nodeUtils/getCurrentNodeVersion.js';
-import { getNodeCompatibility } from './src/nodeUtils/nodeVersionCheck.js';
-import * as versionCheck from './src/nodeUtils/nodeVersionCheck.js';
-import * as argsEval from './src/nodeUtils/evaluateArgs.js';
+import { getNodeCompatibility} from './src/nodeUtils/nodeVersionCheck/nodeVersionCheck.js';
+import * as versionCheck from './src/nodeUtils/nodeVersionCheck/nodeVersionCheck.js';
+import * as argsEval from './src/nodeUtils/evaluateArgs/evaluateArgs.js';
 
 vi.mock('./src/nodeUtils/getCurrentNodeVersion.js');
-vi.mock('./src/nodeUtils/nodeVersionCheck.js');
+vi.mock('./src/nodeUtils/nodeVersionCheck/nodeVersionCheck.js');
 
 describe('index.js', ()=>{
   describe('WHEN: main() is invoked:', ()=>{
@@ -37,7 +37,7 @@ describe('index.js', ()=>{
       const nodeVersion = '16.11.1';
       getCurrentNodeVersion.mockImplementationOnce(() => nodeVersion);
       getNodeCompatibility.mockImplementationOnce(() => true)
-      const spyEvaluateArgs = vi.spyOn(argsEval, "evaluateArgs");
+      const spyEvaluateArgs = vi.spyOn(argsEval, 'evaluateArgs');
 
       await main();
 
@@ -47,7 +47,7 @@ describe('index.js', ()=>{
       const nodeVersion = '1.2.3';
       getCurrentNodeVersion.mockImplementationOnce(() => nodeVersion);
       getNodeCompatibility.mockImplementationOnce(() => false)
-      const spyEvaluateArgs = vi.spyOn(argsEval, "evaluateArgs");
+      const spyEvaluateArgs = vi.spyOn(argsEval, 'evaluateArgs');
 
       await main();
 

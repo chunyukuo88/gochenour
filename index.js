@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import { getNodeCompatibility } from './src/nodeUtils/nodeVersionCheck.js';
-import { evaluateArgs } from './src/nodeUtils/evaluateArgs.js';
+import { getNodeCompatibility } from './src/nodeUtils/nodeVersionCheck/nodeVersionCheck.js';
+import { evaluateArgs } from './src/nodeUtils/evaluateArgs/evaluateArgs.js';
 import { getCurrentNodeVersion } from './src/nodeUtils/getCurrentNodeVersion.js';
 
 const userArgs = process.argv.slice(2);

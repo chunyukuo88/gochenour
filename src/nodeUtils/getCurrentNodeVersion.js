@@ -1,3 +1,3 @@
-export async function getCurrentNodeVersion() {
-  return process.versions.node;
-}
+import 'dotenv/config';
+
+export const getCurrentNodeVersion = () => process.versions.node;
