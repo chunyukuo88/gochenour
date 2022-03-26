@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import 'dotenv/config';
 import { getNodeCompatibility } from './src/nodeVersionCheck.js';
 import { evaluateArgs } from './src/evaluateArgs.js';
 
