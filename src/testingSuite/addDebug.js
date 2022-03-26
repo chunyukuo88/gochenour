@@ -4,7 +4,7 @@ export const addDebugFnToRender = (lineOfCode) => {
     : addDebug(lineOfCode);
 };
 
-const debugNeedNotBeAdded = (lineOfCode) => doesNotContainRender(lineOfCode) || alreadyContainsDebug(lineOfCode);
+const debugNeedNotBeAdded = (lineOfCode) => (doesNotContainRender(lineOfCode) || alreadyContainsDebug(lineOfCode));
 
 const doesNotContainRender = (lineOfCode) => {
   const render = new RegExp('render');

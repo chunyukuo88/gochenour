@@ -3,8 +3,8 @@ import { evaluateArgs, flagsAndAliases } from './evaluateArgs.js';
 import { printAboutText } from '../display/about.js';
 import { printHelpText } from '../display/help.js';
 
-vi.mock('./about.js');
-vi.mock('./help.js');
+vi.mock('../display/about.js');
+vi.mock('../display/help.js');
 const { ABOUT, ABOUT_ALIAS, HELP, HELP_ALIAS } = flagsAndAliases;
 
 describe('evaluateArgs()', ()=>{
@@ -22,7 +22,6 @@ describe('evaluateArgs()', ()=>{
       await evaluateArgs(argsArray);
 
       expect(printAboutText).toHaveBeenCalledTimes(1);
-
     });
   });
   describe(`WHEN: Given a flag of ABOUT_ALIAS"`, ()=>{

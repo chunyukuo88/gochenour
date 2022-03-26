@@ -30,5 +30,4 @@ const displayMemoryUsed = () => {
   console.log(`The script uses approximately ${Math.round(memoryUsed * 100) / 100} MB`);
 };
 
-//TODO
 removeDebugFromGivenFile();

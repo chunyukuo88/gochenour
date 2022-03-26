@@ -1,6 +1,9 @@
-import { describe, test, expect } from 'vitest';
+import {
+  describe,
+  expect,
+  test,
+} from 'vitest';
 import { removeAllDebug } from './removeDebug.js';
-
 
 describe('removeAllDebug', ()=>{
   describe('GIVEN: This function is invoked with a line of code', ()=>{
@@ -31,16 +34,43 @@ describe('removeAllDebug', ()=>{
         expect(result).toEqual(lineOfCode);
       });
     });
-    describe.each`
-      lineOfCode                                           | expectedResult
-      ${'const { debug } = render('}                        | ${' render('}
-      ${'  const { debug } = render('}                      | ${' render('}
-      ${'const { debug, component } = render('}             | ${'const { component } = render('}
-      ${'const { component, debug } = render('}             | ${'const { component } = render('}
-      ${'const { component, debug, getByRole } = render('}  | ${'const { component, getByRole } = render('}
-    `('WHEN: The code contains $lineOfCode, destructured from a render() invocation, ',
-      ({ lineOfCode, expectedResult })=>{
-      test(`THEN: It is removed, leaving a line that begins with "{expectedResult}".`, ()=>{
+    describe('WHEN: Given a string that should have `debug` removed from it,', ()=>{
+      test('THEN: A singly destructured debug function becomes a `render()`', ()=>{
+        const lineOfCode = 'const { debug } = render(';
+        const expectedResult = ' render(';
+
+        const result = removeAllDebug(lineOfCode);
+
+        expect(result).toEqual(expectedResult);
+      });
+      test('THEN: A singly destructured debug function with an indent becomes a `render()`', ()=>{
+        const lineOfCode = '  const { debug } = render(';
+        const expectedResult = ' render(';
+
+        const result = removeAllDebug(lineOfCode);
+
+        expect(result).toEqual(expectedResult);
+      });
+      test('THEN: A debug function, destructured before some other thing, causes only the debug to be removed.', ()=>{
+        const lineOfCode = 'const { debug, component } = render(';
+        const expectedResult = 'const { component } = render(';
+
+        const result = removeAllDebug(lineOfCode);
+
+        expect(result).toEqual(expectedResult);
+      });
+      test('THEN: A debug function, destructured after some other thing, causes only the debug to be removed.', ()=>{
+        const lineOfCode = 'const { component, debug } = render(';
+        const expectedResult = 'const { component } = render(';
+
+        const result = removeAllDebug(lineOfCode);
+
+        expect(result).toEqual(expectedResult);
+      });
+      test('THEN: A debug function, destructured between two other things, causes only the debug to be removed.', ()=>{
+        const lineOfCode = 'const { component, debug, getByRole } = render(';
+        const expectedResult = 'const { component, getByRole } = render(';
+
         const result = removeAllDebug(lineOfCode);
 
         expect(result).toEqual(expectedResult);
