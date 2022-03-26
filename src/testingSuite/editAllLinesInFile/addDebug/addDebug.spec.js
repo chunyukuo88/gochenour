@@ -16,6 +16,8 @@ describe(`GIVEN: addDebugFnToRender is invoked with a lineOfCode string`, ()=>{
       test.each`
         lineOfCode
         ${'const { debug } = render(Something);'}
+        ${'const { debug } = render(12341234);'}
+        ${'const {debug} = render(Something);'}
         ${'const { component, debug } = render(Something);'}
         ${'const { debug, component } = render(Something);'}
         ${'const { getByRole, debug, component } = render(Something);'}

@@ -2,12 +2,32 @@ import 'dotenv/config';
 import clipboard from 'clipboardy';
 import { beforeAll, afterAll, describe, expect, test, vi } from 'vitest';
 import { addBlocksToBuffer, blocks, notifications } from './addBlocksToBuffer.js';
-import { getSingleUserArgument } from '../getUserArgs.js';
+import { getSingleUserArgument } from './getUserArgs.js';
 
 vi.mock('clipboardy');
-vi.mock('../getUserArgs.js');
+vi.mock('./getUserArgs.js');
 
 describe('addBlocksToBuffer()', ()=>{
+  describe('WHEN: Invoked without an argument,', ()=>{
+    test('THEN: It tells the user to run the command with the --help flag.', ()=>{
+      const consoleSpy = vi.spyOn(console, 'log');
+
+      addBlocksToBuffer();
+
+      expect(consoleSpy).toBeCalledWith(notifications.noArgumentsFound);
+    });
+  });
+  describe('WHEN: Invoked with a --help flag,', ()=>{
+    test('THEN: It shows the available flags and their meanings.', ()=>{
+      getSingleUserArgument.mockImplementationOnce(() => '--help');
+      const consoleSpy = vi.spyOn(console, 'log');
+
+      addBlocksToBuffer();
+
+      expect(consoleSpy).toBeCalledWith(notifications.noArgumentsFound);
+      vi.clearAllMocks();
+    });
+  });
   describe('WHEN: Given an input of `ddd`', ()=>{
     beforeAll(()=>{
       getSingleUserArgument.mockImplementation(() => 'ddd');
@@ -19,7 +39,7 @@ describe('addBlocksToBuffer()', ()=>{
 
       addBlocksToBuffer();
 
-      expect(spy).toBeCalledWith(blocks.describeBlocks3Layers);
+      expect(spy).toBeCalledWith(blocks.ddd);
     });
     test('AND: It logs what has been copied to clipboard.', ()=>{
       const consoleSpy = vi.spyOn(console, 'log');
@@ -40,7 +60,7 @@ describe('addBlocksToBuffer()', ()=>{
 
       addBlocksToBuffer();
 
-      expect(spy).toBeCalledWith(blocks.describeBlocks2Test);
+      expect(spy).toBeCalledWith(blocks.ddt);
     });
     test('AND: It logs what has been copied to clipboard.', ()=>{
       const spy = vi.spyOn(console, 'log');

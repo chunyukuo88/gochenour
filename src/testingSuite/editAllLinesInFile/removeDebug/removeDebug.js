@@ -1,6 +1,8 @@
-export const removeAllDebug = (lineOfCode) => (lineOfCode.includes('debug'))
-  ? removeDebugFromLine(lineOfCode)
-  : '';
+export const removeAllDebug = (lineOfCode) => {
+  return (lineOfCode.includes('debug'))
+    ? removeDebugFromLine(lineOfCode)
+    : lineOfCode;
+}
 
 const removeDebugFromLine = (lineOfCode) => (patterns.invokedDebug.test(lineOfCode))
   ? ''

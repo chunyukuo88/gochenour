@@ -1,5 +1,5 @@
-import fs from "fs";
-import { removeAllDebug } from './testingSuite/removeDebug.js';
+import fs from 'fs';
+import { removeAllDebug } from './removeDebug/removeDebug.js';
 
 export async function removeDebugFromGivenFile(givenFile = './__test__.js') {
   try {
@@ -30,5 +30,4 @@ const displayMemoryUsed = () => {
   console.log(`The script uses approximately ${Math.round(memoryUsed * 100) / 100} MB`);
 };
 
-//TODO
 removeDebugFromGivenFile();

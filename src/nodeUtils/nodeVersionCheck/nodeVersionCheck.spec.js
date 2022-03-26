@@ -1,4 +1,4 @@
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, vi } from 'vitest';
 import { getNodeCompatibility, buildFailureMsg } from './nodeVersionCheck.js';
 
 describe('getNodeCompatibility()', ()=>{
@@ -11,7 +11,7 @@ describe('getNodeCompatibility()', ()=>{
         expect(result).toEqual(false);
       });
       test('AND: that error message is printed to the console.', ()=>{
-        const spy = jest.spyOn(console, 'error');
+        const spy = vi.spyOn(console, 'error');
         const currentNodeVersion = '1.2.3';
         const minimumNodeVersion = 16;
         const expectedFailureMsg = buildFailureMsg('1', minimumNodeVersion);
