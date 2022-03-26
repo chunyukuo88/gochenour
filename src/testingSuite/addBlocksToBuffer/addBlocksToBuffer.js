@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import clipboard from 'clipboardy';
-import { getSingleUserArgument } from './getUserArgs.js'
+import { getAllUserArguments } from './getUserArgs.js'
 
 export const blocks = {
   ddd: "describe('', ()=>{\n  describe('', ()=>{\n    describe('', ()=>{\n      //\n    });\n  });\n});",
@@ -14,9 +14,14 @@ export const notifications = {
 };
 
 export function addBlocksToBuffer(){
-  const userArg = getSingleUserArgument();
-  if (!userArg || userArg === '--help') console.log(notifications.noArgumentsFound);
-  copyAndLogBufferContent(blocks[userArg], notifications[userArg]);
+  const userArgs = getAllUserArguments();
+  console.log('userArgs: ', userArgs);
+  try {
+    if (!userArgs || userArgs === '--help') console.log(notifications.noArgumentsFound);
+    copyAndLogBufferContent(blocks[userArgs], notifications[userArgs]);
+  } catch(e) {
+    console.error(e)
+  }
 }
 
 function copyAndLogBufferContent(blockString, notificationString){

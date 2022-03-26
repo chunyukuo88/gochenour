@@ -2,7 +2,7 @@ import 'dotenv/config';
 import clipboard from 'clipboardy';
 import { beforeAll, afterAll, describe, expect, test, vi } from 'vitest';
 import { addBlocksToBuffer, blocks, notifications } from './addBlocksToBuffer.js';
-import { getSingleUserArgument } from './getUserArgs.js';
+import { getAllUserArguments } from './getUserArgs.js';
 
 vi.mock('clipboardy');
 vi.mock('./getUserArgs.js');
@@ -19,7 +19,7 @@ describe('addBlocksToBuffer()', ()=>{
   });
   describe('WHEN: Invoked with a --help flag,', ()=>{
     test('THEN: It shows the available flags and their meanings.', ()=>{
-      getSingleUserArgument.mockImplementationOnce(() => '--help');
+      getAllUserArguments.mockImplementationOnce(() => '--help');
       const consoleSpy = vi.spyOn(console, 'log');
 
       addBlocksToBuffer();
@@ -30,7 +30,7 @@ describe('addBlocksToBuffer()', ()=>{
   });
   describe('WHEN: Given an input of `ddd`', ()=>{
     beforeAll(()=>{
-      getSingleUserArgument.mockImplementation(() => 'ddd');
+      getAllUserArguments.mockImplementation(() => 'ddd');
     });
     afterAll(() => vi.clearAllMocks());
 
@@ -51,7 +51,7 @@ describe('addBlocksToBuffer()', ()=>{
   });
   describe('WHEN: Given an input of `ddt`', ()=>{
     beforeAll(()=>{
-      getSingleUserArgument.mockImplementation(() => 'ddt');
+      getAllUserArguments.mockImplementation(() => 'ddt');
     });
     afterAll(() => vi.clearAllMocks());
 
