@@ -1,11 +1,13 @@
 import 'dotenv/config';
 import clipboard from 'clipboardy';
-import { beforeAll, afterAll, describe, expect, test, vi } from 'vitest';
+import { beforeAll, afterAll, afterEach, describe, expect, test, vi } from 'vitest';
 import { addBlocksToBuffer, blocks, notifications } from './addBlocksToBuffer.js';
+import { buildCustomBlock } from './utils.js';
 import { getAllUserArguments } from './getUserArgs.js';
 
 vi.mock('clipboardy');
 vi.mock('./getUserArgs.js');
+vi.mock('./utils.js');
 
 describe('addBlocksToBuffer()', ()=>{
   describe('WHEN: Invoked without an argument,', ()=>{
@@ -68,6 +70,22 @@ describe('addBlocksToBuffer()', ()=>{
       addBlocksToBuffer();
 
       expect(spy).toBeCalledWith(notifications['ddt']);
+    });
+  });
+  describe('GIVEN: The user wishes to specify the number of `describe` and `test` blocks,', ()=>{
+    afterEach(() => vi.clearAllMocks());
+    describe('WHEN: The user inputs the flag d5', ()=>{
+      test('THEN: It copies to the clipboard a single `describe` block with a nested `describe` block and two test blocks inside that.', ()=>{
+        const fiveLayerDescribeBlock = "\ndescribe('', ()=>{\n  describe('', ()=>{\n    describe('', ()=>{\n      describe('', ()=>{\n        describe('', ()=>{\n          //\n        });\n      });\n    });\n  });\n});\n";
+        getAllUserArguments.mockImplementationOnce(() => ['d5']);
+        buildCustomBlock.mockImplementationOnce(() => fiveLayerDescribeBlock);
+
+        const spy = vi.spyOn(clipboard, 'writeSync');
+
+        addBlocksToBuffer();
+
+        expect(spy).toBeCalledWith(fiveLayerDescribeBlock);
+      });
     });
   });
 });

@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import clipboard from 'clipboardy';
 import { getAllUserArguments } from './getUserArgs.js'
+import { buildCustomBlock } from './utils.js';
 
 export const blocks = {
   ddd: "describe('', ()=>{\n  describe('', ()=>{\n    describe('', ()=>{\n      //\n    });\n  });\n});",
@@ -8,6 +9,7 @@ export const blocks = {
 };
 
 export const notifications = {
+  customBlockHasBeenCopied: 'The following custom block has been copied to your clipboard:\n',
   ddd: `The following has been copied to your clipboard: \n\n${blocks.ddd}\n\n`,
   ddt: `The following has been copied to your clipboard: \n\n${blocks.ddt}\n\n`,
   help: `
@@ -32,28 +34,45 @@ export const notifications = {
   noArgumentsFound: 'No arguments found. Try running this command again with the --help flag for more information.',
 };
 
-export function addBlocksToBuffer(){
-  const userArgsArray = getAllUserArguments();
-  if (!userArgsArray) {
-    console.log(notifications.noArgumentsFound);
-    return;
-  }
-  if (userArgsArray[0] === '--help' || userArgsArray[0] === '-h') {
-    console.log(notifications.help);
-    return;
-  }
-  try {
-    const commandName = userArgsArray[0];
-    copyAndLogBufferContent(blocks[commandName], notifications[commandName]);
-  } catch(e) {
-    console.error(`ERROR: ${e}`)
-  }
-}
+const includesHelpFlag = (userArgsArray) => userArgsArray[0] === '--help' || userArgsArray[0] === '-h';
+
+const includesNumbers = (userArgsArray) => {
+  const testBlockWithNumbers = /[1-9]/;
+  return testBlockWithNumbers.test(userArgsArray[0]);
+};
 
 function copyAndLogBufferContent(blockString, notificationString){
   clipboard.writeSync(blockString);
   console.log(notificationString);
 }
 
+function copyWithCustomBlock(userArgsArray, notification){
+  try {
+    const commandName = userArgsArray[0];
+    const customBlock = buildCustomBlock(commandName);
+    const msg = notification + customBlock;
+    return copyAndLogBufferContent(customBlock, msg);
+  } catch(e) {
+    return console.error(`FAILED TO COPY CUSTOM BLOCK: ${e}`)
+  }
+}
+
+function copyWithPresetBlock(userArgsArray){
+  try {
+    const commandName = userArgsArray[0];
+    return copyAndLogBufferContent(blocks[commandName], notifications[commandName]);
+  } catch(e) {
+    return console.error(`FAILED TO COPY PRESET BLOCK: ${e}`)
+  }
+}
+
+export function addBlocksToBuffer(){
+  const userArgsArray = getAllUserArguments();
+  if (!userArgsArray) return console.log(notifications.noArgumentsFound);
+  if (includesHelpFlag(userArgsArray)) return console.log(notifications.help);
+  return (includesNumbers(userArgsArray))
+    ? copyWithCustomBlock(userArgsArray, notifications.customBlockHasBeenCopied)
+    : copyWithPresetBlock(userArgsArray);
+}
 
 addBlocksToBuffer();
