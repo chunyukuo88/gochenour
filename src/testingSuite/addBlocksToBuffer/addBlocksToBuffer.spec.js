@@ -19,18 +19,18 @@ describe('addBlocksToBuffer()', ()=>{
   });
   describe('WHEN: Invoked with a --help flag,', ()=>{
     test('THEN: It shows the available flags and their meanings.', ()=>{
-      getAllUserArguments.mockImplementationOnce(() => '--help');
-      const consoleSpy = vi.spyOn(console, 'log');
+      getAllUserArguments.mockImplementationOnce(() => ['--help']);
+      const spy = vi.spyOn(console, 'log');
 
       addBlocksToBuffer();
 
-      expect(consoleSpy).toBeCalledWith(notifications.noArgumentsFound);
+      expect(spy).toBeCalledWith(notifications.help);
       vi.clearAllMocks();
     });
   });
   describe('WHEN: Given an input of `ddd`', ()=>{
     beforeAll(()=>{
-      getAllUserArguments.mockImplementation(() => 'ddd');
+      getAllUserArguments.mockImplementation(() => ['ddd']);
     });
     afterAll(() => vi.clearAllMocks());
 
@@ -51,7 +51,7 @@ describe('addBlocksToBuffer()', ()=>{
   });
   describe('WHEN: Given an input of `ddt`', ()=>{
     beforeAll(()=>{
-      getAllUserArguments.mockImplementation(() => 'ddt');
+      getAllUserArguments.mockImplementation(() => ['ddt']);
     });
     afterAll(() => vi.clearAllMocks());
 
