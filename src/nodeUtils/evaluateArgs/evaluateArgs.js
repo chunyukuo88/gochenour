@@ -1,5 +1,6 @@
 import { printAboutText } from '../../display/about/about.js';
 import { printHelpText } from '../../display/help/help.js';
+import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer/addBlocksToBuffer.js';
 import { derived } from '../../common/displayMethods.js';
 
 const { logBox } = derived;
@@ -12,7 +13,7 @@ export async function evaluateArgs(argsArray){
 }
 
 function getFirstValidFlagFunctionPair(argsArray){
-  const flagFunctionPairs = Object.values(flagsAndAliases);
+  const flagFunctionPairs = Object.values(flags);
   const firstValidPair = getFirstValidPair(argsArray, flagFunctionPairs);
   return firstValidPair;
 }
@@ -26,16 +27,18 @@ function getFirstValidPair(userArgsOnly, flagFunctionPairs){
 }
 
 function printNoArgsFound(){
-  const availableFlags = Object.values(flagsAndAliases).map(pair => ('\n      '+pair[0]));
+  const availableFlags = Object.values(flags).map(pair => ('\n      '+pair[0]));
   logBox(`
     No flags or inputs detected. 
     Try running this CLI with the --help flag for detailed information or try one of the following valid flags and aliases:  \n${availableFlags}
   `);
 }
 
-export const flagsAndAliases = {
+export const flags = {
   ABOUT: ['--about', printAboutText],
   ABOUT_ALIAS: ['-a', printAboutText],
+  ADD_BLOCKS: ['test', addBlocksToBuffer ],
+  ADD_BLOCKS_ALIAS: ['t', addBlocksToBuffer],
   HELP: ['--help', printHelpText],
   HELP_ALIAS: ['-h', printHelpText],
 };

@@ -1,3 +1,3 @@
 import 'dotenv/config';
 
-export const getSingleUserArgument = () => process.argv[2];
+export const getAllUserArguments = () => process.argv.slice(3);

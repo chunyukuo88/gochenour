@@ -10,6 +10,7 @@
   "dependencies": {
     "boxen": "^6.2.1",
     "chalk": "^5.0.1",
+    "clipboardy": "^3.0.0",
     "dotenv": "^16.0.0",
     "log-symbols": "^5.1.0",
     "node-fetch": "^3.2.3",

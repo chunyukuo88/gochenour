@@ -1,5 +1,5 @@
 import { describe, test, expect, vi } from 'vitest';
-import { main } from './index.js';
+import { main } from './indexTestable.js';
 import { getCurrentNodeVersion } from './src/nodeUtils/getCurrentNodeVersion.js';
 import { getNodeCompatibility} from './src/nodeUtils/nodeVersionCheck/nodeVersionCheck.js';
 import * as versionCheck from './src/nodeUtils/nodeVersionCheck/nodeVersionCheck.js';

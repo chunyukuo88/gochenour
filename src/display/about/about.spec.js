@@ -1,22 +1,39 @@
-import { describe, test, expect, vi } from 'vitest';
-import { getWeatherData } from '../weather/weather.js';
+import { afterEach, describe, expect, test, vi } from 'vitest';
+import '../weather/weather.js';
+import { printWelcome } from '../printWelcome.js';
 import { printAboutText } from './about.js';
+import { derived } from '../../common/displayMethods.js';
 
-vi.mock('../weather/weather.js');
+vi.mock('../printWelcome');
+vi.mock('../weather/weather.js', ()=>({
+  getWeatherData: ()=>({
+    temp: 272,
+    humidity: 50,
+  })
+}));
+vi.mock('../../common/displayMethods.js', ()=>({
+  derived: {
+    logYellow: vi.fn(),
+  },
+}));
+
+afterEach(()=> vi.clearAllMocks());
 
 describe('about.js', ()=>{
   describe('printAboutText()', ()=>{
-    describe('printAboutText()', ()=>{
-      test('It prints a welcome message.', async ()=>{
-        getWeatherData.mockImplementationOnce(async ()=>({
-          temp: 5
-        }));
-        const spyConsoleLog = vi.spyOn(console, 'log');
+    test('First it prints a welcome message.', async ()=>{
+      printWelcome.mockImplementationOnce(vi.fn());
 
-        await printAboutText();
+      await printAboutText();
 
-        expect(spyConsoleLog).toBeCalledTimes(3);
-      });
+      expect(printWelcome).toBeCalled();
+    });
+    test('Then it prints the weather.', async ()=>{
+      const expectedWeather = "It's 30 degrees and 50% humidity in Westerville now.";
+
+      await printAboutText();
+
+      expect(derived.logYellow).toBeCalledWith(expectedWeather);
     });
   });
 });
