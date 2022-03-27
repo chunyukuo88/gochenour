@@ -1,32 +1,40 @@
 import 'dotenv/config';
 import clipboard from 'clipboardy';
 import { beforeAll, afterAll, afterEach, describe, expect, test, vi } from 'vitest';
-import { addBlocksToBuffer, blocks, notifications } from './addBlocksToBuffer.js';
+import { addBlocksToBuffer, presetBlocks, notifications } from './addBlocksToBuffer.js';
 import { buildCustomBlock } from './utils.js';
+import { derived } from '../../common/displayMethods.js';
 import { getAllUserArguments } from './getUserArgs.js';
 
 vi.mock('clipboardy');
 vi.mock('./getUserArgs.js');
 vi.mock('./utils.js');
+vi.mock('../../common/displayMethods.js', ()=>({
+  derived: {
+    logRedBox: vi.fn(),
+    logCyanBox: vi.fn(),
+    logGreenBox: vi.fn(),
+  }
+}));
+
 
 describe('addBlocksToBuffer()', ()=>{
   describe('WHEN: Invoked without an argument,', ()=>{
     test('THEN: It tells the user to run the command with the --help flag.', ()=>{
-      const consoleSpy = vi.spyOn(console, 'log');
+      getAllUserArguments.mockImplementationOnce(() => []);
 
       addBlocksToBuffer();
 
-      expect(consoleSpy).toBeCalledWith(notifications.noArgumentsFound);
+      expect(derived.logRedBox).toBeCalledWith(notifications.noArgumentsFound);
     });
   });
   describe('WHEN: Invoked with a --help flag,', ()=>{
     test('THEN: It shows the available flags and their meanings.', ()=>{
       getAllUserArguments.mockImplementationOnce(() => ['--help']);
-      const spy = vi.spyOn(console, 'log');
 
       addBlocksToBuffer();
 
-      expect(spy).toBeCalledWith(notifications.help);
+      expect(derived.logCyanBox).toBeCalledWith(notifications.help);
       vi.clearAllMocks();
     });
   });
@@ -41,14 +49,12 @@ describe('addBlocksToBuffer()', ()=>{
 
       addBlocksToBuffer();
 
-      expect(spy).toBeCalledWith(blocks.ddd);
+      expect(spy).toBeCalledWith(presetBlocks.ddd);
     });
     test('AND: It logs what has been copied to clipboard.', ()=>{
-      const consoleSpy = vi.spyOn(console, 'log');
-
       addBlocksToBuffer();
 
-      expect(consoleSpy).toBeCalledWith(notifications['ddd']);
+      expect(derived.logGreenBox).toBeCalledWith(notifications['ddd']);
     });
   });
   describe('WHEN: Given an input of `ddt`', ()=>{
@@ -62,14 +68,12 @@ describe('addBlocksToBuffer()', ()=>{
 
       addBlocksToBuffer();
 
-      expect(spy).toBeCalledWith(blocks.ddt);
+      expect(spy).toBeCalledWith(presetBlocks.ddt);
     });
     test('AND: It logs what has been copied to clipboard.', ()=>{
-      const spy = vi.spyOn(console, 'log');
-
       addBlocksToBuffer();
 
-      expect(spy).toBeCalledWith(notifications['ddt']);
+      expect(derived.logGreenBox).toBeCalledWith(notifications['ddt']);
     });
   });
   describe('GIVEN: The user wishes to specify the number of `describe` and `test` blocks,', ()=>{
