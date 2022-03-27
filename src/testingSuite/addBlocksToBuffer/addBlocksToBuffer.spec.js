@@ -22,10 +22,10 @@ describe('addBlocksToBuffer()', ()=>{
   describe('WHEN: Invoked without an argument,', ()=>{
     test('THEN: It tells the user to run the command with the --help flag.', ()=>{
       getAllUserArguments.mockImplementationOnce(() => []);
-
+      const expectedErrorMsg = '\n Invalid argument or no arguments found.\n Try running this command again with the --help flag for more information. ';
       addBlocksToBuffer();
 
-      expect(derived.logRedBox).toBeCalledWith(notifications.noArgumentsFound);
+      expect(derived.logRedBox).toBeCalledWith(expectedErrorMsg);
     });
   });
   describe('WHEN: Invoked with a --help flag,', ()=>{
@@ -102,7 +102,6 @@ describe('addBlocksToBuffer()', ()=>{
 
         addBlocksToBuffer();
 
-        // expect(derived.logRedBox).toBeCalled();
         expect(derived.logRedBox).toBeCalledWith(expectedError);
       });
     });

@@ -20,7 +20,7 @@ export const notifications = {
   help: `
   
   COMMAND:
-  $ gochenour test \<flag\>     |       $ goch t \<flag\>
+  $ gochenour test \<flag\> | $ goch t \<flag\>
   
   SYNOPSIS:
   The \`test\` command is used in conjunction with one of the two preset flags \`ddd\` and \`ddt\` to copy blocks of unit testing boilerplate to your computer's clipboard. Use this whenever you need to write one or more unit tests. 
@@ -29,12 +29,15 @@ export const notifications = {
   FLAGS:
   Running \`gochenour test\` with the \`ddd\` flags produces a single \`describe\` block with two \`describe\` blocks nested within it.
   Running \`gochenour test\` with the \`ddt\` produces a single \`describe\` block one \`describe\` blocks nested within it and a \`test\` block nested within that.
+  Running \`gochenour test\` with a single-digit number after the letter "d" produces a block of variable size.
   
   EXAMPLES:
     Full commands:              Command shorthands
   $ gochenour test ddd        $ goch t ddd
   $ gochenour test ddt        $ goch t ddt
+  $ gochenour test d<1-9>     $ goch t d<1-9>
   
+  In addition to copying the test block to your clipboard, it will also log the copied string to the console.
   `,
   noArgumentsFound: `\n Invalid argument or no arguments found.\n Try running this command again with the --help flag for more information. `,
 };
