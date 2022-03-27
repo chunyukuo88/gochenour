@@ -78,7 +78,7 @@ describe('addBlocksToBuffer()', ()=>{
   });
   describe('GIVEN: The user wishes to specify the number of `describe` and `test` blocks,', ()=>{
     afterEach(() => vi.clearAllMocks());
-    describe('WHEN: The user inputs the flag d5', ()=>{
+    describe('WHEN: The user inputs the custom flag "d5"', ()=>{
       test('THEN: It copies to the clipboard a single `describe` block with a nested `describe` block and two test blocks inside that.', ()=>{
         const fiveLayerDescribeBlock = "\ndescribe('', ()=>{\n  describe('', ()=>{\n    describe('', ()=>{\n      describe('', ()=>{\n        describe('', ()=>{\n          //\n        });\n      });\n    });\n  });\n});\n";
         getAllUserArguments.mockImplementationOnce(() => ['d5']);
@@ -89,6 +89,21 @@ describe('addBlocksToBuffer()', ()=>{
         addBlocksToBuffer();
 
         expect(spy).toBeCalledWith(fiveLayerDescribeBlock);
+      });
+    });
+    describe('WHEN: The user inputs an invalid custom flag', ()=>{
+      test('THEN: It renders the error message specific to invalid custom flags.', ()=>{
+        getAllUserArguments.mockImplementationOnce(() => ['invalid! 123456']);
+        const errorFromCompiler = 'Expected a string, got undefined';
+        buildCustomBlock.mockImplementationOnce(()=> {
+          throw new Error(errorFromCompiler);
+        });
+        const expectedError = ` FAILED TO COPY CUSTOM BLOCK: Error: ${errorFromCompiler}\n Invalid argument or no arguments found.\n Try running this command again with the --help flag for more information. `;
+
+        addBlocksToBuffer();
+
+        // expect(derived.logRedBox).toBeCalled();
+        expect(derived.logRedBox).toBeCalledWith(expectedError);
       });
     });
   });
