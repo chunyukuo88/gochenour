@@ -3,19 +3,20 @@ import { removeAllDebug } from './removeDebug/removeDebug.js';
 import { removeMethods } from "./removeMethods/removeMethods.js";
 
 const testFile = 'src/testingSuite/editAllLinesInFile/__test__.js';
-export async function removeDebugFromGivenFile(givenFile = testFile) {
+
+export async function removeDebugFromGivenFile(filePath = testFile) {
   try {
-    removeDebugsAndUpdateFile(givenFile);
+    removeDebugsAndUpdateFile(filePath);
     displayMemoryUsed();
   } catch (err) {
     console.error(err);
   }
 }
 
-const removeDebugsAndUpdateFile = (givenFile) => {
-  let fileDataArray = fs.readFileSync(givenFile, 'utf8').split('\n');
+const removeDebugsAndUpdateFile = (filePath) => {
+  let fileDataArray = fs.readFileSync(filePath, 'utf8').split('\n');
   const updatedArrayOfLines = buildUpdatedArrayOfLines(fileDataArray);
-  fs.writeFileSync(givenFile, updatedArrayOfLines.join('\n'));
+  fs.writeFileSync(filePath, updatedArrayOfLines.join('\n'));
 };
 
 const buildUpdatedArrayOfLines = (fileDataArray) => {
