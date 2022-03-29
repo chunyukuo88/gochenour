@@ -1,3 +1,4 @@
+
 /**
 ⌌一一一一一一一一一一一一一一一一一一一一一一一一一一一⌍
 ⎪ Scenarios where `debug` should be deleted:  ⎪
@@ -44,3 +45,28 @@ debug
 //10. Where "debug" appears as part of some variable, which should not be deleted:
 const debugSomething = jest.fn();
 debugSomething();
+/**
+ ⌌一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一⌍
+ ⎪ Scenarios where `only()` and `skip()` methods should be deleted:  ⎪
+ ⌎一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一⌏
+ */
+//11. Includes `describe.skip`, `describe.only`, `test.skip`, and `test.only`:
+describe.only('GIVEN: Something', ()=>{
+  describe.skip('WHEN: Something else', ()=>{
+    test.only('THEN: Something happens.', ()=>{
+      //
+    })
+    test.skip('AND: Something else happens.', ()=>{
+      //
+    })
+  });
+});
+
+/**
+ ⌌一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一⌍
+ ⎪ Scenarios where `only()` and `skip()` methods should NOT be deleted:   ⎪
+ ⌎一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一⌏
+ */
+const someObject = { only: jest.fn(), skip: jest.fn() };
+const result = someObject.only('data');
+const output = someObject.skip('something');

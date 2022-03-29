@@ -8,7 +8,7 @@ describe('GIVEN: removeMethods is invoked with a line of code and a removal targ
         const lineOfCode = 'removeTypeScript();';
 
         const result = removeMethods(lineOfCode);
-
+//
         expect(result).toEqual(lineOfCode);
       });
     });

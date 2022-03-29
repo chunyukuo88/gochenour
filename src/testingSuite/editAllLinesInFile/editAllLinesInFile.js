@@ -2,7 +2,8 @@ import fs from 'fs';
 import { removeAllDebug } from './removeDebug/removeDebug.js';
 import { removeMethods } from "./removeMethods/removeMethods.js";
 
-export async function removeDebugFromGivenFile(givenFile = './__test__.js') {
+const testFile = 'src/testingSuite/editAllLinesInFile/__test__.js';
+export async function removeDebugFromGivenFile(givenFile = testFile) {
   try {
     removeDebugsAndUpdateFile(givenFile);
     displayMemoryUsed();
