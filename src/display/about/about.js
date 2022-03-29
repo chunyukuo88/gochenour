@@ -1,6 +1,9 @@
+import ora from 'ora';
 import { getWeatherData } from '../weather/weather.js';
 import { printWelcome } from '../printWelcome.js';
 import { derived } from '../../common/displayMethods.js';
+
+const spinner = ora();
 
 export async function printAboutText(){
   printWelcome();
@@ -8,8 +11,10 @@ export async function printAboutText(){
 }
 
 const printWeather = async () => {
+  spinner.start();
   const { temp, humidity } = await getWeatherData();
   const tempInFahrenheit = convertToFahrenheit(temp);
+  spinner.succeed('Fetching weather data...');
   derived.logYellow(`It's ${tempInFahrenheit} degrees and ${humidity}% humidity in Westerville now.`);
 };
 
