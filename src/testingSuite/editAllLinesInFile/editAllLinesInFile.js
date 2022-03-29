@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { removeAllDebug } from './removeDebug/removeDebug.js';
+import { removeMethods } from "./removeMethods/removeMethods.js";
 
 export async function removeDebugFromGivenFile(givenFile = './__test__.js') {
   try {
@@ -19,8 +20,9 @@ const removeDebugsAndUpdateFile = (givenFile) => {
 const buildUpdatedArrayOfLines = (fileDataArray) => {
   const updatedArrayOfLines = [];
   fileDataArray.forEach(lineOfCode => {
-    const updatedLine = removeAllDebug(lineOfCode);
-    updatedArrayOfLines.push(updatedLine);
+    const debugRemoved = removeAllDebug(lineOfCode);
+    const methodsRemoved = removeMethods(debugRemoved);
+    updatedArrayOfLines.push(methodsRemoved);
   });
   return updatedArrayOfLines;
 };

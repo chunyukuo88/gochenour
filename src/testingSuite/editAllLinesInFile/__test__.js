@@ -15,13 +15,13 @@ debug();
   const { debug } = render(1);
 //==============================
 //3. Destructured `debug` with other destructured function before it:
-const { debug, garbage } = render(2);
+const { debug, component } = render(2);
 //==============================
 //4. Destructured `debug` with other destructured function after it:
-const { garbage, debug } = render(3);
+const { component, debug } = render(3);
 //==============================
 //5. Destructured `debug` with other destructured functions around it:
-const { garbage, debug, trash } = render(4);
+const { component, debug, getByRole } = render(4);
 debug();
 //==============================
 //6. An invoked "debug" with an argument given to it:

@@ -1,23 +1,27 @@
 export function removeMethods(lineOfCode, target){
   if (!target) return evaluateLineOnly(lineOfCode);
-  if (!validTargets.includes(target)) return lineOfCode;
-  if (lineOfCodeAndTargetAreValid(lineOfCode, target)) return lineOfCode.replace(target, '');
-  return lineOfCode;
+  if (targetIsInvalid(target)) return lineOfCode;
+  return (lineOfCodeMatchesPattern(lineOfCode))
+    ? lineOfCode.replace(target, '')
+    : lineOfCode;
 }
 
 function evaluateLineOnly(lineOfCode){
-  const pattern = /(describe|test|it)\.(skip|only)/;
   const lineOfCodeMatchesPattern = pattern.test(lineOfCode);
   return (lineOfCodeMatchesPattern)
     ? lineOfCode.replace('.only', '').replace('.skip', '')
     : lineOfCode;
 }
 
-function lineOfCodeAndTargetAreValid(lineOfCode, target){
-  const pattern = /(describe|test|it)\.(skip|only)/;
+function lineOfCodeMatchesPattern(lineOfCode){
   const lineOfCodeMatchesPattern = pattern.test(lineOfCode);
-  const lineOfCodeContainsValidTarget = lineOfCode.includes(target);
-  return lineOfCodeMatchesPattern && lineOfCodeContainsValidTarget;
+  return lineOfCodeMatchesPattern;
 }
+
+function targetIsInvalid(target){
+  return !validTargets.includes(target);
+}
+
+const pattern = /(describe|test|it)\.(skip|only)/;
 
 const validTargets = ['.skip', '.only'];
