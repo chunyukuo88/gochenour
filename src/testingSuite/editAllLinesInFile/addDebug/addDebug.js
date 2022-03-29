@@ -1,8 +1,6 @@
-export const addDebugFnToRender = (lineOfCode) => {
-  return (debugNeedNotBeAdded(lineOfCode))
-    ? lineOfCode
-    : addDebug(lineOfCode);
-};
+export const addDebugFnToRender = (lineOfCode) => (debugNeedNotBeAdded(lineOfCode))
+  ? lineOfCode
+  : addDebug(lineOfCode);
 
 const debugNeedNotBeAdded = (lineOfCode) => (doesNotContainRender(lineOfCode) || alreadyContainsDebug(lineOfCode));
 
