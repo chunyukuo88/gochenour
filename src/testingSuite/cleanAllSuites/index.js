@@ -15,10 +15,9 @@ export function cleanAllTestSuites(dir = process.cwd(), entityList = []){
       entityList = cleanAllTestSuites(path.join(dir, entity), entityList);
     }
     else {
-      if(theFileIsATestSuite(entity)) {
+      if(entityIsATestSuite(entity)) {
+        cleanSingleTestSuite(path.join(dir, entity));
         entityList.push(entity);
-        cleanSingleTestSuite(entity);
-        console.log('entity: ', entity);
       }
     }
   });
@@ -41,7 +40,7 @@ function displayExaminedSuites(arrayOfTestSuites){
   `);
 }
 
-function theFileIsATestSuite(entity){
+function entityIsATestSuite(entity){
   const testSuitePattern = /\.spec\.js/;
   return testSuitePattern.test(entity);
 }

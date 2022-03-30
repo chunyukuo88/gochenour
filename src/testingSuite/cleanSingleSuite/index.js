@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { removeAllDebug } from "./removeDebug/index.js";
-import { removeMethods } from "./removeMethods/index.js";
+import { removeAllDebug } from './removeDebug/index.js';
+import { removeMethods } from './removeMethods/index.js';
 
 const testFile = './__test__.js';
 
