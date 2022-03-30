@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { cleanSingleTestSuite } from './index.js';
-import { getHeapUsed } from '../../nodeUtils/getProcessData';
+import { getMemoryUsage } from '../../nodeUtils/getProcessData';
 import * as RemoveDebug from './removeDebug';
 import fs from 'fs';
 
@@ -40,7 +40,7 @@ describe('removeDebugFromGivenFile()', ()=>{
     });
     describe('WHEN: As long as an error is not caught,', ()=>{
       test('THEN: It logs the memory used.', async ()=>{
-        getHeapUsed.mockImplementationOnce(()=>({
+        getMemoryUsage.mockImplementationOnce(()=>({
           heapUsed: 10_485_760,
         }));
         const mockReadFile = vi.spyOn(fs, 'readFileSync');

@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { getHeapUsed } from '../../nodeUtils/getProcessData.js';
 import { removeAllDebug } from "./removeDebug/index.js";
 import { removeMethods } from "./removeMethods/index.js";
 
@@ -8,7 +7,6 @@ const testFile = './__test__.js';
 export async function cleanSingleTestSuite(filePath = testFile) {
   try {
     cleanAndUpdate(filePath);
-    displayMemoryUsed();
   } catch (err) {
     console.error(err);
   }
@@ -28,11 +26,6 @@ const buildUpdatedArrayOfLines = (fileDataArray) => {
     updatedArrayOfLines.push(methodsRemoved);
   });
   return updatedArrayOfLines;
-};
-
-const displayMemoryUsed = () => {
-  const memoryUsed = getHeapUsed().heapUsed / 1024 / 1024;
-  console.log(`The script uses approximately ${Math.round(memoryUsed * 100) / 100} MB`);
 };
 
 cleanSingleTestSuite();
