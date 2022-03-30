@@ -6,22 +6,27 @@ import { derived } from '../../common/displayMethods.js';
 const { readdirSync, statSync } = fs;
 const { logCyanBox } = derived;
 
-export function cleanAllTestSuites(dir = process.cwd(), fileList = []){
-  let files = readdirSync(dir);
+export function cleanAllTestSuites(dir = process.cwd(), entityList = []){
+  let entities = readdirSync(dir);
 
-  files.forEach(file => {
-    if (statSync(path.join(dir, file)).isDirectory()) {
-      fileList = cleanAllTestSuites(path.join(dir, file), fileList);
+  entities.forEach(entity => {
+    if (entityIsADirectory(dir, entity)) {
+      entityList = cleanAllTestSuites(path.join(dir, entity), entityList);
     }
     else {
-      if(theFileIsATestSuite(file)) {
-        fileList.push(file);
-        return cleanSingleTestSuite(file);
+      if(theFileIsATestSuite(entity)) {
+        entityList.push(entity);
+        cleanSingleTestSuite(entity);
       }
     }
   });
 
-  displayExaminedSuites(fileList);
+  displayExaminedSuites(entityList);
+  return entityList;
+}
+
+function entityIsADirectory(dir, entity){
+  return statSync(path.join(dir, entity)).isDirectory();
 }
 
 function displayExaminedSuites(arrayOfTestSuites){
@@ -33,9 +38,9 @@ function displayExaminedSuites(arrayOfTestSuites){
   `);
 }
 
-function theFileIsATestSuite(file){
+function theFileIsATestSuite(entity){
   const testSuitePattern = /\.spec\.js/;
-  return testSuitePattern.test(file);
+  return testSuitePattern.test(entity);
 }
 
 // const displayMemoryUsed = () => {

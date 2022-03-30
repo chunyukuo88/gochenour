@@ -8,7 +8,7 @@ describe.skip('', ()=>{
 describe.only('GIVEN: ', ()=>{
   describe.only('WHEN: ', ()=>{
     test.only('THEN: ', ()=>{
-      // debug()
+      debug()
     });
   });
 });
