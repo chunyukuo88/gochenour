@@ -1,6 +1,6 @@
 import ora from 'ora';
 import { getWeatherData } from '../weather/weather.js';
-import { printWelcome } from '../printWelcome.js';
+import { printWelcome } from '../welcome/printWelcome.js';
 import { derived } from '../../common/displayMethods.js';
 
 const spinner = ora();

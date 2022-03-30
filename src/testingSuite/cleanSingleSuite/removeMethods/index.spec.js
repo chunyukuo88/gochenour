@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { removeMethods } from './removeMethods.js';
+import { removeMethods } from './index.js';
 
 describe('GIVEN: removeMethods is invoked with a line of code and a removal target,', ()=>{
   describe('Invalid cases: ', ()=>{

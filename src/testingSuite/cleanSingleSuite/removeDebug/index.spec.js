@@ -3,7 +3,7 @@ import {
   expect,
   test,
 } from 'vitest';
-import { removeAllDebug } from './removeDebug.js';
+import { removeAllDebug } from './index.js';
 
 describe('removeAllDebug', ()=>{
   describe('GIVEN: This function is invoked with a line of code', ()=>{

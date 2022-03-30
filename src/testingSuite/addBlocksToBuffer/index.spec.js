@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import clipboard from 'clipboardy';
 import { beforeAll, afterAll, afterEach, describe, expect, test, vi } from 'vitest';
-import { addBlocksToBuffer, presetBlocks, notifications } from './addBlocksToBuffer.js';
+import { addBlocksToBuffer, presetBlocks, notifications } from './index.js';
 import { buildCustomBlock } from './utils.js';
 import { derived } from '../../common/displayMethods.js';
 import { getAllUserArguments } from './getUserArgs.js';

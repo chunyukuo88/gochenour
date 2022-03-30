@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { addDebugFnToRender } from './addDebug.js';
+import { addDebugFnToRender } from './index.js';
 
 describe(`GIVEN: addDebugFnToRender is invoked with a lineOfCode string`, ()=>{
   describe('WHEN: That lineOfCode does not contain a `render` invocation', ()=>{

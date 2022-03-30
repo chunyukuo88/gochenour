@@ -1,6 +1,6 @@
 import { printAboutText } from '../../display/about/about.js';
 import { printHelpText } from '../../display/help/help.js';
-import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer/addBlocksToBuffer.js';
+import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer/index.js';
 import { derived } from '../../common/displayMethods.js';
 
 const { logBox } = derived;

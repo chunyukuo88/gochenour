@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { removeDebugFromGivenFile } from './editAllLinesInFile.js';
+import { cleanSingleTestSuite } from './index.js';
 import { getHeapUsed } from '../../nodeUtils/getProcessData';
-import * as RemoveDebug from './removeDebug/removeDebug.js';
+import * as RemoveDebug from './removeDebug';
 import fs from 'fs';
 
 vi.mock('../../nodeUtils/getProcessData.js');
@@ -17,7 +17,7 @@ describe('removeDebugFromGivenFile()', ()=>{
         const writeSpy = vi.spyOn(fs, 'writeFileSync');
         const filePath = './SomeFile/someFile.js';
 
-        await removeDebugFromGivenFile(filePath);
+        await cleanSingleTestSuite(filePath);
 
         expect(writeSpy).toBeCalledWith(filePath, mockUpdatedDocument);
       });
@@ -32,7 +32,7 @@ describe('removeDebugFromGivenFile()', ()=>{
           const spy = vi.spyOn(console, 'error');
           const filePath = './SomeFile/someFile.js';
 
-          await removeDebugFromGivenFile(filePath);
+          await cleanSingleTestSuite(filePath);
 
           expect(spy).toBeCalledWith(mockError);
         });
@@ -48,7 +48,7 @@ describe('removeDebugFromGivenFile()', ()=>{
         const expectedLog = 'The script uses approximately 10 MB';
         const spy = vi.spyOn(console, 'log');
 
-        await removeDebugFromGivenFile();
+        await cleanSingleTestSuite();
 
         expect(spy).toHaveBeenCalledWith(expectedLog);
       });
