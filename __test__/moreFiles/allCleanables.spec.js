@@ -6,33 +6,35 @@
  */
 function render(){}
 //0. Single destructured `debug`:
- render(1);
+const { debug } = render(1);
 //==============================
 //1. Single destructured `debug` followed by an invoked function:
- render(1);
+const { debug } = render(1);
+debug();
 
 //==============================
 //2. Single destructured `debug` with indent:
- render(1);
+  const { debug } = render(1);
 //==============================
 //3. Destructured `debug` with other destructured function before it:
-const { component } = render(2);
+const { component, debug } = render(2);
 //==============================
 //4. Destructured `debug` with other destructured function after it:
-const { component } = render(3);
+const { debug, component } = render(3);
 //==============================
 //5. Destructured `debug` with other destructured functions around it:
-const { component, getByRole } = render(4);
+const { component, debug, getByRole } = render(4);
 
 //==============================
 //6. An invoked "debug" with an argument given to it:
-
+const Subcomponent = document.querySelector('.something');
+debug(Subcomponent);
 //==============================
 //7. An invoked "debug" without an argument given to it:
-
+debug();
 //==============================
 //8. An invoked "debug" without an argument given to it or a semicolon:
-
+debug()
 
 /**
  ⌌一一一一一一一一一一一一一一一一一一一一一一一一一一一一一⌍
@@ -47,16 +49,16 @@ const debugSomething = jest.fn();
 debugSomething();
 /**
  ⌌一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一⌍
- ⎪ Scenarios where `only()` and `skip()` methods should be deleted:  ⎪
+ ⎪ Scenarios where `only()` and `skip()` methods SHOULD be deleted:  ⎪
  ⌎一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一⌏
  */
 //11. Includes `describe`, `describe`, `test`, and `test`:
-describe('GIVEN: Something', ()=>{
-  describe('WHEN: Something else', ()=>{
-    test('THEN: Something happens.', ()=>{
+describe.skip('GIVEN: Something', ()=>{
+  describe.only('WHEN: Something else', ()=>{
+    test.skip('THEN: Something happens.', ()=>{
       //
     })
-    test('AND: Something else happens.', ()=>{
+    test.skip('AND: Something else happens.', ()=>{
       //
     })
   });
