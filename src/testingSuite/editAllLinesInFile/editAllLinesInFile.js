@@ -2,7 +2,7 @@ import fs from 'fs';
 import { removeAllDebug } from './removeDebug/removeDebug.js';
 import { removeMethods } from "./removeMethods/removeMethods.js";
 
-const testFile = 'src/testingSuite/editAllLinesInFile/__test__.js';
+const testFile = './__test__.js';
 
 export async function removeDebugFromGivenFile(filePath = testFile) {
   try {
