@@ -18,6 +18,9 @@ vi.mock('../../common/displayMethods.js', ()=>({
 }));
 
 
+
+
+
 describe('addBlocksToBuffer()', ()=>{
   describe('WHEN: Invoked without an argument,', ()=>{
     test('THEN: It tells the user to run the command with the --help flag.', ()=>{

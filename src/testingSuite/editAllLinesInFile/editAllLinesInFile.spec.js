@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { removeDebugFromGivenFile } from './editAllLinesInFile.js';
+import { getHeapUsed } from '../../nodeUtils/getProcessData';
 import * as RemoveDebug from './removeDebug/removeDebug.js';
-import * as RemoveMethods from './removeMethods/removeMethods.js';
 import fs from 'fs';
 
+vi.mock('../../nodeUtils/getProcessData.js');
 afterEach(()=> vi.clearAllMocks());
 
 describe('removeDebugFromGivenFile()', ()=>{
@@ -23,7 +24,7 @@ describe('removeDebugFromGivenFile()', ()=>{
     });
     describe('WHEN: All other use cases:', ()=>{
       describe('WHEN: That file is not found,', ()=>{
-        test('THEN: It throws an error.', async ()=>{
+        test('THEN: It logs an error.', async ()=>{
           const mockError = new Error("ENOENT: no such file or directory, open './SomeFile/someFile.js'");
           const mockRemoveAllDebug = vi
             .spyOn(RemoveDebug, 'removeAllDebug')
@@ -36,16 +37,20 @@ describe('removeDebugFromGivenFile()', ()=>{
           expect(spy).toBeCalledWith(mockError);
         });
       });
-      describe('GIVEN: This function is invoked without an argument passed to it,', ()=>{
-        test('THEN: It invokes the removal functions on the default test file.', async ()=>{
-          const mockRemoveAllDebug = vi.spyOn(RemoveDebug, 'removeAllDebug').mockImplementationOnce(vi.fn());
-          const mockRemoveMethods = vi.spyOn(RemoveMethods, 'removeMethods').mockImplementationOnce(vi.fn());
+    });
+    describe('WHEN: As long as an error is not caught,', ()=>{
+      test('THEN: It logs the memory used.', async ()=>{
+        getHeapUsed.mockImplementationOnce(()=>({
+          heapUsed: 10_485_760,
+        }));
+        const mockReadFile = vi.spyOn(fs, 'readFileSync');
+        const mockWriteFile = vi.spyOn(fs, 'writeFileSync');
+        const expectedLog = 'The script uses approximately 10 MB';
+        const spy = vi.spyOn(console, 'log');
 
-          await removeDebugFromGivenFile();
+        await removeDebugFromGivenFile();
 
-          expect(mockRemoveAllDebug).toBeCalled();
-          expect(mockRemoveMethods).toBeCalled();
-        });
+        expect(spy).toHaveBeenCalledWith(expectedLog);
       });
     });
   });

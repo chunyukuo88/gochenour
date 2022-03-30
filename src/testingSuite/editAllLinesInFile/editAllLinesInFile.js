@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { getHeapUsed } from '../../nodeUtils/getProcessData.js';
 import { removeAllDebug } from './removeDebug/removeDebug.js';
 import { removeMethods } from "./removeMethods/removeMethods.js";
 
@@ -30,7 +31,7 @@ const buildUpdatedArrayOfLines = (fileDataArray) => {
 };
 
 const displayMemoryUsed = () => {
-  const memoryUsed = process.memoryUsage().heapUsed / 1024 / 1024;
+  const memoryUsed = getHeapUsed().heapUsed / 1024 / 1024;
   console.log(`The script uses approximately ${Math.round(memoryUsed * 100) / 100} MB`);
 };
 
