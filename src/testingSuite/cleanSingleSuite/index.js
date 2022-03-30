@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { getHeapUsed } from '../../nodeUtils/getProcessData.js';
-import { removeAllDebug } from './removeDebug';
-import { removeMethods } from "./removeMethods";
+import { removeAllDebug } from "./removeDebug/index.js";
+import { removeMethods } from "./removeMethods/index.js";
 
 const testFile = './__test__.js';
 
