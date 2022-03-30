@@ -1,5 +1,5 @@
 import { describe, test, expect, vi } from 'vitest';
-import { getNodeCompatibility, buildFailureMsg } from './nodeVersionCheck.js';
+import { getNodeCompatibility, buildFailureMsg } from './index.js';
 
 describe('getNodeCompatibility()', ()=>{
   describe('GIVEN: The minimum Node version', ()=>{

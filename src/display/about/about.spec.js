@@ -1,10 +1,10 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import '../weather/weather.js';
-import { printWelcome } from '../printWelcome.js';
-import { printAboutText } from './about.js';
+import { printWelcome } from '../welcome/printWelcome.js';
 import { derived } from '../../common/displayMethods.js';
+import { printAboutText } from './about.js';
 
-vi.mock('../printWelcome');
+vi.mock('../welcome/printWelcome.js');
 vi.mock('../weather/weather.js', ()=>({
   getWeatherData: ()=>({
     temp: 272,

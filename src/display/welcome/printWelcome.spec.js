@@ -1,8 +1,8 @@
 import { printWelcome } from './printWelcome.js';
-import { derived } from '../common/displayMethods.js';
+import { derived } from '../../common/displayMethods.js';
 import { describe, expect, test, vi} from "vitest";
 
-vi.mock('../common/displayMethods.js', ()=>({
+vi.mock('../../common/displayMethods.js', ()=>({
   derived: {
     logCyanBox: vi.fn(),
     logYellowInverse: vi.fn(),

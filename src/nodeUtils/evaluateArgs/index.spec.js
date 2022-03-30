@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import { evaluateArgs, flags } from './evaluateArgs.js';
+import { evaluateArgs, flags } from './index.js';
 import { printAboutText} from '../../display/about/about.js';
 import { printHelpText } from '../../display/help/help.js';
-import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer/addBlocksToBuffer.js';
+import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer';
 
 vi.mock('../../display/about/about.js');
 vi.mock('../../display/help/help.js');
-vi.mock('../../testingSuite/addBlocksToBuffer/addBlocksToBuffer.js');
+vi.mock('../../testingSuite/addBlocksToBuffer/index.js');
 const {
   ABOUT,
   ABOUT_ALIAS,

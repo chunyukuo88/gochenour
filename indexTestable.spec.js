@@ -1,12 +1,12 @@
 import { describe, test, expect, vi } from 'vitest';
 import { main } from './indexTestable.js';
-import { getCurrentNodeVersion } from './src/nodeUtils/getCurrentNodeVersion.js';
-import { getNodeCompatibility} from './src/nodeUtils/nodeVersionCheck/nodeVersionCheck.js';
-import * as versionCheck from './src/nodeUtils/nodeVersionCheck/nodeVersionCheck.js';
-import * as argsEval from './src/nodeUtils/evaluateArgs/evaluateArgs.js';
+import { getProcessData } from './src/nodeUtils/getProcessData.js';
+import { getNodeCompatibility} from './src/nodeUtils/nodeVersionCheck/index.js';
+import * as versionCheck from './src/nodeUtils/nodeVersionCheck/index.js';
+import * as argsEval from './src/nodeUtils/evaluateArgs/index.js';
 
-vi.mock('./src/nodeUtils/getCurrentNodeVersion.js');
-vi.mock('./src/nodeUtils/nodeVersionCheck/nodeVersionCheck.js');
+vi.mock('./src/nodeUtils/getProcessData.js');
+vi.mock('./src/nodeUtils/nodeVersionCheck/index.js');
 
 describe('index.js', ()=>{
   describe('WHEN: main() is invoked:', ()=>{
@@ -18,15 +18,15 @@ describe('index.js', ()=>{
       expect(spyClear).toHaveBeenCalledTimes(1);
     });
     test('THEN: It gets the user\'s version of Node.', async ()=>{
-      getCurrentNodeVersion.mockImplementationOnce(()=>{});
+      getProcessData.mockImplementationOnce(()=>{});
 
       await main();
 
-      expect(getCurrentNodeVersion).toHaveBeenCalled();
+      expect(getProcessData).toHaveBeenCalled();
     });
     test('THEN: It determines whether the user has a compatible version of Node.', async ()=>{
       const nodeVersion = '16.11.1';
-      getCurrentNodeVersion.mockImplementationOnce(() => nodeVersion);
+      getProcessData.mockImplementationOnce(() => nodeVersion);
       const spy = vi.spyOn(versionCheck, 'getNodeCompatibility');
 
       await main();
@@ -35,7 +35,7 @@ describe('index.js', ()=>{
     });
     test('THEN: If compatible, it invokes the callback to evaluate the arguments the user has entered.', async ()=>{
       const nodeVersion = '16.11.1';
-      getCurrentNodeVersion.mockImplementationOnce(() => nodeVersion);
+      getProcessData.mockImplementationOnce(() => nodeVersion);
       getNodeCompatibility.mockImplementationOnce(() => true)
       const spyEvaluateArgs = vi.spyOn(argsEval, 'evaluateArgs');
 
@@ -45,7 +45,7 @@ describe('index.js', ()=>{
     });
     test('THEN: If compatible, it does NOT invoke that callback.', async ()=>{
       const nodeVersion = '1.2.3';
-      getCurrentNodeVersion.mockImplementationOnce(() => nodeVersion);
+      getProcessData.mockImplementationOnce(() => nodeVersion);
       getNodeCompatibility.mockImplementationOnce(() => false)
       const spyEvaluateArgs = vi.spyOn(argsEval, 'evaluateArgs');
 

@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { readFileSync } from 'fs';
-import { derived } from '../common/displayMethods.js';
+import { derived } from '../../common/displayMethods.js';
 
 export const printWelcome = () => {
   derived.logYellowInverse(`
@@ -11,7 +11,7 @@ export const printWelcome = () => {
 
 const pkg = JSON.parse(
   readFileSync(
-    new URL('../../package.json', import.meta.url)
+    new URL('../../../package.json', import.meta.url)
   )
 );
 
