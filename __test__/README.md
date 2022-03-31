@@ -1,0 +1,2 @@
+This directory contains files and folders that can be used to manually test the features of `gochenour` that pertain to cleaning up unit test files recursively.
+Try running `gochenour test --help` or `goch t -h` for more information.

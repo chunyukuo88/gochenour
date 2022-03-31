@@ -2,6 +2,7 @@ import { printAboutText } from '../../display/about/about.js';
 import { printHelpText } from '../../display/help/help.js';
 import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer/index.js';
 import { derived } from '../../common/displayMethods.js';
+import { cleanAllTestSuites } from '../../testingSuite/cleanAllSuites/index.js';
 
 const { logBox } = derived;
 
@@ -39,6 +40,8 @@ export const flags = {
   ABOUT_ALIAS: ['-a', printAboutText],
   ADD_BLOCKS: ['test', addBlocksToBuffer ],
   ADD_BLOCKS_ALIAS: ['t', addBlocksToBuffer],
+  CLEAN_TESTS: ['clean', cleanAllTestSuites],
+  CLEAN_TESTS_ALIAS: ['ct', cleanAllTestSuites],
   HELP: ['--help', printHelpText],
   HELP_ALIAS: ['-h', printHelpText],
 };

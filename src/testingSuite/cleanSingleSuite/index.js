@@ -2,7 +2,7 @@ import fs from 'fs';
 import { removeAllDebug } from './removeDebug/index.js';
 import { removeMethods } from './removeMethods/index.js';
 
-const testFile = './__test__.js';
+const testFile = './allCleanables.spec.js';
 
 export async function cleanSingleTestSuite(filePath = testFile) {
   try {

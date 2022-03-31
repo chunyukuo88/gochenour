@@ -14,9 +14,9 @@ describe('GIVEN: removeMethods is invoked with a line of code and a removal targ
     });
     describe('WHEN: The line of code includes the an invalid target,', ()=>{
       test('THEN: Invalid targets result in an unchanged line.', ()=>{
-        const lineOfCode = 'describe.skip("WHEN: Something happens,", ()=>{';
+        const lineOfCode = 'describe("WHEN: Something happens,", ()=>{';
         const target = '.anInvalidTarget';
-        const expectedResult = 'describe.skip("WHEN: Something happens,", ()=>{';
+        const expectedResult = 'describe("WHEN: Something happens,", ()=>{';
 
         const result = removeMethods(lineOfCode, target);
 
@@ -46,8 +46,8 @@ describe('GIVEN: removeMethods is invoked with a line of code and a removal targ
   });
   describe('Valid cases: ', ()=>{
     describe('WHEN: The line of code includes the removal target,', ()=>{
-      test('THEN: "describe.skip" becomes "describe"', ()=>{
-        const lineOfCode = 'describe.skip("WHEN: Something happens,", ()=>{';
+      test('THEN: "describe" becomes "describe"', ()=>{
+        const lineOfCode = 'describe("WHEN: Something happens,", ()=>{';
         const target = '.skip';
         const expectedResult = 'describe("WHEN: Something happens,", ()=>{';
 
@@ -55,8 +55,8 @@ describe('GIVEN: removeMethods is invoked with a line of code and a removal targ
 
         expect(result).toEqual(expectedResult);
       });
-      test('AND: "test.skip" becomes "describe"', ()=>{
-        const lineOfCode = 'test.skip("WHEN: Something happens,", ()=>{';
+      test('AND: "test" becomes "describe"', ()=>{
+        const lineOfCode = 'test("WHEN: Something happens,", ()=>{';
         const target = '.skip';
         const expectedResult = 'test("WHEN: Something happens,", ()=>{';
 
@@ -64,8 +64,8 @@ describe('GIVEN: removeMethods is invoked with a line of code and a removal targ
 
         expect(result).toEqual(expectedResult);
       });
-      test('THEN: "describe.only" becomes "describe"', ()=>{
-        const lineOfCode = 'describe.only("WHEN: Something happens,", ()=>{';
+      test('THEN: "describe" becomes "describe"', ()=>{
+        const lineOfCode = 'describe("WHEN: Something happens,", ()=>{';
         const target = '.only';
         const expectedResult = 'describe("WHEN: Something happens,", ()=>{';
 
@@ -73,8 +73,8 @@ describe('GIVEN: removeMethods is invoked with a line of code and a removal targ
 
         expect(result).toEqual(expectedResult);
       });
-      test('AND: "test.only" becomes "describe"', ()=>{
-        const lineOfCode = 'test.only("WHEN: Something happens,", ()=>{';
+      test('AND: "test" becomes "describe"', ()=>{
+        const lineOfCode = 'test("WHEN: Something happens,", ()=>{';
         const target = '.only';
         const expectedResult = 'test("WHEN: Something happens,", ()=>{';
 
@@ -85,7 +85,7 @@ describe('GIVEN: removeMethods is invoked with a line of code and a removal targ
     });
     describe('WHEN: The function is not given a target and the lineOfCode contains .only(', ()=>{
       test('THEN: That methods is removed.', ()=>{
-        const lineOfCode = 'describe.only("WHEN: Something happens")';
+        const lineOfCode = 'describe("WHEN: Something happens")';
         const expectedResult = 'describe("WHEN: Something happens")';
 
         const result = removeMethods(lineOfCode);
@@ -95,7 +95,7 @@ describe('GIVEN: removeMethods is invoked with a line of code and a removal targ
     });
     describe('WHEN: The function is not given a target and the lineOfCode contains .only(', ()=>{
       test('THEN: Those methods are removed.', ()=>{
-        const lineOfCode = 'test.skip("WHEN: Something happens")';
+        const lineOfCode = 'test("WHEN: Something happens")';
         const expectedResult = 'test("WHEN: Something happens")';
 
         const result = removeMethods(lineOfCode);

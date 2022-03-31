@@ -1,10 +1,12 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { cleanSingleTestSuite } from './index.js';
 import { getMemoryUsage } from '../../nodeUtils/getProcessData';
-import * as RemoveDebug from './removeDebug';
+import * as RemoveDebug from './removeDebug/index.js';
+import { removeMethods } from './removeMethods/index.js';
 import fs from 'fs';
 
 vi.mock('../../nodeUtils/getProcessData.js');
+vi.mock('./removeMethods/index.js');
 afterEach(()=> vi.clearAllMocks());
 
 describe('removeDebugFromGivenFile()', ()=>{
