@@ -2,7 +2,7 @@ import { printAboutText } from '../../display/about/about.js';
 import { printHelpText } from '../../display/help/help.js';
 import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer/index.js';
 import { derived } from '../../common/displayMethods.js';
-import { cleanAllTestSuites } from '../../testingSuite/cleanAllSuites';
+import { cleanAllTestSuites } from '../../testingSuite/cleanAllSuites/index.js';
 
 const { logBox } = derived;
 
