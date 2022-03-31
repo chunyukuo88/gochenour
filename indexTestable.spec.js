@@ -2,11 +2,13 @@ import { describe, test, expect, vi } from 'vitest';
 import { main } from './indexTestable.js';
 import { getProcessData } from './src/nodeUtils/getProcessData.js';
 import { getNodeCompatibility} from './src/nodeUtils/nodeVersionCheck/index.js';
+import './src/testingSuite/cleanAllSuites/index.js';
 import * as versionCheck from './src/nodeUtils/nodeVersionCheck/index.js';
 import * as argsEval from './src/nodeUtils/evaluateArgs/index.js';
 
 vi.mock('./src/nodeUtils/getProcessData.js');
 vi.mock('./src/nodeUtils/nodeVersionCheck/index.js');
+vi.mock('./src/testingSuite/cleanAllSuites/index.js');
 
 describe('index.js', ()=>{
   describe('WHEN: main() is invoked:', ()=>{
