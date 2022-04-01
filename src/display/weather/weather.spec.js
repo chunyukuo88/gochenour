@@ -1,5 +1,5 @@
-import { afterEach, describe, it, expect, vi } from 'vitest';
 import fetch from 'node-fetch';
+import { afterEach, describe, it, expect, vi } from 'vitest';
 import { getWeatherData } from './weather.js';
 
 vi.mock('node-fetch');

@@ -1,8 +1,7 @@
 import path from 'path';
 import fs from 'fs';
-import { getMemoryUsage } from '../../nodeUtils/getProcessData.js';
-import { cleanSingleTestSuite } from '../cleanSingleSuite/index.js';
-import { derived } from '../../common/displayMethods.js';
+import {cleanSingleTestSuite} from '../cleanSingleSuite/index.js';
+import {derived} from '../../common/displayMethods.js';
 
 const { readdirSync, statSync } = fs;
 const { logCyanBox } = derived;
@@ -12,7 +11,8 @@ export function cleanAllTestSuites(dir = process.cwd(), entityList = []){
 
   entities.forEach(entity => {
     if (entityIsADirectory(dir, entity)) {
-      entityList = cleanAllTestSuites(path.join(dir, entity), entityList);
+      const extendedPath = path.join(dir, entity);
+      entityList = cleanAllTestSuites(extendedPath, entityList);
     }
     else {
       if(entityIsATestSuite(entity)) {
@@ -23,7 +23,6 @@ export function cleanAllTestSuites(dir = process.cwd(), entityList = []){
   });
 
   displayExaminedSuites(entityList);
-  // displayMemoryUsed();
   return entityList;
 }
 
@@ -44,10 +43,5 @@ function entityIsATestSuite(entity){
   const testSuitePattern = /\.spec\.js/;
   return testSuitePattern.test(entity);
 }
-
-const displayMemoryUsed = () => {
-  const memoryUsed = getMemoryUsage().heapUsed / 1024 / 1024;
-  console.log(`The script uses approximately ${Math.round(memoryUsed * 100) / 100} MB`);
-};
 
 cleanAllTestSuites();

@@ -1,6 +1,5 @@
 import fs from 'fs';
-import { removeAllDebug } from './removeDebug/index.js';
-import { removeMethods } from './removeMethods/index.js';
+import { buildUpdatedArrayOfLines } from './utils.js';
 
 const testFile = './allCleanables.spec.js';
 
@@ -17,15 +16,3 @@ const cleanAndUpdate = (filePath) => {
   const updatedArrayOfLines = buildUpdatedArrayOfLines(fileDataArray);
   fs.writeFileSync(filePath, updatedArrayOfLines.join('\n'));
 };
-
-const buildUpdatedArrayOfLines = (fileDataArray) => {
-  const updatedArrayOfLines = [];
-  fileDataArray.forEach(lineOfCode => {
-    const debugRemoved = removeAllDebug(lineOfCode);
-    const methodsRemoved = removeMethods(debugRemoved);
-    updatedArrayOfLines.push(methodsRemoved);
-  });
-  return updatedArrayOfLines;
-};
-
-cleanSingleTestSuite();

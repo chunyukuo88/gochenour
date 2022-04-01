@@ -1,14 +1,14 @@
-describe.skip('', ()=>{
-  describe.skip('', ()=>{
-    describe.skip('', ()=>{
-      const { component, debug, getByRole } = render();
+describe('', ()=>{
+  describe('', ()=>{
+    describe('', ()=>{
+      const { component, getByRole } = render();
     });
   });
 });
-describe.only('GIVEN: ', ()=>{
-  describe.only('WHEN: ', ()=>{
-    test.only('THEN: ', ()=>{
-      debug()
+describe('GIVEN: ', ()=>{
+  describe('WHEN: ', ()=>{
+    test('THEN: ', ()=>{
+
     });
   });
 });
