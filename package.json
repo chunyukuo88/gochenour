@@ -20,7 +20,7 @@
   "description": "Get to know the man, the myth, the legend",
   "devDependencies": {
     "c8": "^7.11.0",
-    "vitest": "^0.8.1"
+    "vitest": "^0.8.4"
   },
   "files": [
     "index.js",
