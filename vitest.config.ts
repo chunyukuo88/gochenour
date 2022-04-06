@@ -5,7 +5,7 @@ export default defineConfig({
     coverage: {
       exclude: [
         'src/common/displayMethods.js',
-        'src/nodeUtils/getProcessData.js',
+        'src/nodeUtils/processFunctions.js',
         '**/*.spec.js',
         '**/*/__test__',
         'index.js'
