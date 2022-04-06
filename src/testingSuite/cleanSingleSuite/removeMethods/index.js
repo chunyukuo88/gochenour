@@ -18,15 +18,15 @@ function removeDescribeMethods(lineOfCode){
   return lineOfCode.replace('.only', '').replace('.skip', '');
 }
 
+const pattern = /(describe|test|it)\.(skip|only)/;
+
 function lineOfCodeMatchesPattern(lineOfCode){
   const lineOfCodeMatchesPattern = pattern.test(lineOfCode);
   return lineOfCodeMatchesPattern;
 }
 
+const methodsToBeRemoved = ['.skip', '.only'];
+
 function targetMethodIsInvalid(targetMethod){
   return !methodsToBeRemoved.includes(targetMethod);
 }
-
-const pattern = /(describe|test|it)\.(skip|only)/;
-
-const methodsToBeRemoved = ['.skip', '.only'];
