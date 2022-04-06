@@ -7,7 +7,7 @@ export default defineConfig({
         'src/common/displayMethods.js',
         'src/nodeUtils/processFunctions.js',
         '**/*.spec.js',
-        '**/*/__test__',
+        '/__test__/*.js',
         'index.js'
       ],
     },

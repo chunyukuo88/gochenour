@@ -34,6 +34,10 @@
   "license": "MIT",
   "main": "index.js",
   "name": "gochenour",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chunyukuo88/gochenour"
+  },
   "scripts": {
     "c": "vitest run --coverage",
     "coverage": "vitest run --coverage",
@@ -42,5 +46,5 @@
     "test:clean": "git checkout __test__ && vitest"
   },
   "type": "module",
-  "version": "1.7.0"
+  "version": "1.7.1"
 }
