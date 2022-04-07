@@ -12,7 +12,7 @@ function render(){
 describe.only('', ()=>{
   describe.only('', ()=>{
     test.only('', ()=>{
-      const { component, getByRole } = render();
+      const { component, getByRole } = render(); // comment at the end of the line
     });
   });
 });
@@ -20,7 +20,7 @@ describe.only('', ()=>{
 describe.skip('GIVEN: ', ()=>{
   describe.skip('WHEN: ', ()=>{
     test.skip('THEN: ', ()=>{
-
+      // comment at the end of the line
     });
   });
 });
