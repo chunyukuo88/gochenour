@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import {cleanSingleTestSuite} from '../cleanSingleSuite/index.js';
-import {derived} from '../../common/displayMethods.js';
+import { derived } from '../../common/displayMethods.js';
 
 const { readdirSync, statSync } = fs;
 const { logCyanBox } = derived;
@@ -43,5 +43,3 @@ function entityIsATestSuite(entity){
   const testSuitePattern = /\.spec\.js/;
   return testSuitePattern.test(entity);
 }
-
-cleanAllTestSuites();

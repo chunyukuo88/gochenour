@@ -40,10 +40,8 @@
   },
   "scripts": {
     "c": "vitest run --coverage",
-    "coverage": "vitest run --coverage",
     "restore": "cp __test__/toBeCleanedData.js __test__/toBeCleaned.spec.js && cp __test__/moreFiles/allCleanablesData.js __test__/moreFiles/allCleanables.spec.js && cp __test__/moreFiles/thirdFolder/cleanMeTooData.js __test__/moreFiles/thirdFolder/cleanMeToo.spec.js",
-    "test": "vitest && run restore",
-    "test:clean": "git checkout __test__ && vitest"
+    "test": "vitest && run restore"
   },
   "type": "module",
   "version": "1.7.2"

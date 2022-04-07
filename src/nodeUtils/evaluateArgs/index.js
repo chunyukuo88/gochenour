@@ -16,6 +16,7 @@ export async function evaluateArgs(argsArray){
 function getFirstValidFlagFunctionPair(argsArray){
   if (!argsArray) return;
   const flagFunctionPairs = Object.values(flags);
+  console.log('flagFunctionPairs', flagFunctionPairs);
   const firstValidPair = getFirstValidPair(argsArray, flagFunctionPairs);
   return firstValidPair;
 }
@@ -24,6 +25,7 @@ function getFirstValidPair(userArgsOnly, flagFunctionPairs){
   for (let i = 0; i < flagFunctionPairs.length; i++){
     if (flagFunctionPairs[i][0] === userArgsOnly[0]) {
       return flagFunctionPairs[i];
+      break;
     }
   }
 }
@@ -31,7 +33,7 @@ function getFirstValidPair(userArgsOnly, flagFunctionPairs){
 function printNoArgsFound(){
   const availableFlags = Object.values(flags).map(pair => ('\n      '+pair[0]));
   logBox(`
-    No flags or inputs detected. 
+    No flags or inputs detected.
     Try running this CLI with the --help flag for detailed information or try one of the following valid flags and aliases:  \n${availableFlags}
   `);
 }
