@@ -11,7 +11,7 @@ vi.mock('../../common/displayMethods.js',()=>({
 
 describe('printHelpText()', ()=>{
   it('This function prints a message with a yellow box and an underline.', ()=>{
-    // const { logYellowBox, underline } = derived;
+
 
     printHelpText();
 
