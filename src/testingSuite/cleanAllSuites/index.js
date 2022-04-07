@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import {cleanSingleTestSuite} from '../cleanSingleSuite/index.js';
+import { cleanSingleTestSuite } from '../cleanSingleSuite/index.js';
 import { derived } from '../../common/displayMethods.js';
 
 const { readdirSync, statSync } = fs;
