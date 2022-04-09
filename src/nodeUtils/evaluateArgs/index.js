@@ -16,7 +16,6 @@ export async function evaluateArgs(argsArray){
 function getFirstValidFlagFunctionPair(argsArray){
   if (!argsArray) return;
   const flagFunctionPairs = Object.values(flags);
-  console.log('flagFunctionPairs', flagFunctionPairs);
   const firstValidPair = getFirstValidPair(argsArray, flagFunctionPairs);
   return firstValidPair;
 }

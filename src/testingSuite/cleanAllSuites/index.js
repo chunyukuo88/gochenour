@@ -40,6 +40,6 @@ function displayExaminedSuites(arrayOfTestSuites){
 }
 
 function entityIsATestSuite(entity){
-  const testSuitePattern = /\.spec\.js/;
+  const testSuitePattern = /\.(test|spec)\.js/;
   return testSuitePattern.test(entity);
 }
