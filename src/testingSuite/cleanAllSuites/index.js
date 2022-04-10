@@ -8,22 +8,27 @@ const { logCyanBox } = derived;
 
 export function cleanAllTestSuites(dir = process.cwd(), entityList = []){
   let entities = readdirSync(dir);
-
-  entities.forEach(entity => {
-    if (entityIsADirectory(dir, entity)) {
-      const extendedPath = path.join(dir, entity);
-      entityList = cleanAllTestSuites(extendedPath, entityList);
-    }
-    else {
-      if(entityIsATestSuite(entity)) {
-        cleanSingleTestSuite(path.join(dir, entity));
-        entityList.push(entity);
-      }
-    }
-  });
-
+  entities.forEach(entity => recursivelyCleanSuites(entity, dir, entityList));
   displayExaminedSuites(entityList);
   return entityList;
+}
+
+function recursivelyCleanSuites(entity, dir, entityList){
+  (entityIsADirectory(dir, entity))
+    ? cleanAllSuitesInDirectory(entity, dir, entityList)
+    : cleanSuite(entity, dir, entityList)
+}
+
+function cleanSuite(entity, dir, entityList){
+  if(entityIsATestSuite(entity)) {
+    cleanSingleTestSuite(path.join(dir, entity));
+    entityList.push(entity);
+  }
+}
+
+function cleanAllSuitesInDirectory(entity, dir, entityList){
+  const extendedPath = path.join(dir, entity);
+  cleanAllTestSuites(extendedPath, entityList);
 }
 
 function entityIsADirectory(dir, entity){
