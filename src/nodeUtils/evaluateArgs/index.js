@@ -24,7 +24,6 @@ function getFirstValidPair(userArgsOnly, flagFunctionPairs){
   for (let i = 0; i < flagFunctionPairs.length; i++){
     if (flagFunctionPairs[i][0] === userArgsOnly[0]) {
       return flagFunctionPairs[i];
-      break;
     }
   }
 }
