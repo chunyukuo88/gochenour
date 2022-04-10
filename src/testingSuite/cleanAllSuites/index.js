@@ -8,12 +8,12 @@ const { logCyanBox } = derived;
 
 export function cleanAllTestSuites(dir = process.cwd(), entityList = []){
   let entities = readdirSync(dir);
-  entities.forEach(entity => recursivelyCleanSuites(entity, dir, entityList));
+  entities.forEach(entity => recursivelyEvaluateEntity(entity, dir, entityList));
   displayExaminedSuites(entityList);
   return entityList;
 }
 
-function recursivelyCleanSuites(entity, dir, entityList){
+function recursivelyEvaluateEntity(entity, dir, entityList){
   (entityIsADirectory(dir, entity))
     ? cleanAllSuitesInDirectory(entity, dir, entityList)
     : cleanSuite(entity, dir, entityList)
