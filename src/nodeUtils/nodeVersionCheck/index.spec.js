@@ -23,7 +23,7 @@ describe('getNodeCompatibility()', ()=>{
       });
     });
     describe('WHEN: The user\'s version is NOT below the minimum', ()=>{
-      test('THEN: It returns false.', ()=>{
+      test('THEN: It returns true, (and the app carries on with the next task).', ()=>{
         const currentNodeVersion = '100.0.0';
 
         const result = getNodeCompatibility(currentNodeVersion);
