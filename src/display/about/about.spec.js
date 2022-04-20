@@ -1,39 +1,25 @@
-import { afterEach, describe, expect, test, vi } from 'vitest';
-import '../weather/weather.js';
-import { printWelcome } from '../welcome/printWelcome.js';
-import { derived } from '../../common/displayMethods.js';
-import { printAboutText } from './about.js';
+import { afterEach, describe, expect, test, vi } from "vitest";
+import { printWelcome } from "../welcome/printWelcome.js";
+import { derived } from "../../common/displayMethods.js";
+import { printAboutText } from "./about.js";
 
-vi.mock('../welcome/printWelcome.js');
-vi.mock('../weather/weather.js', ()=>({
-  getWeatherData: ()=>({
-    temp: 272,
-    humidity: 50,
-  })
-}));
-vi.mock('../../common/displayMethods.js', ()=>({
+vi.mock("../welcome/printWelcome.js");
+vi.mock("../../common/displayMethods.js", () => ({
   derived: {
     logYellow: vi.fn(),
   },
 }));
 
-afterEach(()=> vi.clearAllMocks());
+afterEach(() => vi.clearAllMocks());
 
-describe('about.js', ()=>{
-  describe('printAboutText()', ()=>{
-    test('First it prints a welcome message.', async ()=>{
+describe("about.js", () => {
+  describe("printAboutText()", () => {
+    test("First it prints a welcome message.", async () => {
       printWelcome.mockImplementationOnce(vi.fn());
 
       await printAboutText();
 
       expect(printWelcome).toBeCalled();
-    });
-    test('Then it prints the weather.', async ()=>{
-      const expectedWeather = "It's 30 degrees and 50% humidity in Westerville now.";
-
-      await printAboutText();
-
-      expect(derived.logYellow).toBeCalledWith(expectedWeather);
     });
   });
 });
