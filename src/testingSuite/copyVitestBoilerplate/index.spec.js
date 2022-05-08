@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest';
-import { copyVitestBoilerplate, successMsg, vitestBoilerplateString } from './copyVitestBoilerplate.js';
+import { copyVitestBoilerplate, successMsg, vitestBoilerplateString } from './index.js';
 import { derived } from '../../common/displayMethods.js';
 import clipboard from 'clipboardy';
 
