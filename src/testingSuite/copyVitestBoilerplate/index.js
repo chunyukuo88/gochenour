@@ -6,8 +6,6 @@ export function copyVitestBoilerplate(){
   derived.logGreenBox(successMsg);
 }
 
-export const successMsg = 'The Vitest boilerplate has been copied to your system\'s clipboard.';
-
 export const vitestBoilerplateString = `
 import { describe, expect, test, vi } from 'vitest';
 import {} from '';
@@ -18,5 +16,9 @@ describe('GIVEN: ', ()=>{
       //
     });
   });
-});
+});`;
+
+export const successMsg = `The following Vitest boilerplate has been copied to your system\'s clipboard:
+${vitestBoilerplateString}
 `;
+
