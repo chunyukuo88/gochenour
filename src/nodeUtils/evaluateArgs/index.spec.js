@@ -4,10 +4,10 @@ import { printAboutText} from '../../display/about/about.js';
 import { printHelpText } from '../../display/help/help.js';
 import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer';
 import { derived } from '../../common/displayMethods.js';
-import chalk from "chalk";
-import boxen from "boxen";
+import { copyVitestBoilerplate } from '../../testingSuite/copyVitestBoilerplate/index.js';
 
 vi.mock('../../display/about/about.js');
+vi.mock('../../testingSuite/copyVitestBoilerplate/index.js');
 vi.mock('../../display/help/help.js');
 vi.mock('../../testingSuite/addBlocksToBuffer/index.js');
 vi.mock('../../common/displayMethods.js', ()=>({
@@ -22,6 +22,7 @@ vi.mock('../../common/displayMethods.js', ()=>({
    underline: vi.fn(),
  },
 }));
+
 
 beforeEach(()=> {
   printAboutText.mockImplementationOnce(vi.fn());
@@ -95,6 +96,24 @@ describe('evaluateArgs()', ()=>{
       expect(addBlocksToBuffer).toHaveBeenCalledTimes(1);
     });
   });
+  describe(`WHEN: Invoked with a flag of VITEST`, ()=>{
+    it('THEN: It runs the copyVitestBoilerplate() script', async ()=>{
+      copyVitestBoilerplate.mockImplementationOnce(vi.fn());
+      const argsArray = [ flags.VITEST[0] ];
+
+      await evaluateArgs(argsArray);
+
+      expect(copyVitestBoilerplate).toHaveBeenCalledTimes(1);
+    });
+  });
+  describe(`WHEN: Invoked with a flag of VITEST_ALIAS`, ()=>{
+    it('THEN: It runs the copyVitestBoilerplate() script', async ()=>{
+      copyVitestBoilerplate.mockImplementationOnce(vi.fn());
+      const argsArray = [ flags.VITEST_ALIAS[0] ];
+
+      await evaluateArgs(argsArray);
+
+      expect(copyVitestBoilerplate).toHaveBeenCalledTimes(1);
+    });
+  });
 });
-
-
