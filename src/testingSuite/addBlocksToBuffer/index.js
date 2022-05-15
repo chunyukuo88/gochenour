@@ -1,22 +1,25 @@
-import 'dotenv/config';
-import clipboard from 'clipboardy';
-import { getAllUserArguments } from './getUserArgs.js'
-import { derived } from '../../common/displayMethods.js';
-import { buildCustomBlock } from './utils.js';
+import "dotenv/config";
+import clipboard from "clipboardy";
+import { getAllUserArguments } from "./getUserArgs.js";
+import { derived } from "../../common/displayMethods.js";
+import { buildCustomBlock } from "./utils.js";
 
 const { logRedBox, logCyanBox, logGreenBox } = derived;
 
 export const presetBlocks = {
-  ddd: "describe('', ()=>{\n  describe('', ()=>{\n    describe('', ()=>{\n      //\n    });\n  });\n});",
-  ddt: "describe('GIVEN: ', ()=>{\n  describe('WHEN: ', ()=>{\n    test('THEN: ', ()=>{\n      //\n    });\n  });\n});"
+  ddd: "describe('', () => {\n  describe('', () => {\n    describe('', () => {\n      //\n    });\n  });\n});",
+  ddt: "describe('GIVEN: ', () => {\n  describe('WHEN: ', () => {\n    test('THEN: ', () => {\n      //\n    });\n  });\n});",
+  ddi: "describe('GIVEN: ', () => {\n  describe('WHEN: ', () => {\n    it('THEN: ', () => {\n      //\n    });\n  });\n});",
 };
 
 export const notifications = {
-  customBlockHasBeenCopied: 'The following custom block has been copied to your clipboard:\n',
+  customBlockHasBeenCopied:
+    "The following custom block has been copied to your clipboard:\n",
   ddd: `The following has been copied to your clipboard: \n\n${presetBlocks.ddd}\n\n`,
   ddt: `The following has been copied to your clipboard: \n\n${presetBlocks.ddt}\n\n`,
-  failureCustom: ' FAILED TO COPY CUSTOM BLOCK: ',
-  failurePreset: ' FAILED TO COPY PRESET BLOCK: ',
+  ddi: `The following has been copied to your clipboard: \n\n${presetBlocks.ddi}\n\n`,
+  failureCustom: " FAILED TO COPY CUSTOM BLOCK: ",
+  failurePreset: " FAILED TO COPY PRESET BLOCK: ",
   help: `
   
   COMMAND:
@@ -42,53 +45,57 @@ export const notifications = {
   noArgumentsFound: `\n Invalid argument or no arguments found.\n Try running this command again with the --help flag for more information. `,
 };
 
-const includesHelpFlag = (userArgsArray) => userArgsArray[0] === '--help' || userArgsArray[0] === '-h';
+const includesHelpFlag = (userArgsArray) =>
+  userArgsArray[0] === "--help" || userArgsArray[0] === "-h";
 
 const includesNumbers = (userArgsArray) => {
   const testBlockWithNumbers = /[1-9]/;
   return testBlockWithNumbers.test(userArgsArray[0]);
 };
 
-function copyAndLogBufferContent(blockString, notificationString){
+function copyAndLogBufferContent(blockString, notificationString) {
   clipboard.writeSync(blockString);
   logGreenBox(notificationString);
 }
 
-function buildErrorMessageCustom(e){
+function buildErrorMessageCustom(e) {
   return `${notifications.failureCustom}${e}${notifications.noArgumentsFound}`;
 }
 
-function buildErrorMessagePreset(e){
+function buildErrorMessagePreset(e) {
   return `${notifications.failurePreset}${e}${notifications.noArgumentsFound}`;
 }
 
-function copyWithCustomBlock(userArgsArray, notificationStub){
+function copyWithCustomBlock(userArgsArray, notificationStub) {
   try {
     const commandName = userArgsArray[0];
     const customBlock = buildCustomBlock(commandName);
     const msg = notificationStub + customBlock;
     return copyAndLogBufferContent(customBlock, msg);
-  } catch(e) {
+  } catch (e) {
     const errorMessage = buildErrorMessageCustom(e);
     return logRedBox(errorMessage);
   }
 }
 
-function copyWithPresetBlock(userArgsArray){
+function copyWithPresetBlock(userArgsArray) {
   try {
     const commandName = userArgsArray[0];
-    return copyAndLogBufferContent(presetBlocks[commandName], notifications[commandName]);
-  } catch(e) {
+    return copyAndLogBufferContent(
+      presetBlocks[commandName],
+      notifications[commandName]
+    );
+  } catch (e) {
     const errorMessage = buildErrorMessagePreset(e);
     return logRedBox(errorMessage);
   }
 }
 
-export function addBlocksToBuffer(){
+export function addBlocksToBuffer() {
   const userArgsArray = getAllUserArguments();
   if (!userArgsArray) return logRedBox(notifications.noArgumentsFound);
   if (includesHelpFlag(userArgsArray)) return logCyanBox(notifications.help);
-  return (includesNumbers(userArgsArray))
+  return includesNumbers(userArgsArray)
     ? copyWithCustomBlock(userArgsArray, notifications.customBlockHasBeenCopied)
     : copyWithPresetBlock(userArgsArray);
 }
