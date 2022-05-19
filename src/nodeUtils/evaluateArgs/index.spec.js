@@ -5,8 +5,10 @@ import { printHelpText } from '../../display/help/help.js';
 import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer';
 import { derived } from '../../common/displayMethods.js';
 import { copyVitestBoilerplate } from '../../testingSuite/copyVitestBoilerplate/index.js';
+import { copyTreeCommandToBuffer } from '../../otherAutomations/copyTreeCommandToBuffer/index.js';
 
 vi.mock('../../display/about/about.js');
+vi.mock('../../otherAutomations/copyTreeCommandToBuffer/index.js');
 vi.mock('../../testingSuite/copyVitestBoilerplate/index.js');
 vi.mock('../../display/help/help.js');
 vi.mock('../../testingSuite/addBlocksToBuffer/index.js');
@@ -114,6 +116,16 @@ describe('evaluateArgs()', ()=>{
       await evaluateArgs(argsArray);
 
       expect(copyVitestBoilerplate).toHaveBeenCalledTimes(1);
+    });
+  });
+  describe(`WHEN: Invoked with a flag of TREE`, ()=>{
+    it('THEN: It runs the copyTreeCommandToBuffer() script', async ()=>{
+      copyTreeCommandToBuffer.mockImplementationOnce(vi.fn());
+      const argsArray = [ flags.TREE[0] ];
+
+      await evaluateArgs(argsArray);
+
+      expect(copyTreeCommandToBuffer).toHaveBeenCalledTimes(1);
     });
   });
 });
