@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest';
-import { copyTreeCommandToBuffer, expectedBufferContent } from './index.js';
+import { copyTreeCommandToBuffer, expectedBufferContent, treeCommand } from './index.js';
 import clipboard from 'clipboardy';
 import { derived } from '../../common/displayMethods.js';
 
@@ -16,7 +16,7 @@ describe('copyTreeCommandToBuffer()', () => {
 
       copyTreeCommandToBuffer();
 
-      expect(spy).toHaveBeenCalledWith(expectedBufferContent);
+      expect(spy).toHaveBeenCalledWith(treeCommand);
     });
     test('AND: it logs a message indicating that the tree command has been copied.', () => {
       copyTreeCommandToBuffer();
