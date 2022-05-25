@@ -3,7 +3,8 @@ import { printHelpText } from '../../display/help/help.js';
 import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer/index.js';
 import { derived } from '../../common/displayMethods.js';
 import { cleanAllTestSuites } from '../../testingSuite/cleanAllSuites/index.js';
-import {copyVitestBoilerplate} from "../../testingSuite/copyVitestBoilerplate/index.js";
+import {copyVitestBoilerplate} from '../../testingSuite/copyVitestBoilerplate/index.js';
+import { copyTreeCommandToBuffer } from '../../otherAutomations/copyTreeCommandToBuffer/index.js';
 
 const { logBox } = derived;
 
@@ -46,6 +47,7 @@ export const flags = {
   CLEAN_TESTS_ALIAS: ['ct', cleanAllTestSuites],
   HELP: ['--help', printHelpText],
   HELP_ALIAS: ['-h', printHelpText],
+  TREE: ['tree', copyTreeCommandToBuffer],
   VITEST: ['vitest', copyVitestBoilerplate],
   VITEST_ALIAS: ['vi', copyVitestBoilerplate],
 };

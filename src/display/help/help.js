@@ -22,6 +22,11 @@ export const printHelpText = () =>
     command was invoked. For more details, consult the 
     test suites in the 'cleanAllSuites' and 
     'cleanSingleSuite' directories.
+  $${underline("gochenour")} tree
+    This command copies to your clipboard buffer a complex
+    tree command that you can run as-is or add an addi-
+    tional subdirectory to specify where to display a tree.
+    NOTE: This requires installation of the tree program.
   $${underline("gochenour")} vitest|vi
     This command copies to your clipboard buffer a commonly
     used string that imports Vitest methods. Handy for 
