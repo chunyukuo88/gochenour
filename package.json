@@ -19,7 +19,8 @@
   "description": "Get to know the man, the myth, the legend",
   "devDependencies": {
     "c8": "^7.11.0",
-    "vitest": "^0.8.4"
+    "husky": "^8.0.1",
+    "vitest": "^0.16.0"
   },
   "files": [
     "index.js",
@@ -39,9 +40,8 @@
   },
   "scripts": {
     "c": "vitest run --coverage",
-    "restore": "cp __test__/toBeCleanedData.js __test__/toBeCleaned.spec.js && cp __test__/moreFiles/allCleanablesData.js __test__/moreFiles/allCleanables.spec.js && cp __test__/moreFiles/thirdFolder/cleanMeTooData.js __test__/moreFiles/thirdFolder/cleanMeToo.spec.js",
-    "r": "run restore",
-    "test": "vitest && run restore"
+    "prepare": "husky install",
+    "test": "vitest && ./restore.sh"
   },
   "type": "module",
   "version": "1.9.2"
