@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-#npm test
-echo "Replace this line with an invocation of unit tests once I figure out how to prevent Vitest from defaulting to watch mode."
+npm test

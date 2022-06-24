@@ -11,5 +11,6 @@ export default defineConfig({
         'index.js'
       ],
     },
+    watch: false,
   },
 });
