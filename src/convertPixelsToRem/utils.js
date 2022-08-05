@@ -1,4 +1,5 @@
 export const convertSingleLine = (lineOfCode) => {
+  if (doesNotNeedConversion(lineOfCode)) return lineOfCode;
   const asArray = lineOfCode.split(' ');
   return asArray
     .map(lexicalUnit => {
@@ -13,3 +14,12 @@ const convertLexicalUnit = (lexicalUnit) => {
   const numberOnly = parseInt(lexicalUnit.split('px')[0]);
   return `${numberOnly/16}rem`;
 };
+
+const doesNotNeedConversion = (lineOfCode) => {
+  const nameOfRule = lineOfCode.trim().split(':')[0];
+  return rulesThatDoNotRequireConversion.includes(nameOfRule);
+};
+
+const rulesThatDoNotRequireConversion = [
+  'border',
+];
