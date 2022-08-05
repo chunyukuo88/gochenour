@@ -3,7 +3,7 @@ import { buildUpdatedArrayOfLines } from './utils.js';
 
 const testFile = './allCleanables.spec.js';
 
-export async function cleanSingleTestSuite(filePath = testFile) {
+export function cleanSingleTestSuite(filePath = testFile) {
   try {
     cleanAndUpdate(filePath);
   } catch (err) {
