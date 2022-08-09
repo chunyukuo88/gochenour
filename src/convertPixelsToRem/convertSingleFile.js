@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { convertSingleLine } from './convertSingleLine.js';
 
-const testFile = './toHavePixelsConverted.css';
+const testFile = '__test__/toHavePixelsConverted.css';
 
 export const convertSingleFile = (filePath = testFile) => {
   let asArrayOfLines = fs.readFileSync(filePath, 'utf-8').split('\n');
