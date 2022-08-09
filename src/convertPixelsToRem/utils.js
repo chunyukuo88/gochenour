@@ -1,23 +1,14 @@
 export const convertSingleLine = (lineOfCode) => {
   if (doesNotNeedConversion(lineOfCode)) return lineOfCode;
-  // if (ruleEndsInSemicolon(lineOfCode)) {
-    const asArray = lineOfCode.split(' ');
-    return asArray
-      .map(lexicalUnit => {
-        return (lexicalUnit.includes('px'))
-          ? convertLexicalUnit(lexicalUnit)
-          : lexicalUnit;
-      })
-      .join(' ') + ';';
-  // }
-  // else {
-     //
-  // }
+  const asArray = lineOfCode.split(' ');
+  return asArray
+    .map(lexicalUnit => {
+      return (lexicalUnit.includes('px'))
+        ? convertLexicalUnit(lexicalUnit)
+        : lexicalUnit;
+    })
+    .join(' ') + ';';
 };
-
-// const ruleEndsInSemicolon = (lineOfCode) => {
-//   return
-// }
 
 const convertLexicalUnit = (lexicalUnit) => {
   const numberOnly = parseInt(lexicalUnit.split('px')[0]);
@@ -34,4 +25,5 @@ const rulesThatDoNotRequireConversion = [
   'border',
   'border-width',
   'borderWidth',
+  'transform',
 ];
