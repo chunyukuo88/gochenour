@@ -25,5 +25,6 @@ const rulesThatDoNotRequireConversion = [
   'border',
   'border-width',
   'borderWidth',
+  'box-shadow',
   'transform',
 ];

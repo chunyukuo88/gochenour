@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest';
-import { convertSingleLine } from './utils.js';
+import { convertSingleLine } from './convertSingleLine.js';
 
 describe('convertSingleLine/1', ()=>{
   describe('GIVEN: This function is invoked with given a line of code from a normal CSS file,', ()=>{
@@ -18,6 +18,7 @@ describe('convertSingleLine/1', ()=>{
         const cases = [
           ['    border: 1px solid black;'],
           ['  transform: translate(12px, 0px) rotate(-40deg);'],
+          ['  box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.07);'],
         ];
         test.each(cases)('THEN: The line is returned as-is.', (lineOfCode)=>{
           const result = convertSingleLine(lineOfCode);
