@@ -1,14 +1,19 @@
 import { describe, expect, test, vi } from 'vitest';
-import { convertSingleFile } from './index.js';
+import { convertAllFiles } from './index.js';
+import { convertSingleFile } from './convertSingleFile.js';
 
+vi.mock('./convertSingleFile.js');
 
-describe('convertSingleFile()', () => {
-  describe('GIVEN: A CSS file with rules that need to have pixels converted to REM', () => {
-    describe('WHEN: The function is invoked,', () => {
-      test('THEN: The function updates those rules accordingly.', () => {
-        const testFile = '__test__/toHavePixelsConverted.css';
+describe('convertAllFiles()', () => {
+  describe('GIVEN: The function is invoked,', () => {
+    describe('WHEN: The current directory contains CSS files,', () => {
+      test('THEN: The pixels-to-REM conversion function is applied to each CSS file.', () => {
+        convertSingleFile.mockImplementation(vi.fn());
 
+        convertAllFiles();
 
+        expect(convertSingleFile).toHaveBeenCalled();
+        vi.clearAllMocks();
       });
     });
   });
