@@ -1,4 +1,4 @@
-import { buildUpdatedArrayOfLines } from './utils.js';
+import { processArrayOfLines } from './utils.js';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 
 import { mocks } from './mocks.js';
@@ -14,7 +14,7 @@ describe('buildUpdatedArrayOfLines', ()=>{
         `});`,
       ];
 
-      const result = buildUpdatedArrayOfLines(fileDataArray);
+      const result = processArrayOfLines(fileDataArray);
 
       expect(result).toEqual(updatedArrayOfLines);
     });

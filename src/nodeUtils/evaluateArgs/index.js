@@ -5,6 +5,7 @@ import { derived } from '../../common/displayMethods.js';
 import { cleanAllTestSuites } from '../../testingSuite/cleanAllSuites/index.js';
 import {copyVitestBoilerplate} from '../../testingSuite/copyVitestBoilerplate/index.js';
 import { copyTreeCommandToBuffer } from '../../otherAutomations/copyTreeCommandToBuffer/index.js';
+import {convertPixelsInAllFiles} from '../../convertPixelsToRem/index.js';
 
 const { logBox } = derived;
 
@@ -47,6 +48,8 @@ export const flags = {
   CLEAN_TESTS_ALIAS: ['ct', cleanAllTestSuites],
   HELP: ['--help', printHelpText],
   HELP_ALIAS: ['-h', printHelpText],
+  PIXEL: ['--pixel', convertPixelsInAllFiles],
+  PIXEL_ALIAS: ['-px', convertPixelsInAllFiles],
   TREE: ['tree', copyTreeCommandToBuffer],
   VITEST: ['vitest', copyVitestBoilerplate],
   VITEST_ALIAS: ['vi', copyVitestBoilerplate],

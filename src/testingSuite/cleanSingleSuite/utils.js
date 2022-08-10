@@ -2,7 +2,7 @@ import { removeAllDebug } from './removeDebug/index.js';
 import { removeMethods } from './removeMethods/index.js';
 import { removeComments } from './removeComments/index.js';
 
-export const buildUpdatedArrayOfLines = (fileDataArray) => {
+export const processArrayOfLines = (fileDataArray) => {
   const updatedArrayOfLines = [];
   fileDataArray.forEach(lineOfCode => {
     const debugRemoved = removeAllDebug(lineOfCode);
