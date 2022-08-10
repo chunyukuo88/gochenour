@@ -2,9 +2,12 @@ import { convertSingleFile } from './convertSingleFile.js';
 import path from 'path';
 import fs from 'fs';
 
+const { readdirSync, statSync } = fs;
+
 export const convertAllFiles = (dir = process.cwd(), entityList = []) => {
-  let entities = fs.readdirSync(dir);
+  let entities = readdirSync(dir);
   entities.forEach(entity => {
+    if (entitiesToBeIgnored.includes(entity)) return;
     recursivelyEvaluateEntity(entity, dir, entityList);
   });
 };
@@ -23,3 +26,18 @@ function convertAllCssFilesInDirectory(entity, dir, entityList) {
 function entityIsADirectory(dir, entity){
   return statSync(path.join(dir, entity)).isDirectory();
 }
+
+const entitiesToBeIgnored = [
+  '.git',
+  '.gitignore',
+  '.husky',
+  '.idea',
+  'LICENSE',
+  'README.md',
+  'References.md',
+  'coverage',
+  'node_modules',
+  'package-lock.json',
+  'package.json',
+  'vitest.config.ts',
+];
