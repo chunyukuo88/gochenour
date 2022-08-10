@@ -19,6 +19,7 @@ describe('convertSingleLine/1', ()=>{
           ['    border: 1px solid black;'],
           ['  transform: translate(12px, 0px) rotate(-40deg);'],
           ['  box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.07);'],
+          ['  margin: 1rem;'],
         ];
         test.each(cases)('THEN: The line is returned as-is.', (lineOfCode)=>{
           const result = convertSingleLine(lineOfCode);
@@ -29,10 +30,20 @@ describe('convertSingleLine/1', ()=>{
     });
     describe('WHEN: The line of code does NOT contain px units', () => {
       test('THEN: The line is returned as-is.', ()=>{
-        const lineOfCode = '}';
-        const expectedResult = lineOfCode;
+        const justABracket = '}';
+        const expectedResult = justABracket;
 
-        const result = convertSingleLine(lineOfCode);
+        const result = convertSingleLine(justABracket);
+
+        expect(result).toEqual(expectedResult);
+      });
+    });
+    describe('WHEN: The line of code has an extra semicolon,', () => {
+      test('THEN: The extra semicolon is lopped off.', ()=>{
+        const hasExtraSemicolon = '};;';
+        const expectedResult = '};';
+
+        const result = convertSingleLine(hasExtraSemicolon);
 
         expect(result).toEqual(expectedResult);
       });
