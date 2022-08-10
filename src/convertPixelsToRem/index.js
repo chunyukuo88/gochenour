@@ -24,7 +24,8 @@ function convertAllCssFilesInDirectory(entity, dir, entityList) {
 }
 
 function entityIsADirectory(dir, entity){
-  return statSync(path.join(dir, entity)).isDirectory();
+  const isADirectory = statSync(path.join(dir, entity)).isDirectory();
+  return isADirectory;
 }
 
 const entitiesToBeIgnored = [
@@ -32,12 +33,12 @@ const entitiesToBeIgnored = [
   '.gitignore',
   '.husky',
   '.idea',
-  'LICENSE',
-  'README.md',
-  'References.md',
   'coverage',
+  'LICENSE',
   'node_modules',
   'package-lock.json',
   'package.json',
+  'README.md',
+  'References.md',
   'vitest.config.ts',
 ];
