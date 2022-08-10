@@ -4,7 +4,7 @@ import fs from 'fs';
 
 const { readdirSync, statSync } = fs;
 
-export const convertAllFiles = (dir = process.cwd(), entityList = []) => {
+export const convertPixelsInAllFiles = (dir = process.cwd(), entityList = []) => {
   let entities = readdirSync(dir);
   entities.forEach(entity => {
     if (entitiesToBeIgnored.includes(entity)) return;
@@ -20,7 +20,7 @@ function recursivelyEvaluateEntity(entity, dir, entityList){
 
 function convertAllCssFilesInDirectory(entity, dir, entityList) {
   const extendedPath = path.join(dir, entity);
-  convertAllFiles(extendedPath, entityList);
+  convertPixelsInAllFiles(extendedPath, entityList);
 }
 
 function entityIsADirectory(dir, entity){

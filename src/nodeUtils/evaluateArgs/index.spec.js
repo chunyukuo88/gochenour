@@ -6,6 +6,7 @@ import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer';
 import { derived } from '../../common/displayMethods.js';
 import { copyVitestBoilerplate } from '../../testingSuite/copyVitestBoilerplate/index.js';
 import { copyTreeCommandToBuffer } from '../../otherAutomations/copyTreeCommandToBuffer/index.js';
+import { convertPixelsInAllFiles } from '../../convertPixelsToRem/index.js';
 
 vi.mock('../../display/about/about.js');
 vi.mock('../../otherAutomations/copyTreeCommandToBuffer/index.js');
@@ -24,7 +25,7 @@ vi.mock('../../common/displayMethods.js', ()=>({
    underline: vi.fn(),
  },
 }));
-
+vi.mock('../../convertPixelsToRem/index.js');
 
 beforeEach(()=> {
   printAboutText.mockImplementationOnce(vi.fn());
@@ -126,6 +127,26 @@ describe('evaluateArgs()', ()=>{
       await evaluateArgs(argsArray);
 
       expect(copyTreeCommandToBuffer).toHaveBeenCalledTimes(1);
+    });
+  });
+  describe(`WHEN: Invoked with a flag of PIXEL`, ()=>{
+    it('THEN: It runs the convertPixelsInAllFiles() script.', async ()=>{
+      convertPixelsInAllFiles.mockImplementationOnce(vi.fn());
+      const argsArray = [ flags.PIXEL[0] ];
+
+      await evaluateArgs(argsArray);
+
+      expect(convertPixelsInAllFiles).toHaveBeenCalledTimes(1);
+    });
+  });
+  describe(`WHEN: Invoked with a flag of PIXEL_ALIAS`, ()=>{
+    it('THEN: It runs the convertPixelsInAllFiles() script.', async ()=>{
+      convertPixelsInAllFiles.mockImplementationOnce(vi.fn());
+      const argsArray = [ flags.PIXEL_ALIAS[0] ];
+
+      await evaluateArgs(argsArray);
+
+      expect(convertPixelsInAllFiles).toHaveBeenCalledTimes(1);
     });
   });
 });
