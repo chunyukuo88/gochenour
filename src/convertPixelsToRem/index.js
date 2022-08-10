@@ -2,10 +2,8 @@ import { convertSingleFile } from './convertSingleFile.js';
 import path from 'path';
 import fs from 'fs';
 
-const { readdirSync, statSync } = fs;
-
 export const convertPixelsInAllFiles = (dir = process.cwd(), entityList = []) => {
-  let entities = readdirSync(dir);
+  let entities = fs.readdirSync(dir);
   entities.forEach(entity => {
     if (entitiesToBeIgnored.includes(entity)) return;
     recursivelyEvaluateEntity(entity, dir, entityList);
@@ -15,7 +13,7 @@ export const convertPixelsInAllFiles = (dir = process.cwd(), entityList = []) =>
 function recursivelyEvaluateEntity(entity, dir, entityList){
   (entityIsADirectory(dir, entity))
     ? convertAllCssFilesInDirectory(entity, dir, entityList)
-    : convertSingleFile(entity);
+    : convertSingleFile(dir, entity);
 }
 
 function convertAllCssFilesInDirectory(entity, dir, entityList) {
@@ -24,7 +22,7 @@ function convertAllCssFilesInDirectory(entity, dir, entityList) {
 }
 
 function entityIsADirectory(dir, entity){
-  const isADirectory = statSync(path.join(dir, entity)).isDirectory();
+  const isADirectory = fs.statSync(path.join(dir, entity)).isDirectory();
   return isADirectory;
 }
 

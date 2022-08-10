@@ -1,12 +1,14 @@
 import fs from 'fs';
+import path from 'path';
 import { convertSingleLine } from './convertSingleLine.js';
 
-const testFile = '__test__/toHavePixelsConverted.css';
+const testFilepath = '__test__';
 
-export const convertSingleFile = (filePath = testFile) => {
-  let asArrayOfLines = fs.readFileSync(filePath, 'utf-8').split('\n');
+export const convertSingleFile = (filePath = testFilepath, fileName) => {
+  const joined = path.join(filePath, fileName);
+  let asArrayOfLines = fs.readFileSync(joined, 'utf-8').split('\n');
   const updatedArrayOfLines = convertEachLine(asArrayOfLines);
-  fs.writeFileSync(filePath, updatedArrayOfLines.join('\n'));
+  fs.writeFileSync(joined, updatedArrayOfLines.join('\n'));
 };
 
 const convertEachLine = (arrayOfLines) => {

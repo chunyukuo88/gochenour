@@ -1,8 +1,7 @@
-/*Only the last two rules, 'margin' and 'padding', should have their pixels converted. */
 .something {
-    border: 3px;
-    box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.07);
-    transform: translate(12px, 0px) rotate(-40deg);
-    margin: 160px;
-    padding: 16px 8px 0 32px;
+border: 3px;
+box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.07);
+transform: translate(12px, 0px) rotate(-40deg);
+margin: 160px;
+padding: 16px 8px 0 32px;
 }

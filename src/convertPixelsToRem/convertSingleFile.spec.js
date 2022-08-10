@@ -16,14 +16,14 @@ afterEach(()=> vi.clearAllMocks());
 describe('GIVEN: convertSingleFile is passed a CSS file', ()=>{
   describe('WHEN: The file contains rules that require conversion,', ()=>{
     test('THEN: convertSingleFile converts the px values of the specific rules that require it.', ()=>{
-      const mockRead = vi.spyOn(fs, 'readFileSync').mockImplementationOnce(()=>mocks.ORIGINAL_DOC);
       const mockWrite = vi.spyOn(fs, 'writeFileSync');
 
-      const testFile = '__test__/toHavePixelsConverted.css';
+      const testFilepath = '__test__';
+      const testFile = 'toHavePixelsConverted.css';
+      const updatedFilePath = `${testFilepath}/${testFile}`;
+      convertSingleFile(testFilepath, testFile);
 
-      convertSingleFile();
-
-      expect(mockWrite).toBeCalledWith(testFile, mocks.UPDATED_DOC);
+      expect(mockWrite).toBeCalledWith(updatedFilePath, mocks.UPDATED_DOC);
     });
   });
 });
