@@ -14,7 +14,7 @@ describe('convertPixelsInAllFiles()', () => {
 
         convertPixelsInAllFiles(dir);
 
-        expect(convertSingleFile).toHaveBeenCalled();
+        expect(convertSingleFile).toHaveBeenCalledTimes(2);
         vi.clearAllMocks();
       });
     });
