@@ -10,7 +10,9 @@ describe('convertPixelsInAllFiles()', () => {
       test('THEN: The pixels-to-REM conversion function is applied to each CSS file.', () => {
         convertSingleFile.mockImplementation(vi.fn());
 
-        convertPixelsInAllFiles();
+        const dir = '__test__';
+
+        convertPixelsInAllFiles(dir);
 
         expect(convertSingleFile).toHaveBeenCalled();
         vi.clearAllMocks();

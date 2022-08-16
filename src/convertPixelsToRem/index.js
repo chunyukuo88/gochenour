@@ -5,15 +5,27 @@ import fs from 'fs';
 export const convertPixelsInAllFiles = (dir = process.cwd(), entityList = []) => {
   let entities = fs.readdirSync(dir);
   entities.forEach(entity => {
-    if (entitiesToBeIgnored.includes(entity)) return;
+    if (entityShouldBeIgnored(entity)) {
+      return;
+    }
     recursivelyEvaluateEntity(entity, dir, entityList);
   });
 };
 
+const entityShouldBeIgnored = (entity) => (!isACssFile(entity) || entitiesToBeIgnored.includes(entity));
+
+function isACssFile(entity){
+  const asArray = entity.split('.');
+  const fileExtension = asArray[asArray.length - 1];
+  return fileExtension === 'css';
+}
+
 function recursivelyEvaluateEntity(entity, dir, entityList){
-  (entityIsADirectory(dir, entity))
-    ? convertAllCssFilesInDirectory(entity, dir, entityList)
-    : convertSingleFile(dir, entity);
+  if (entityIsADirectory(dir, entity)) {
+    convertAllCssFilesInDirectory(entity, dir, entityList)
+  } else {
+    convertSingleFile(dir, entity);
+  }
 }
 
 function convertAllCssFilesInDirectory(entity, dir, entityList) {
@@ -22,8 +34,7 @@ function convertAllCssFilesInDirectory(entity, dir, entityList) {
 }
 
 function entityIsADirectory(dir, entity){
-  const isADirectory = fs.statSync(path.join(dir, entity)).isDirectory();
-  return isADirectory;
+  return fs.statSync(path.join(dir, entity)).isDirectory();
 }
 
 const entitiesToBeIgnored = [
