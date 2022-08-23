@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { convertSingleFile } from './convertSingleFile.js';
-import * as line from './convertSingleLine.js';
+import { convertSingleFile } from '../convertSingleFile.js';
+import * as line from '../convertSingleLine.js';
 import { mocks } from './mocks.js';
-import { derived } from '../common/displayMethods.js';
+import { derived } from '../../common/displayMethods.js';
 import fs from 'fs';
 
 vi.mock('./utils.js');
