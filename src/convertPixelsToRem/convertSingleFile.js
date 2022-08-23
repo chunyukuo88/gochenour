@@ -11,7 +11,6 @@ export const convertSingleFile = (filePath = testFilepath, fileName) => {
   const updatedArrayOfLines = convertEachLine(asArrayOfLines);
   if (asArrayOfLines.join('\n') !== updatedArrayOfLines.join('\n'))
     derived.logYellowInverse(`Pixel-to-rem conversion has been performed on file: ${joined}`);
-  // const result = updatedArrayOfLines.join('\n');
   const result = updatedArrayOfLines.join('\n');
   fs.writeFileSync(joined, result);
 };

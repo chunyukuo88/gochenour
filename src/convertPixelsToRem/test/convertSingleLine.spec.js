@@ -1,13 +1,13 @@
 import { describe, expect, test, vi } from 'vitest';
-import { convertSingleLine } from './convertSingleLine.js';
+import { convertSingleLine } from '../convertSingleLine.js';
 
 describe('convertSingleLine/1', ()=>{
   describe('GIVEN: This function is invoked with given a line of code from a normal CSS file,', ()=>{
     describe('WHEN: The line of code that contains px units', ()=>{
       describe('AND: That rule should be converted,', ()=>{
-        test('THEN: The pixels get converted to REM.', ()=>{
+        test('THEN: The pixels get converted to REM and the original value is printed next to it.', ()=>{
           const lineOfCode = '    margin: 4px 16px 0px 32px;';
-          const expectedResult = '    margin: 0.25rem 1rem 0rem 2rem;';
+          const expectedResult = `    margin: 0.25rem 1rem 0rem 2rem; /* As pixels: ${lineOfCode.trim()} */`;
 
           const result = convertSingleLine(lineOfCode);
 

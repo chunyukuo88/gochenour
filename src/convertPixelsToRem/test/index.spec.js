@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { convertPixelsInAllFiles } from './index.js';
-import { convertSingleFile } from './convertSingleFile.js';
+import { convertPixelsInAllFiles } from '../index.js';
+import { convertSingleFile } from '../convertSingleFile.js';
 
-vi.mock('./convertSingleFile.js');
+vi.mock('../convertSingleFile.js');
 
 afterEach(() => vi.clearAllMocks());
 

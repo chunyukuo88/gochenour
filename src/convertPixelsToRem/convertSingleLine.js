@@ -1,15 +1,28 @@
 export const convertSingleLine = (lineOfCode) => {
   if (doesNotNeedEvaluation(lineOfCode)) return lineOfCode;
+  const { requiredConversion, convertedLineOfCode } = performConversion(lineOfCode);
+  return (requiredConversion)
+    ? addComment(convertedLineOfCode, lineOfCode)
+    : convertedLineOfCode;
+};
+
+const addComment = (convertedLineOfCode, originalLineOfCode) => `${convertedLineOfCode} /* As pixels: ${originalLineOfCode.trim()} */`;
+
+const performConversion = (lineOfCode) => {
   const asArray = lineOfCode.split(' ');
+  let requiredConversion = false;
   const joined = asArray
     .map(lexicalUnit => {
-      return (lexicalUnit.includes('px'))
-        ? convertLexicalUnit(lexicalUnit)
-        : lexicalUnit;
+      if (lexicalUnit.includes('px')) {
+        requiredConversion = true;
+        return convertLexicalUnit(lexicalUnit)
+      }
+      return lexicalUnit;
     })
     .join(' ');
-  return accountForSemicolon(joined);
-};
+  const convertedLineOfCode = accountForSemicolon(joined);
+  return { requiredConversion, convertedLineOfCode };
+}
 
 const accountForSemicolon = (lineOfCode) => {
   const lastTwoChars = lineOfCode.substring(lineOfCode.length - 2, lineOfCode.length);
