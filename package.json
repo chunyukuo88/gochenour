@@ -44,5 +44,5 @@
     "test": "vitest && ./restore.sh"
   },
   "type": "module",
-  "version": "1.10.0"
+  "version": "1.10.1"
 }
