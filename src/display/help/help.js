@@ -10,10 +10,6 @@ export const printHelpText = () =>
         
   $${underline("gochenour")} --about|-a      
     This provides a brief bio of the author.
-  $${underline("gochenour")} test|t  ddt|ddi|d<integer>
-    This command, followed by any of its ensuing options, 
-    copies a piece of test suite boilerplate to your 
-    clipboard buffer.
   $${underline("gochenour")} clean|ct
     This command recursively removes comments, debug 
     statements and test-specific 'describe', 'test', and
@@ -22,6 +18,16 @@ export const printHelpText = () =>
     command was invoked. For more details, consult the 
     test suites in the 'cleanAllSuites' and 
     'cleanSingleSuite' directories.
+  $${underline("gochenour")} --pixel|-px
+    Beginning at the current working directory, recursively 
+    combs through the current directory and all subdirectories 
+    to convert all rulesets that incorrectly use pixels to REM
+    values in all CSS files; it then prints out all 
+    converted files to the console. 
+  $${underline("gochenour")} test|t  ddt|ddi|d<integer>
+    This command, followed by any of its ensuing options, 
+    copies a piece of test suite boilerplate to your 
+    clipboard buffer.
   $${underline("gochenour")} tree
     This command copies to your clipboard buffer a complex
     tree command that you can run as-is or add an addi-
