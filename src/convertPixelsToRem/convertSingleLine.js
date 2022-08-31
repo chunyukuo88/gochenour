@@ -49,4 +49,5 @@ const rulesThatDoNotRequireConversion = [
   'borderWidth',
   'box-shadow',
   'transform',
+  '-webkit-transform',
 ];
