@@ -10,7 +10,7 @@ export const convertPixelsInAllFiles = (dir = process.cwd(), entityList = []) =>
   });
 };
 
-const entityShouldBeIgnored = (entity) => (entitiesToBeIgnored.includes(entity) || isNonCssFile(entity));
+const entityShouldBeIgnored = (entity) => (isNonCssFile(entity) || entitiesToBeIgnored.includes(entity));
 
 const isNonCssFile = (entity) => (entity.includes('.') && !isACssFile(entity));
 
