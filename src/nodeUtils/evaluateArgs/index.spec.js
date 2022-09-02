@@ -1,18 +1,19 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import { evaluateArgs, flags } from './index.js';
-import { printAboutText} from '../../display/about/about.js';
-import { printHelpText } from '../../display/help/help.js';
-import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer';
+import { printAboutText} from '../../features/display/about/about.js';
+import { printHelpText } from '../../features/display/help/help.js';
+import { addBlocksToBuffer } from '../../features/testingSuite/addBlocksToBuffer';
+import { copyVitestBoilerplate } from '../../features/testingSuite/copyVitestBoilerplate/index.js';
+import { copyTreeCommandToBuffer } from '../../features/copyTreeCommandToBuffer/index.js';
+import { convertPixelsInAllFiles } from '../../features/convertPixelsToRem/index.js';
 import { derived } from '../../common/displayMethods.js';
-import { copyVitestBoilerplate } from '../../testingSuite/copyVitestBoilerplate/index.js';
-import { copyTreeCommandToBuffer } from '../../otherAutomations/copyTreeCommandToBuffer/index.js';
-import { convertPixelsInAllFiles } from '../../convertPixelsToRem/index.js';
 
-vi.mock('../../display/about/about.js');
-vi.mock('../../otherAutomations/copyTreeCommandToBuffer/index.js');
-vi.mock('../../testingSuite/copyVitestBoilerplate/index.js');
-vi.mock('../../display/help/help.js');
-vi.mock('../../testingSuite/addBlocksToBuffer/index.js');
+vi.mock('../../features/display/about/about.js');
+vi.mock('../../features/display/help/help.js');
+vi.mock('../../features/testingSuite/addBlocksToBuffer/index.js');
+vi.mock('../../features/copyTreeCommandToBuffer/index.js');
+vi.mock('../../features/testingSuite/copyVitestBoilerplate/index.js');
+vi.mock('../../features/convertPixelsToRem/index.js');
 vi.mock('../../common/displayMethods.js', ()=>({
  derived: {
    logBox: vi.fn(),

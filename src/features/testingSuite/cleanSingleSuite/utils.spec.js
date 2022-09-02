@@ -1,5 +1,5 @@
 import { processArrayOfLines } from './utils.js';
-import { afterEach, describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 import { mocks } from './mocks.js';
 

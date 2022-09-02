@@ -1,14 +1,8 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
 import { printWelcome } from "../welcome/printWelcome.js";
-import { derived } from "../../common/displayMethods.js";
 import { printAboutText } from "./about.js";
 
 vi.mock("../welcome/printWelcome.js");
-vi.mock("../../common/displayMethods.js", () => ({
-  derived: {
-    logYellow: vi.fn(),
-  },
-}));
 
 afterEach(() => vi.clearAllMocks());
 

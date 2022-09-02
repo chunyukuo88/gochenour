@@ -1,7 +1,7 @@
 import "dotenv/config";
 import clipboard from "clipboardy";
 import { getAllUserArguments } from "./getUserArgs.js";
-import { derived } from "../../common/displayMethods.js";
+import { derived } from "../../../common/displayMethods.js";
 import { buildCustomBlock } from "./utils.js";
 
 const { logRedBox, logCyanBox, logGreenBox } = derived;

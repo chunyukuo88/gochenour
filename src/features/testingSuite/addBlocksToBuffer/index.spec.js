@@ -11,13 +11,13 @@ import {
 } from "vitest";
 import { addBlocksToBuffer, presetBlocks, notifications } from "./index.js";
 import { buildCustomBlock } from "./utils.js";
-import { derived } from "../../common/displayMethods.js";
 import { getAllUserArguments } from "./getUserArgs.js";
+import { derived } from "../../../common/displayMethods.js";
 
 vi.mock("clipboardy");
-vi.mock("./getUserArgs.js");
 vi.mock("./utils.js");
-vi.mock("../../common/displayMethods.js", () => ({
+vi.mock("./getUserArgs.js");
+vi.mock("../../../common/displayMethods.js", () => ({
   derived: {
     logRedBox: vi.fn(),
     logCyanBox: vi.fn(),

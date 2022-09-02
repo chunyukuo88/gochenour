@@ -1,11 +1,11 @@
-import { printAboutText } from '../../display/about/about.js';
-import { printHelpText } from '../../display/help/help.js';
-import { addBlocksToBuffer } from '../../testingSuite/addBlocksToBuffer/index.js';
+import { printAboutText } from '../../features/display/about/about.js';
+import { printHelpText } from '../../features/display/help/help.js';
+import { addBlocksToBuffer } from '../../features/testingSuite/addBlocksToBuffer/index.js';
 import { derived } from '../../common/displayMethods.js';
-import { cleanAllTestSuites } from '../../testingSuite/cleanAllSuites/index.js';
-import {copyVitestBoilerplate} from '../../testingSuite/copyVitestBoilerplate/index.js';
-import { copyTreeCommandToBuffer } from '../../otherAutomations/copyTreeCommandToBuffer/index.js';
-import {convertPixelsInAllFiles} from '../../convertPixelsToRem/index.js';
+import { cleanAllTestSuites } from '../../features/testingSuite/cleanAllSuites/index.js';
+import {copyVitestBoilerplate} from '../../features/testingSuite/copyVitestBoilerplate/index.js';
+import { copyTreeCommandToBuffer } from '../../features/copyTreeCommandToBuffer/index.js';
+import { convertPixelsInAllFiles } from '../../features/convertPixelsToRem/index.js';
 
 const { logBox } = derived;
 

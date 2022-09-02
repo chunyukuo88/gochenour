@@ -1,5 +1,5 @@
 import clipboard from 'clipboardy';
-import { derived } from '../../common/displayMethods.js';
+import { derived } from '../../../common/displayMethods.js';
 
 export function copyVitestBoilerplate(){
   clipboard.writeSync(vitestBoilerplateString);
