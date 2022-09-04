@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 import { sortSingleFile } from '../sortSingleFile.js';
 import { mocks } from './mocks.js';
 import fs from 'fs';
@@ -9,13 +9,14 @@ afterEach(()=> {
   vi.clearAllMocks();
 });
 describe('GIVEN: A CSS file,', ()=>{
+  const testFilepath = '__test__';
+  const testFile = 'someCssFile.css';
+  const updatedFilePath = `${testFilepath}/${testFile}`;
+
   describe('WHEN: that file contains a single rule set that needs to be alphabetized,', ()=>{
     test('THEN: the function sorts it alphabetically.', ()=>{
       const mockWrite = vi.spyOn(fs, 'writeFileSync');
       fs.readFileSync.mockImplementationOnce(() => mocks.SINGLE_RULE_SET_ORIGINAL);
-      const testFilepath = '__test__';
-      const testFile = 'someCssFile.css';
-      const updatedFilePath = `${testFilepath}/${testFile}`;
 
       sortSingleFile(testFilepath, testFile);
 
@@ -26,9 +27,6 @@ describe('GIVEN: A CSS file,', ()=>{
     test('THEN: the function sorts them alphabetically.', ()=>{
       const mockWrite = vi.spyOn(fs, 'writeFileSync');
       fs.readFileSync.mockImplementationOnce(() => mocks.MULTIPLE_RULE_SETS_ORIGINAL);
-      const testFilepath = '__test__';
-      const testFile = 'someCssFile.css';
-      const updatedFilePath = `${testFilepath}/${testFile}`;
 
       sortSingleFile(testFilepath, testFile);
 

@@ -44,12 +44,21 @@ const produceArrayOfRuleSets = (fileAsArrayOfLines) => {
 const sortEachRuleSet = (ruleSets) => {
   const result = [];
   ruleSets.forEach((ruleSet) => {
-    const firstLine = ruleSet[0];
-    const middlePart = ruleSet.slice(1, ruleSet.length);
-    const indentsUnified = ensureUnifiedIntends(middlePart);
-    result.push(firstLine, indentsUnified.sort());
+    const [ firstLine, remainder] = separateFirstLineFromRemainder(ruleSet);
+    result.push(firstLine, remainder.sort());
   });
   return result.flat();
 };
 
-const ensureUnifiedIntends = (middlePart) => middlePart.map((line) => (line.trim() === '}') ? line : `  ${line.trim()}`);
+const separateFirstLineFromRemainder = (ruleSet) => {
+  const firstLine = ruleSet[0];
+  const middlePart = ruleSet.slice(1, ruleSet.length);
+  const indentsUnified = ensureUnifiedIntends(middlePart);
+  return [firstLine, indentsUnified];
+}
+
+const ensureUnifiedIntends = (middlePart) => middlePart.map((line) => {
+  return (line.trim() === '}')
+    ? line
+    : `  ${line.trim()}`;
+});
