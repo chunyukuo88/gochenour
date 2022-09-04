@@ -11,12 +11,17 @@ export const sortSingleFile = (filePath = testFilepath, fileName) => {
   fs.writeFileSync(joined, result);
 };
 
-const sortEntireFile = (fileAsArrayofLines) => {
-  const copy = [...fileAsArrayofLines];
+const sortEntireFile = (fileAsArrayOfLines) => {
+  const ruleSets = produceArrayOfRuleSets(fileAsArrayOfLines);
+  return sortEachRuleSet(ruleSets);
+};
+
+const produceArrayOfRuleSets = (fileAsArrayOfLines) => {
+  const copy = [...fileAsArrayOfLines];
   const ruleSets = [];
   let ruleSetsIndex = 0;
   while (copy.length > 0) {
-    for (const line of fileAsArrayofLines) {
+    for (const line of fileAsArrayOfLines) {
       const finalCharacter = line[line.length - 1];
       if (finalCharacter === '{') {
         const ruleSet = [];
@@ -33,6 +38,10 @@ const sortEntireFile = (fileAsArrayofLines) => {
       copy.shift();
     }
   };
+  return ruleSets;
+};
+
+const sortEachRuleSet = (ruleSets) => {
   const result = [];
   ruleSets.forEach((ruleSet) => {
     const firstLine = ruleSet[0];
