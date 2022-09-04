@@ -1,0 +1,12 @@
+.second {
+    gap: normal;
+    font-family: AkayaKanadaka;
+    display: block;
+}
+
+.first {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

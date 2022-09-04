@@ -16,7 +16,7 @@ describe('convertPixelsInAllFiles()', () => {
 
         convertPixelsInAllFiles(dir);
 
-        expect(convertSingleFile).toHaveBeenCalledTimes(2);
+        expect(convertSingleFile).toHaveBeenCalledTimes(3);
       });
     });
   });
