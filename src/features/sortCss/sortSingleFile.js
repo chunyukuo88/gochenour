@@ -7,38 +7,40 @@ export const sortSingleFile = (filePath = testFilepath, fileName) => {
   const joined = path.join(filePath, fileName);
   const asArrayOfLines = fs.readFileSync(joined, 'utf-8').split('\n');
   const alphabetized = sortEntireFile(asArrayOfLines);
-  const result = alphabetized.join('');
+  const result = alphabetized.join('\n');
   fs.writeFileSync(joined, result);
 };
 
 const sortEntireFile = (fileAsArrayofLines) => {
   const copy = [...fileAsArrayofLines];
-  const rulesets = [];
+  const ruleSets = [];
   let ruleSetsIndex = 0;
   while (copy.length > 0) {
     for (const line of fileAsArrayofLines) {
       const finalCharacter = line[line.length - 1];
       if (finalCharacter === '{') {
-        const ruleset = [];
-        ruleset.push(line);
-        rulesets.push(ruleset);
-        copy.shift();
+        const ruleSet = [];
+        ruleSet.push(line);
+        ruleSets.push(ruleSet);
       }
       if (line.trim() === '}') {
-        rulesets[ruleSetsIndex] && rulesets[ruleSetsIndex].push(line);
+        ruleSets[ruleSetsIndex].push(line);
         ruleSetsIndex++;
-        copy.shift();
-        break;
       }
       if (finalCharacter !== '{') {
-      rulesets[ruleSetsIndex] && rulesets[ruleSetsIndex].push(line);
+        ruleSets[ruleSetsIndex] && ruleSets[ruleSetsIndex].push(line);
+      }
       copy.shift();
     }
-  }
-    const firstRuleSet = rulesets[0];
-    const finalRuleIndex = firstRuleSet.length - 1;
-    const partInsideBraces = firstRuleSet.slice(1, finalRuleIndex);
-    const sorted = partInsideBraces.sort().join('\n');
-    return [...firstRuleSet[0] + '\n', sorted + '\n', firstRuleSet[firstRuleSet.length - 1]];
   };
+  const result = [];
+  ruleSets.forEach((ruleSet) => {
+    const firstLine = ruleSet[0];
+    const middlePart = ruleSet.slice(1, ruleSet.length);
+    const indentsUnified = ensureUnifiedIntends(middlePart);
+    result.push(firstLine, indentsUnified.sort());
+  });
+  return result.flat();
 };
+
+const ensureUnifiedIntends = (middlePart) => middlePart.map((line) => (line.trim() === '}') ? line : `  ${line.trim()}`);
