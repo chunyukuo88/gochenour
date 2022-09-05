@@ -6,10 +6,42 @@ const testFilepath = '__test__';
 export const sortSingleFile = (filePath = testFilepath, fileName) => {
   const joined = path.join(filePath, fileName);
   const asArrayOfLines = fs.readFileSync(joined, 'utf-8').split('\n');
+  if (fileHasInvalidatingRules(asArrayOfLines)) return;
   const alphabetized = sortEntireFile(asArrayOfLines);
   const result = alphabetized.join('\n');
   fs.writeFileSync(joined, result);
 };
+
+const fileHasInvalidatingRules = (fileAsArrayOfLines) => {
+  let hasInvalidatingRules = false;
+  for (const line in fileAsArrayOfLines) {
+    if (containsCssAtRule(fileAsArrayOfLines[line])) {
+      hasInvalidatingRules = true;
+      break;
+    }
+  }
+  return hasInvalidatingRules;
+};
+
+const containsCssAtRule = (lineOfCssCode) => {
+  const invalidRules = [
+    '@charset',
+    '@color-profile',
+    '@counter-style',
+    '@font-face',
+    '@font-feature-values',
+    '@import',
+    '@keyframes',
+    '@layer',
+    '@media',
+    '@namespace',
+    '@page',
+    '@supports',
+  ];
+  const beginningOfLine = lineOfCssCode.split(' ')[0];
+  const result = invalidRules.includes(beginningOfLine);
+  return result;
+}
 
 const sortEntireFile = (fileAsArrayOfLines) => {
   const ruleSets = produceArrayOfRuleSets(fileAsArrayOfLines);
