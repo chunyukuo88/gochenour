@@ -27,7 +27,7 @@ describe('alphabetizeCssInAllFiles()', ()=>{
 
       alphabetizeCssInAllFiles(dir);
 
-      expect(mockLogYellowInverse).toHaveBeenCalledTimes(5);
+      expect(mockLogYellowInverse).toHaveBeenCalledTimes(3);
     });
   });
 });

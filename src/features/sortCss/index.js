@@ -9,7 +9,7 @@ export const alphabetizeCssInAllFiles = (dir = process.cwd(), entityList = []) =
   entities.forEach(entity => {
     if (entityShouldBeIgnored(entity)) return;
     recursivelyEvaluateEntity(entity, dir, entityList);
-    filesProcessed.push(entity);
+    isACssFile(entity) && filesProcessed.push(entity);
   });
   filesProcessed.forEach(entity => derived.logYellowInverse(`Sorting completed for file: ${entity}`));
 };
@@ -34,9 +34,7 @@ const entityShouldBeIgnored = (entity) => (isNonCssFile(entity) || entitiesToBeI
 const isNonCssFile = (entity) => (entity.includes('.') && !isACssFile(entity));
 
 function isACssFile(entity){
-  const asArray = entity.split('.');
-  const fileExtension = asArray[asArray.length - 1];
-  return fileExtension === 'css';
+  return entity.slice(-4) === '.css';
 }
 
 const entitiesToBeIgnored = [
