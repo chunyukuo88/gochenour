@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { convertSingleLine } from './convertSingleLine.js';
-import { derived } from '../common/displayMethods.js';
+import { derived } from '../../common/displayMethods.js';
 
 const testFilepath = '__test__';
 

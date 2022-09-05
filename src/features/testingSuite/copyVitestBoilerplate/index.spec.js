@@ -1,10 +1,10 @@
 import { describe, expect, test, vi } from 'vitest';
 import { copyVitestBoilerplate, successMsg, vitestBoilerplateString } from './index.js';
-import { derived } from '../../common/displayMethods.js';
+import { derived } from '../../../common/displayMethods.js';
 import clipboard from 'clipboardy';
 
 vi.mock('clipboardy');
-vi.mock('../../common/displayMethods.js', ()=>({
+vi.mock('../../../common/displayMethods.js', ()=>({
   derived: {
     logRedBox: vi.fn(),
     logCyanBox: vi.fn(),

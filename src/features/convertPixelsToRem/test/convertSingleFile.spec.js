@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { convertSingleFile } from '../convertSingleFile.js';
 import * as line from '../convertSingleLine.js';
+import { derived } from '../../../common/displayMethods.js';
 import { mocks } from './mocks.js';
-import { derived } from '../../common/displayMethods.js';
 import fs from 'fs';
 
-vi.mock('./utils.js');
 vi.mock('fs');
+vi.mock('./utils.js');
 
 /**
  NOTE: Unless the intention is to specifically NOT clean up after this test, run this test together with all other tests
