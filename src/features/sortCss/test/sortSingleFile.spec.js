@@ -14,7 +14,7 @@ describe('GIVEN: A CSS file,', ()=>{
   const updatedFilePath = `${testFilepath}/${testFile}`;
 
   describe('WHEN: that file contains a single rule set that needs to be alphabetized,', ()=>{
-    test('THEN: the function sorts it alphabetically.', ()=>{
+    test('THEN: the function sorts its rules alphabetically.', ()=>{
       const mockWrite = vi.spyOn(fs, 'writeFileSync');
       fs.readFileSync.mockImplementationOnce(() => mocks.SINGLE_RULE_SET_ORIGINAL);
 
@@ -24,7 +24,7 @@ describe('GIVEN: A CSS file,', ()=>{
     });
   });
   describe('WHEN: that file contains multiple rule sets that need to be alphabetized,', ()=>{
-    test('THEN: the function sorts them alphabetically.', ()=>{
+    test('THEN: it alphabetically sorts each rule set and each rule set\'s rules.', ()=>{
       const mockWrite = vi.spyOn(fs, 'writeFileSync');
       fs.readFileSync.mockImplementationOnce(() => mocks.MULTIPLE_RULE_SETS_ORIGINAL);
 

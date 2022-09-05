@@ -13,7 +13,7 @@ export const sortSingleFile = (filePath = testFilepath, fileName) => {
 
 const sortEntireFile = (fileAsArrayOfLines) => {
   const ruleSets = produceArrayOfRuleSets(fileAsArrayOfLines);
-  return sortEachRuleSet(ruleSets);
+  return sortEachRuleSet(ruleSets.sort());
 };
 
 const produceArrayOfRuleSets = (fileAsArrayOfLines) => {
