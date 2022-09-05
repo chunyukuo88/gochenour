@@ -1,13 +1,17 @@
 import fs from 'fs';
 import path from 'path';
 import { sortSingleFile } from './sortSingleFile.js';
+import { derived } from '../../common/displayMethods.js';
 
 export const alphabetizeCssInAllFiles = (dir = process.cwd(), entityList = []) => {
   let entities = fs.readdirSync(dir);
+  let filesProcessed = [];
   entities.forEach(entity => {
     if (entityShouldBeIgnored(entity)) return;
-    recursivelyEvaluateEntity(entity, dir, entityList)
+    recursivelyEvaluateEntity(entity, dir, entityList);
+    filesProcessed.push(entity);
   });
+  filesProcessed.forEach(entity => derived.logYellowInverse(`Sorting completed for file: ${entity}`));
 };
 
 function recursivelyEvaluateEntity(entity, dir, entityList){
