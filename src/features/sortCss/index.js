@@ -1,6 +1,6 @@
 import fs from 'fs';
-import path from "path";
-import {sortSingleFile} from "./sortSingleFile.js";
+import path from 'path';
+import { sortSingleFile } from './sortSingleFile.js';
 
 export const alphabetizeCssInAllFiles = (dir = process.cwd(), entityList = []) => {
   let entities = fs.readdirSync(dir);

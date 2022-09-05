@@ -6,6 +6,7 @@ import { cleanAllTestSuites } from '../../features/testingSuite/cleanAllSuites/i
 import {copyVitestBoilerplate} from '../../features/testingSuite/copyVitestBoilerplate/index.js';
 import { copyTreeCommandToBuffer } from '../../features/copyTreeCommandToBuffer/index.js';
 import { convertPixelsInAllFiles } from '../../features/convertPixelsToRem/index.js';
+import {alphabetizeCssInAllFiles} from "../../features/sortCss/index.js";
 
 const { logBox } = derived;
 
@@ -50,6 +51,7 @@ export const flags = {
   HELP_ALIAS: ['-h', printHelpText],
   PIXEL: ['--pixel', convertPixelsInAllFiles],
   PIXEL_ALIAS: ['-px', convertPixelsInAllFiles],
+  SORT_CSS: ['sort-css', alphabetizeCssInAllFiles],
   TREE: ['tree', copyTreeCommandToBuffer],
   VITEST: ['vitest', copyVitestBoilerplate],
   VITEST_ALIAS: ['vi', copyVitestBoilerplate],

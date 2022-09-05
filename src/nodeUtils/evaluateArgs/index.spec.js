@@ -6,6 +6,7 @@ import { addBlocksToBuffer } from '../../features/testingSuite/addBlocksToBuffer
 import { copyVitestBoilerplate } from '../../features/testingSuite/copyVitestBoilerplate/index.js';
 import { copyTreeCommandToBuffer } from '../../features/copyTreeCommandToBuffer/index.js';
 import { convertPixelsInAllFiles } from '../../features/convertPixelsToRem/index.js';
+import { alphabetizeCssInAllFiles } from '../../features/sortCss/index.js';
 import { derived } from '../../common/displayMethods.js';
 
 vi.mock('../../features/display/about/about.js');
@@ -14,6 +15,7 @@ vi.mock('../../features/testingSuite/addBlocksToBuffer/index.js');
 vi.mock('../../features/copyTreeCommandToBuffer/index.js');
 vi.mock('../../features/testingSuite/copyVitestBoilerplate/index.js');
 vi.mock('../../features/convertPixelsToRem/index.js');
+vi.mock('../../features/sortCss/index.js');
 vi.mock('../../common/displayMethods.js', ()=>({
  derived: {
    logBox: vi.fn(),
@@ -148,6 +150,16 @@ describe('evaluateArgs()', ()=>{
       await evaluateArgs(argsArray);
 
       expect(convertPixelsInAllFiles).toHaveBeenCalledTimes(1);
+    });
+  });
+  describe(`WHEN: Invoked with a flag of SORT_CSS`, ()=>{
+    it('THEN: It runs the alphabetizeCssInAllFiles() script.', async ()=>{
+      alphabetizeCssInAllFiles.mockImplementationOnce(vi.fn());
+      const argsArray = [ flags.SORT_CSS[0] ];
+
+      await evaluateArgs(argsArray);
+
+      expect(alphabetizeCssInAllFiles).toHaveBeenCalledTimes(1);
     });
   });
 });
