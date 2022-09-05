@@ -33,4 +33,14 @@ describe('GIVEN: A CSS file,', ()=>{
       expect(mockWrite).toBeCalledWith(updatedFilePath, mocks.MULTIPLE_RULE_SETS_UPDATED);
     });
   });
+  describe('WHEN: that file contains a CSS at-rule,', ()=>{
+    test('THEN: the file is not processed.', ()=>{
+      const mockWrite = vi.spyOn(fs, 'writeFileSync');
+      fs.readFileSync.mockImplementationOnce(() => mocks.HAS_MEDIA_QUERY);
+
+      sortSingleFile(testFilepath, testFile);
+
+      expect(mockWrite).toBeCalledTimes(0);
+    });
+  });
 });

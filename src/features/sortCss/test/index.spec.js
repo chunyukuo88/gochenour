@@ -10,7 +10,7 @@ vi.mock('../../../common/displayMethods.js');
 
 describe('alphabetizeCssInAllFiles()', ()=>{
   describe('WHEN: This function is invoked,', ()=>{
-    test('THEN: It sorts the rule sets of all files in the directory.', ()=>{
+    test('THEN: It sorts the rule sets of all eligible CSS files in the directory.', ()=>{
       sortSingleFile.mockImplementation(vi.fn());
 
       const dir = '__test__';
