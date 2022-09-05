@@ -21,9 +21,14 @@ export const printHelpText = () =>
   $${underline("gochenour")} --pixel|-px
     Beginning at the current working directory, recursively 
     combs through the current directory and all subdirectories 
-    to convert all rulesets that incorrectly use pixels to REM
-    values in all CSS files; it then prints out all 
+    to convert all rule sets that incorrectly use pixels to REM
+    values in all CSS files. It then prints out all 
     converted files to the console. 
+  $${underline("gochenour")} sort-css
+    Beginning at the current working directory, this 
+    recursively combs through the current directory and all 
+    subdirectories to alphabetically sort all rule sets and
+    all rules within each rule set in all CSS files.
   $${underline("gochenour")} test|t  ddt|ddi|d<integer>
     This command, followed by any of its ensuing options, 
     copies a piece of test suite boilerplate to your 
