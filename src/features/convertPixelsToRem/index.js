@@ -15,10 +15,13 @@ const entityShouldBeIgnored = (entity) => (isNonCssFile(entity) || entitiesToBeI
 const isNonCssFile = (entity) => (entity.includes('.') && !isACssFile(entity));
 
 function isACssFile(entity){
+  if (entityHasNoFileExtension(entity)) return false;
   const asArray = entity.split('.');
   const fileExtension = asArray[asArray.length - 1];
   return fileExtension === 'css';
 }
+
+const entityHasNoFileExtension = (entity) => entity.split('.')[0] === entity;
 
 function recursivelyEvaluateEntity(entity, dir, entityList){
   (entityIsADirectory(dir, entity))
@@ -41,6 +44,7 @@ const entitiesToBeIgnored = [
   '.husky',
   '.idea',
   'coverage',
+  'Dockerfile',
   'LICENSE',
   'node_modules',
   'package-lock.json',

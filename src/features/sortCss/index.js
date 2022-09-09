@@ -43,6 +43,7 @@ const entitiesToBeIgnored = [
   '.husky',
   '.idea',
   'coverage',
+  'Dockerfile',
   'LICENSE',
   'node_modules',
   'package-lock.json',
