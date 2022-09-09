@@ -13,7 +13,6 @@ vi.mock('./utils.js');
  by using `npm run test`, rather than by using the green IDE arrows below.
  **/
 
-
 describe('GIVEN: convertSingleFile is passed a CSS file', ()=>{
   afterEach(()=> {
     vi.clearAllMocks();
@@ -47,7 +46,7 @@ describe('GIVEN: convertSingleFile is passed a CSS file', ()=>{
       expect(derived.logYellowInverse).toBeCalledWith(`Pixel-to-rem conversion has been performed on file: ${joined}`);
     });
   });
-  describe('WHEN: The file contains rules that do NOT require conversion,', () => {
+  describe('WHEN: The file is not a CSS file,', () => {
     test('THEN: No message is displayed.', () => {
       const mockYellowInverse = vi.spyOn(derived, 'logYellowInverse');
       const mockConvertSingleLine = vi.spyOn(derived, 'logYellowInverse');
@@ -57,6 +56,22 @@ describe('GIVEN: convertSingleFile is passed a CSS file', ()=>{
       fs.readFileSync.mockImplementationOnce(() => 'words');
       const testFilepath = '__test__';
       const testFile = 'simpleTextFile.txt';
+
+      convertSingleFile(testFilepath, testFile);
+
+      expect(derived.logYellowInverse).not.toBeCalled();
+    });
+  });
+  describe('WHEN: The file does not even have a file extension,', () => {
+    test('THEN: No message is displayed.', () => {
+      const mockYellowInverse = vi.spyOn(derived, 'logYellowInverse');
+      const mockConvertSingleLine = vi.spyOn(derived, 'logYellowInverse');
+      const mockSingleLine = vi
+        .spyOn(line, 'convertSingleLine')
+        .mockImplementationOnce(() => 'words');
+      fs.readFileSync.mockImplementationOnce(() => 'words');
+      const testFilepath = '__test__';
+      const testFile = 'Dockerfile';
 
       convertSingleFile(testFilepath, testFile);
 
