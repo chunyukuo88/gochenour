@@ -4,7 +4,14 @@ const { logYellowBox, underline } = derived;
 
 export const printHelpText = () =>
   logYellowBox(`
-  Gochenour Man Pages
+    THE
+     _____         __
+    |     |       |  |
+    |  .__|___ ___|  |_ __ ___ ___ _ _ ___
+    |  |  | . | __|    | =|   | . | | | __|
+    |___|_|___|___|__|_|__|_|_|___|___|_|
+    
+    CLI MAN PAGES
   
   This CLI can be run with the following flags:   
         

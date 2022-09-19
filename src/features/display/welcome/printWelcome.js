@@ -18,7 +18,14 @@ const pkg = JSON.parse(
 const printSelfIntro = () => {
   const asterisk = chalk.red('*');
   derived.logCyanBox(`
-    Howzit howzit
+    THE
+     _____         __
+    |     |       |  |
+    |  .__|___ ___|  |_ __ ___ ___ _ _ ___
+    |  |  | . | __|    | =|   | . | | | __|
+    |___|_|___|___|__|_|__|_|_|___|___|_|
+    
+    CLI
   
     I'm Alex Gochenour, and I am an award-winning${asterisk} JavaScript engineer and founder of Woobler's House. 
     I love baking, running, and all things Chinese.
