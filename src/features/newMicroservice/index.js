@@ -1,5 +1,6 @@
 import { derived } from '../../common/displayMethods.js';
 import fs from 'fs';
+import path from 'path';
 import { getUserResponses } from './utils.js';
 
 export const messages = {
@@ -10,10 +11,16 @@ export const messages = {
 export async function createMicroservice() {
   const microserviceName = await getMicroserviceName();
   const thatNameAlreadyExists = checkIfNameAlreadyExists(microserviceName);
-  console.log('haz?', thatNameAlreadyExists);
   return (thatNameAlreadyExists)
     ? derived.logRedBox(messages.SERVICE_ALREADY_EXISTS)
-    : derived.logGreenBox(messages.SUCCESS_MESSAGE);
+    : createFiles(microserviceName);
+}
+
+function createFiles(microserviceName){
+  fs.mkdirSync(microserviceName);
+  const filePath = path.join(process.cwd(), microserviceName);
+  fs.writeFileSync(`${filePath}/Controller.js`, 'moist!');
+  derived.logGreenBox(messages.SUCCESS_MESSAGE)
 }
 
 function checkIfNameAlreadyExists(microserviceName) {
@@ -49,3 +56,5 @@ const queryPrompts = {
     },
   ],
 };
+
+createMicroservice();
