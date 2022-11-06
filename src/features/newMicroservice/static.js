@@ -1,6 +1,7 @@
 export const templates = {
+  controllerFactory: 'import { Controller } from \'./Controller\';\n\nexport const getController = (loggerFn) => {\n\t//\n\n\treturn new Controller();\n};',
   Controller: 'export class Controller {\n\t#member1\n\t#member2\n\tconstructor(arg1, arg2) {\n\t\tthis.#member1 = arg1\n\t\tthis.#member2 = arg2\n\t}\n\n\t#privateMethod = () => {}\n}',
-  handler: 'asdf',
+  handler: (httpMethod) => `import { getController } from './controllerFactory';\n\nmodule.exports.${httpMethod.toLowerCase()}Handler = async (httpRequest) => {\n\t//\n};`,
 }
 
 export const messages = {

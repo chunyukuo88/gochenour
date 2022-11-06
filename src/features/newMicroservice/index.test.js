@@ -20,6 +20,8 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
 
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         fs.readdirSync.mockImplementationOnce(() => ['index.js', 'index.test.js', 'utils.js']);
         const loggerSpy = vi.spyOn(derived, 'logRedBox');
 
@@ -35,6 +37,8 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
       };
       let loggerSpy;
       beforeEach(async () => {
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         loggerSpy = vi.spyOn(derived, 'logGreenBox');
@@ -55,13 +59,24 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
 
         expect(fs.writeFileSync).toBeCalledWith(completeFilePath, templates.Controller);
       });
-      test.skip('THEN: it creates an httpHandler based on what the HTTP method the user selects.', () => {
+      test('THEN: it creates an httpHandler based on what the HTTP method the user selects.', () => {
         const { microserviceName, httpMethod } = mockUserResponses;
         const filePath = path.join(process.cwd(), microserviceName);
-        const completeFilePath = `${filePath}/http${httpMethod}.js`;
-        const handlerContent = '';
-        expect(fs.writeFileSync).toBeCalledWith(completeFilePath, templates.httpMethod);
+        const completeFilePath = `${filePath}/httpGetHandler.js`;
+        expect(fs.writeFileSync).toBeCalledWith(completeFilePath, templates.handler(httpMethod));
       });
+      test('THEN: it creates a controllerFactory module based on what the HTTP method the user selects.', () => {
+        const { microserviceName } = mockUserResponses;
+        const filePath = path.join(process.cwd(), microserviceName);
+        const completeFilePath = `${filePath}/controllerFactory.js`;
+        expect(fs.writeFileSync).toBeCalledWith(completeFilePath, templates.controllerFactory);
+      });
+      // test('THEN: it creates the configuration files that are common to all microservices.', () => {
+      //   const { microserviceName } = mockUserResponses;
+      //   const filePath = path.join(process.cwd(), microserviceName);
+      //   const completeFilePath = `${filePath}/.env`;
+      //   expect(fs.writeFileSync).toBeCalledWith(completeFilePath, '');
+      // });
     });
   });
 });

@@ -12,13 +12,14 @@ export async function createMicroservice() {
     : createFiles(responses);
 }
 
-function createFiles(responses){
+function createFiles(responses) {
   const { microserviceName, httpMethod } = responses;
   fs.mkdirSync(microserviceName);
   const filePath = path.join(process.cwd(), microserviceName);
   const nameOfHandler = buildHandlerName(httpMethod);
   fs.writeFileSync(`${filePath}/Controller.js`, templates.Controller);
-  fs.writeFileSync(`${filePath}/${nameOfHandler}`, templates.handler);
+  fs.writeFileSync(`${filePath}/${nameOfHandler}`, templates.handler(httpMethod));
+  fs.writeFileSync(`${filePath}/controllerFactory.js`, templates.controllerFactory);
   derived.logGreenBox(messages.SUCCESS_MESSAGE)
 }
 
