@@ -25,7 +25,8 @@ function createFiles(responses) {
   fs.writeFileSync(`${filePath}/.eslintrc`, templates.eslintrc);
   fs.writeFileSync(`${filePath}/jest.config.js`, templates.jestConfig);
   fs.writeFileSync(`${filePath}/serverless.yml`, templates.serverlessYml(microserviceName, httpMethod));
-  derived.logGreenBox(messages.SUCCESS_MESSAGE)
+  derived.logGreenBox(messages.SUCCESS_MESSAGE);
+
 }
 
 function buildHandlerName(httpMethod){
@@ -58,5 +59,3 @@ async function getNameAndHttpMethod() {
   }
   return userResponses;
 }
-
-createMicroservice();
