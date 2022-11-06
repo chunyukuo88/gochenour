@@ -9,7 +9,7 @@ import fs from 'fs';
 
 vi.mock('fs');
 
-describe.skip('GIVEN: The createMicroservice function is invoked,', () => {
+describe('GIVEN: The createMicroservice function is invoked,', () => {
   describe('WHEN: the user enters a name for the microservice,', () => {
     describe('AND: a microservice of that name already exists,', () => {
       test('THEN: it tells the user to try again.', async () => {
@@ -18,6 +18,7 @@ describe.skip('GIVEN: The createMicroservice function is invoked,', () => {
           httpMethod: 'GET',
         };
 
+        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         fs.readdirSync.mockImplementationOnce(() => ['index.js', 'index.test.js', 'utils.js']);
         const loggerSpy = vi.spyOn(derived, 'logRedBox');
@@ -34,6 +35,7 @@ describe.skip('GIVEN: The createMicroservice function is invoked,', () => {
       };
       let loggerSpy;
       beforeEach(async () => {
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         loggerSpy = vi.spyOn(derived, 'logGreenBox');
         vi.spyOn(fs, 'mkdirSync');
