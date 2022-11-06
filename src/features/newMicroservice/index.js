@@ -2,25 +2,30 @@ import { derived } from '../../common/displayMethods.js';
 import fs from 'fs';
 import path from 'path';
 import { getUserResponses } from './utils.js';
-
-export const messages = {
-  SERVICE_ALREADY_EXISTS: ' A service of that name already exists. Please try again. ',
-  SUCCESS_MESSAGE: ' Success! Service has been created. ',
-};
+import { templates, queryPrompts, messages } from './static.js';
 
 export async function createMicroservice() {
-  const microserviceName = await getMicroserviceName();
-  const thatNameAlreadyExists = checkIfNameAlreadyExists(microserviceName);
+  const responses = await getNameAndHttpMethod();
+  const thatNameAlreadyExists = checkIfNameAlreadyExists(responses.microserviceName);
   return (thatNameAlreadyExists)
     ? derived.logRedBox(messages.SERVICE_ALREADY_EXISTS)
-    : createFiles(microserviceName);
+    : createFiles(responses);
 }
 
-function createFiles(microserviceName){
+function createFiles(responses){
+  const { microserviceName, httpMethod } = responses;
   fs.mkdirSync(microserviceName);
   const filePath = path.join(process.cwd(), microserviceName);
-  fs.writeFileSync(`${filePath}/Controller.js`, 'moist!');
+  const nameOfHandler = buildHandlerName(httpMethod);
+  fs.writeFileSync(`${filePath}/Controller.js`, templates.Controller);
+  fs.writeFileSync(`${filePath}/${nameOfHandler}`, templates.handler);
   derived.logGreenBox(messages.SUCCESS_MESSAGE)
+}
+
+function buildHandlerName(httpMethod){
+  const firstLetter = httpMethod.at(0);
+  const remainingLetters = httpMethod.toLowerCase().slice(1, httpMethod.length);
+  return `http${firstLetter}${remainingLetters}Handler.js`;
 }
 
 function checkIfNameAlreadyExists(microserviceName) {
@@ -36,25 +41,16 @@ function checkIfNameAlreadyExists(microserviceName) {
   return nameAlreadyExists;
 }
 
-async function getMicroserviceName() {
+async function getNameAndHttpMethod() {
   let userResponses = {
-    nameOfNewService: '',
+    microserviceName: '',
+    httpMethod: '',
   };
   const queries = Object.values(queryPrompts);
   for (const query of queries) {
     userResponses = await getUserResponses(query, userResponses);
   }
-  return userResponses.nameOfNewService;
+  return userResponses;
 }
-
-const queryPrompts = {
-  microserviceName: [
-    {
-      type: 'input',
-      message: 'Enter a name for the new microservice:\n>',
-      name: 'nameOfNewService',
-    },
-  ],
-};
 
 createMicroservice();
