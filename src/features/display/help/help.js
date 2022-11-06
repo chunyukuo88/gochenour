@@ -25,6 +25,11 @@ export const printHelpText = () =>
     command was invoked. For more details, consult the 
     test suites in the 'cleanAllSuites' and 
     'cleanSingleSuite' directories.
+  $${underline("gochenour")} new-service
+    Starting from the current directory from where this command
+    is executed, this creates the folders and files, including 
+    the configs, that are used by a standard AWS Lambda-based 
+    microservice in NodeJS.
   $${underline("gochenour")} --pixel|-px
     Beginning at the current working directory, recursively 
     combs through the current directory and all subdirectories 
