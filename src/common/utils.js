@@ -1,11 +1,6 @@
-import { getMemoryUsage } from '../nodeUtils/processFunctions.js';
 import fs from "fs";
 import path from "path";
 
-export const displayMemoryUsed = () => {
-  const heapUsed = getMemoryUsage() / 1024 / 1024;
-  console.log(`The script uses approximately ${Math.round(heapUsed * 100) / 100} MB`);
-};
 
 export const entitiesToBeIgnored = [
   '.git',
