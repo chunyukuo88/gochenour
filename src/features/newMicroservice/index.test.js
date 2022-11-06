@@ -17,6 +17,7 @@ describe.skip('GIVEN: The createMicroservice function is invoked,', () => {
           microserviceName: 'index.js',
           httpMethod: 'GET',
         };
+
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         fs.readdirSync.mockImplementationOnce(() => ['index.js', 'index.test.js', 'utils.js']);
         const loggerSpy = vi.spyOn(derived, 'logRedBox');
