@@ -22,6 +22,7 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         fs.readdirSync.mockImplementationOnce(() => ['index.js', 'index.test.js', 'utils.js']);
         const loggerSpy = vi.spyOn(derived, 'logRedBox');
 
@@ -37,6 +38,7 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
       };
       let loggerSpy;
       beforeEach(async () => {
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
@@ -71,12 +73,14 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         const completeFilePath = `${filePath}/controllerFactory.js`;
         expect(fs.writeFileSync).toBeCalledWith(completeFilePath, templates.controllerFactory);
       });
-      // test('THEN: it creates the configuration files that are common to all microservices.', () => {
-      //   const { microserviceName } = mockUserResponses;
-      //   const filePath = path.join(process.cwd(), microserviceName);
-      //   const completeFilePath = `${filePath}/.env`;
-      //   expect(fs.writeFileSync).toBeCalledWith(completeFilePath, '');
-      // });
+      test('THEN: it creates the configuration files that are common to all microservices.', () => {
+        const { microserviceName } = mockUserResponses;
+        const filePath = path.join(process.cwd(), microserviceName);
+        const envFile = `${filePath}/.env`;
+        const babelRc = `${filePath}/.babelrc`;
+        expect(fs.writeFileSync).toBeCalledWith(envFile, '');
+        expect(fs.writeFileSync).toBeCalledWith(babelRc, templates.babelrc);
+      });
     });
   });
 });

@@ -20,6 +20,8 @@ function createFiles(responses) {
   fs.writeFileSync(`${filePath}/Controller.js`, templates.Controller);
   fs.writeFileSync(`${filePath}/${nameOfHandler}`, templates.handler(httpMethod));
   fs.writeFileSync(`${filePath}/controllerFactory.js`, templates.controllerFactory);
+  fs.writeFileSync(`${filePath}/.env`, '');
+  fs.writeFileSync(`${filePath}/.babelrc`, templates.babelrc);
   derived.logGreenBox(messages.SUCCESS_MESSAGE)
 }
 

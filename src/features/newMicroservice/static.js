@@ -1,7 +1,8 @@
 export const templates = {
-  controllerFactory: 'import { Controller } from \'./Controller\';\n\nexport const getController = (loggerFn) => {\n\t//\n\n\treturn new Controller();\n};',
-  Controller: 'export class Controller {\n\t#member1\n\t#member2\n\tconstructor(arg1, arg2) {\n\t\tthis.#member1 = arg1\n\t\tthis.#member2 = arg2\n\t}\n\n\t#privateMethod = () => {}\n}',
-  handler: (httpMethod) => `import { getController } from './controllerFactory';\n\nmodule.exports.${httpMethod.toLowerCase()}Handler = async (httpRequest) => {\n\t//\n};`,
+  babelrc: '{\n  "presets": ["@babel/preset-env"],\n  "plugins": ["@babel/plugin-proposal-class-properties", "@babel/transform-runtime"]\n}',
+  controllerFactory: 'import { Controller } from \'./Controller\';\n\nexport const getController = (loggerFn) => {\n  //\n\n  return new Controller(loggerFn);\n};',
+  Controller: 'export class Controller {\n  #member1\n  #member2\n  constructor(arg1, arg2) {\n    this.#member1 = arg1\n    this.#member2 = arg2\n  }\n\n  #privateMethod = () => {}\n}',
+  handler: (httpMethod) => `import { getController } from './controllerFactory';\n\nmodule.exports.${httpMethod.toLowerCase()}Handler = async (httpRequest) => {\n  //\n};`,
 }
 
 export const messages = {
