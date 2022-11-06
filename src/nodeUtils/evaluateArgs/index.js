@@ -7,6 +7,7 @@ import {copyVitestBoilerplate} from '../../features/testingSuite/copyVitestBoile
 import { copyTreeCommandToBuffer } from '../../features/copyTreeCommandToBuffer/index.js';
 import { convertPixelsInAllFiles } from '../../features/convertPixelsToRem/index.js';
 import {alphabetizeCssInAllFiles} from "../../features/sortCss/index.js";
+import {createMicroservice} from "../../features/newMicroservice/index.js";
 
 const { logBox } = derived;
 
@@ -49,6 +50,7 @@ export const flags = {
   CLEAN_TESTS_ALIAS: ['ct', cleanAllTestSuites],
   HELP: ['--help', printHelpText],
   HELP_ALIAS: ['-h', printHelpText],
+  NEW_SERVICE: ['new-service', createMicroservice],
   PIXEL: ['--pixel', convertPixelsInAllFiles],
   PIXEL_ALIAS: ['-px', convertPixelsInAllFiles],
   SORT_CSS: ['sort-css', alphabetizeCssInAllFiles],
