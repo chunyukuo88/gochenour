@@ -23,6 +23,9 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         fs.readdirSync.mockImplementationOnce(() => ['index.js', 'index.test.js', 'utils.js']);
         const loggerSpy = vi.spyOn(derived, 'logRedBox');
 
@@ -38,6 +41,9 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
       };
       let loggerSpy;
       beforeEach(async () => {
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
@@ -73,13 +79,25 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         const completeFilePath = `${filePath}/controllerFactory.js`;
         expect(fs.writeFileSync).toBeCalledWith(completeFilePath, templates.controllerFactory);
       });
-      test('THEN: it creates the configuration files that are common to all microservices.', () => {
+      test('THEN: it creates the 4 configuration files that are common to all microservices.', () => {
         const { microserviceName } = mockUserResponses;
         const filePath = path.join(process.cwd(), microserviceName);
         const envFile = `${filePath}/.env`;
         const babelRc = `${filePath}/.babelrc`;
+        const eslintrc = `${filePath}/.eslintrc`;
+        const jestConfig = `${filePath}/jest.config.js`;
+
         expect(fs.writeFileSync).toBeCalledWith(envFile, '');
         expect(fs.writeFileSync).toBeCalledWith(babelRc, templates.babelrc);
+        expect(fs.writeFileSync).toBeCalledWith(eslintrc, templates.eslintrc);
+        expect(fs.writeFileSync).toBeCalledWith(jestConfig, templates.jestConfig);
+      });
+      test('THEN: it creates the serverless.yml file.', () => {
+        const { microserviceName, httpMethod } = mockUserResponses;
+        const filePath = path.join(process.cwd(), microserviceName);
+        const serverlessYml = `${filePath}/serverless.yml`;
+
+        expect(fs.writeFileSync).toBeCalledWith(serverlessYml, templates.serverlessYml(microserviceName, httpMethod));
       });
     });
   });

@@ -22,6 +22,9 @@ function createFiles(responses) {
   fs.writeFileSync(`${filePath}/controllerFactory.js`, templates.controllerFactory);
   fs.writeFileSync(`${filePath}/.env`, '');
   fs.writeFileSync(`${filePath}/.babelrc`, templates.babelrc);
+  fs.writeFileSync(`${filePath}/.eslintrc`, templates.eslintrc);
+  fs.writeFileSync(`${filePath}/jest.config.js`, templates.jestConfig);
+  fs.writeFileSync(`${filePath}/serverless.yml`, templates.serverlessYml(microserviceName, httpMethod));
   derived.logGreenBox(messages.SUCCESS_MESSAGE)
 }
 
