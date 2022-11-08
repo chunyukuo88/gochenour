@@ -20,12 +20,6 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
 
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         fs.readdirSync.mockImplementationOnce(() => ['index.js', 'index.test.js', 'utils.js']);
         const loggerSpy = vi.spyOn(derived, 'logRedBox');
 
@@ -41,12 +35,6 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
       };
       let loggerSpy;
       beforeEach(async () => {
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         loggerSpy = vi.spyOn(derived, 'logGreenBox');
