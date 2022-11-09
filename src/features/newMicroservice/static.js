@@ -1,8 +1,9 @@
 export const templates = {
   babelrc: '{\n  "presets": ["@babel/preset-env"],\n  "plugins": ["@babel/plugin-proposal-class-properties", "@babel/transform-runtime"]\n}',
-  controllerFactory: 'import { Controller } from \'./Controller\';\n\nexport const getController = (loggerFn) => {\n  //\n\n  return new Controller(loggerFn);\n};',
   Controller: 'export class Controller {\n  #member1\n  #member2\n  constructor(arg1, arg2) {\n    this.#member1 = arg1\n    this.#member2 = arg2\n  }\n\n  #privateMethod = () => {}\n}',
-  ControllerTest: '',
+  ControllerTest: 'import { Controller } from \'../../src/Controller\';\n\ndescribe(\'Controller.js\', () => {\n\n});\n',
+  controllerFactory: 'import { Controller } from \'./Controller\';\n\nexport const getController = (loggerFn) => {\n  //\n\n  return new Controller(loggerFn);\n};',
+  controllerFactoryTest: 'import { getController } from \'../../src/controllerFactory\';\n\ndescribe(\'controllerFactory.js\', () => {\n\  //\n});\n',
   eslintrc: '{\n  "extends": "airbnb",\n  "parser": "@babel/eslint-parser",\n  "rules": {\n    "no-use-before-define": ["error", { "variables": false }],\n    "import/prefer-default-export": "off",\n    "lines-between-class-members": 0,\n    "max-len": [1, { "code": 120 }]\n  },\n  "env": {\n    "jest": true\n  }\n}',
   handler: (httpMethod) => `import { getController } from './controllerFactory';\n\nmodule.exports.${httpMethod.toLowerCase()}Handler = async (httpRequest) => {\n  //\n};`,
   handlerTest: (httpMethod) => '',

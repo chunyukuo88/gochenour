@@ -49,7 +49,8 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
       test('THEN: it creates the folders for the new microservice', async () => {
         expect(fs.mkdirSync).toBeCalledWith(mockUserResponses.microserviceName);
         expect(fs.mkdirSync).toBeCalledWith(`${mockUserResponses.microserviceName}/src`, { recursive: true });
-        expect(fs.mkdirSync).toBeCalledWith(`${mockUserResponses.microserviceName}/test`, { recursive: true });
+        expect(fs.mkdirSync).toBeCalledWith(`${mockUserResponses.microserviceName}/test/unit`, { recursive: true });
+        expect(fs.mkdirSync).toBeCalledWith(`${mockUserResponses.microserviceName}/test/integration`, { recursive: true });
       });
       test('THEN: it creates a Controller for the new microservice', async () => {
         const filePath = path.join(process.cwd(), mockUserResponses.microserviceName);
@@ -93,17 +94,23 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
 
         expect(fs.writeFileSync).toBeCalledWith(serverlessYml, templates.serverlessYml(microserviceName, httpMethod));
       });
-      test('THEN: it creates the a test files Controller.', () => {
+      test('THEN: it creates the test file for the Controller.', () => {
         const filePath = path.join(process.cwd(), mockUserResponses.microserviceName);
-        const controllerTestPath = `${filePath}/test/Controller.test.js`;
+        const controllerTestPath = `${filePath}/test/unit/Controller.test.js`;
 
         expect(fs.writeFileSync).toBeCalledWith(controllerTestPath, templates.ControllerTest);
       });
-      test('THEN: it creates the a test files handler.', () => {
+      test('THEN: it creates the test file for the handler.', () => {
         const filePath = path.join(process.cwd(), mockUserResponses.microserviceName);
-        const handlerTestPath = `${filePath}/test/httpGetHandler.test.js`;
+        const handlerTestPath = `${filePath}/test/unit/httpGetHandler.test.js`;
 
         expect(fs.writeFileSync).toBeCalledWith(handlerTestPath, templates.handlerTest(mockUserResponses.httpMethod));
+      });
+      test('THEN: it creates the test file for the controllerFactory.', () => {
+        const filePath = path.join(process.cwd(), mockUserResponses.microserviceName);
+        const controllerFactoryTestPath = `${filePath}/test/unit/controllerFactory.test.js`;
+
+        expect(fs.writeFileSync).toBeCalledWith(controllerFactoryTestPath, templates.controllerFactoryTest);
       });
     });
   });
