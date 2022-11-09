@@ -15,24 +15,29 @@ export async function createMicroservice() {
 function createFiles(responses) {
   const { microserviceName, httpMethod } = responses;
   fs.mkdirSync(microserviceName);
+  fs.mkdirSync(`${microserviceName}/src`, { recursive: true });
+  fs.mkdirSync(`${microserviceName}/test`, { recursive: true });
   const filePath = path.join(process.cwd(), microserviceName);
   const nameOfHandler = buildHandlerName(httpMethod);
-  fs.writeFileSync(`${filePath}/Controller.js`, templates.Controller);
-  fs.writeFileSync(`${filePath}/${nameOfHandler}`, templates.handler(httpMethod));
-  fs.writeFileSync(`${filePath}/controllerFactory.js`, templates.controllerFactory);
+  fs.writeFileSync(`${filePath}/src/Controller.js`, templates.Controller);
+  fs.writeFileSync(`${filePath}/src/${nameOfHandler}.js`, templates.handler(httpMethod));
+  fs.writeFileSync(`${filePath}/src/controllerFactory.js`, templates.controllerFactory);
   fs.writeFileSync(`${filePath}/.env`, '');
   fs.writeFileSync(`${filePath}/.babelrc`, templates.babelrc);
   fs.writeFileSync(`${filePath}/.eslintrc`, templates.eslintrc);
+  fs.writeFileSync(`${filePath}/.npmignore`, templates.npmIgnore);
   fs.writeFileSync(`${filePath}/jest.config.js`, templates.jestConfig);
   fs.writeFileSync(`${filePath}/serverless.yml`, templates.serverlessYml(microserviceName, httpMethod));
+  fs.writeFileSync(`${filePath}/swagger.yml`, '');
+  fs.writeFileSync(`${filePath}/test/Controller.test.js`, templates.ControllerTest);
+  fs.writeFileSync(`${filePath}/test/${nameOfHandler}.test.js`, templates.handlerTest(httpMethod));
   derived.logGreenBox(messages.SUCCESS_MESSAGE);
-
 }
 
 function buildHandlerName(httpMethod){
   const firstLetter = httpMethod.at(0);
   const remainingLetters = httpMethod.toLowerCase().slice(1, httpMethod.length);
-  return `http${firstLetter}${remainingLetters}Handler.js`;
+  return `http${firstLetter}${remainingLetters}Handler`;
 }
 
 function checkIfNameAlreadyExists(microserviceName) {
@@ -59,3 +64,5 @@ async function getNameAndHttpMethod() {
   }
   return userResponses;
 }
+
+createMicroservice()
