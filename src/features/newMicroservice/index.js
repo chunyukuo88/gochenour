@@ -66,5 +66,3 @@ async function getNameAndHttpMethod() {
   }
   return userResponses;
 }
-
-createMicroservice()
