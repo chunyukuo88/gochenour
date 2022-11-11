@@ -2,13 +2,15 @@ import { createMicroservice } from './index.js';
 import { templates, messages } from './static.js';
 import * as utils from './utils.js';
 import { derived } from '../../common/displayMethods.js';
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import path from 'path';
 import fs from 'fs';
 import { exec } from 'child_process';
 
 vi.mock('fs');
 vi.mock('child_process');
+
+afterEach(() => vi.clearAllMocks());
 
 describe('GIVEN: The createMicroservice function is invoked,', () => {
   describe('WHEN: the user enters a name for the microservice,', () => {
@@ -160,7 +162,7 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         const userResponses = {
           microserviceName: 'woob',
           httpMethod: 'GET',
-          shouldCreatePackageJson: 'Yes',
+          shouldCreatePackageJson: 'No',
         };
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
@@ -171,20 +173,20 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
 
         await createMicroservice();
 
-        expect(exec).toBeCalledWith(`cd ${userResponses.microserviceName} && npm init -y`);
+        expect(exec).not.toBeCalled();
       });
     });
   });
-  // describe('WHEN: user makes it run `npm init`, it then asks to install minimum dependencies,', () => {
-  //   describe('AND: the user selects YES,', () => {
-  //     test('THEN: it installs the minimum dependencies', () => {
-  //       //
-  //     });
-  //   });
-  //   describe('AND: the user selects NO,', () => {
-  //     test('THEN: the application terminates.', () => {
-  //       //
-  //     });
-  //   });
-  // });
+  describe('WHEN: user makes it run `npm init`, it then asks to install minimum dependencies,', () => {
+    describe('AND: the user selects YES,', () => {
+      test('THEN: it installs the minimum dependencies', () => {
+        //
+      });
+    });
+    describe('AND: the user selects NO,', () => {
+      test('THEN: the application terminates.', () => {
+        //
+      });
+    });
+  });
 });

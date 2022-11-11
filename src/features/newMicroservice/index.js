@@ -10,10 +10,10 @@ export async function createMicroservice() {
   const thatNameAlreadyExists = checkIfNameAlreadyExists(responses.microserviceName);
   return (thatNameAlreadyExists)
     ? derived.logRedBox(messages.SERVICE_ALREADY_EXISTS)
-    : performTasks(responses);
+    : performCreationTasks(responses);
 }
 
-function performTasks(responses) {
+function performCreationTasks(responses) {
   const { microserviceName, httpMethod, shouldCreatePackageJson } = responses;
   createDirectories(microserviceName);
   const filePath = path.join(process.cwd(), microserviceName);
