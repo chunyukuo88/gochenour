@@ -16,15 +16,15 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
   describe('WHEN: the user enters a name for the microservice,', () => {
     describe('AND: a microservice of that name already exists,', () => {
       test('THEN: it tells the user to try again.', async () => {
-        const mockUserResponses = {
-          microserviceName: 'index.js',
-          httpMethod: 'GET',
-        };
+        const mockUserResponses = {};
+        mockUserResponses.microserviceName = 'index.js';
 
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         fs.readdirSync.mockImplementationOnce(() => ['index.js', 'index.test.js', 'utils.js']);
+        vi.spyOn(fs, 'mkdirSync');
         const loggerSpy = vi.spyOn(derived, 'logRedBox');
 
         await createMicroservice();
@@ -36,6 +36,7 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
       const mockUserResponses = {
         microserviceName: 'woob',
         httpMethod: 'GET',
+        shouldCreatePackageJson: 'No',
       };
       let loggerSpy;
       beforeEach(async () => {
@@ -126,7 +127,9 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
           microserviceName: 'woob',
           httpMethod: 'GET',
           shouldCreatePackageJson: 'Yes',
+          shouldInstallDependencies: 'Yes',
         };
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
@@ -143,7 +146,9 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
           microserviceName: 'woob',
           httpMethod: 'GET',
           shouldCreatePackageJson: 'Yes',
+          shouldInstallDependencies: 'Yes',
         };
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
@@ -179,13 +184,46 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
   });
   describe('WHEN: user makes it run `npm init`, it then asks to install minimum dependencies,', () => {
     describe('AND: the user selects YES,', () => {
-      test('THEN: it installs the minimum dependencies', () => {
-        //
+      test('THEN: it installs the minimum dependencies', async () => {
+        const userResponses = {
+          microserviceName: 'woob',
+          httpMethod: 'GET',
+          shouldCreatePackageJson: 'Yes',
+          shouldInstallDependencies: 'Yes',
+        };
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(fs, 'mkdirSync');
+        fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
+        exec.mockImplementationOnce(vi.fn());
+
+        await createMicroservice();
+
+        expect(exec).toBeCalledTimes(2);
+        expect(exec).toBeCalledWith(`cd ${userResponses.microserviceName} && npm i`);
       });
     });
     describe('AND: the user selects NO,', () => {
-      test('THEN: the application terminates.', () => {
-        //
+      test('THEN: the application terminates.', async () => {
+        const userResponses = {
+          microserviceName: 'woob',
+          httpMethod: 'GET',
+          shouldCreatePackageJson: 'Yes',
+          shouldInstallDependencies: 'No',
+        };
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(fs, 'mkdirSync');
+        fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
+        exec.mockImplementationOnce(vi.fn());
+
+        await createMicroservice();
+
+        expect(exec).toBeCalledTimes(1);
       });
     });
   });

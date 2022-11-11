@@ -14,16 +14,26 @@ export async function createMicroservice() {
 }
 
 function performCreationTasks(responses) {
-  const { microserviceName, httpMethod, shouldCreatePackageJson } = responses;
+  const {
+    microserviceName,
+    httpMethod,
+  } = responses;
   createDirectories(microserviceName);
   const filePath = path.join(process.cwd(), microserviceName);
   createSourceFiles(filePath, httpMethod);
   createConfigFiles(filePath, httpMethod, microserviceName);
   createTestFiles(filePath, httpMethod);
   derived.logGreenBox(messages.SUCCESS_MESSAGE);
-  if (shouldCreatePackageJson === 'Yes') {
-    exec(`cd ${microserviceName} && npm init -y`);
+  queryPackageCreation(responses);
+}
+
+function queryPackageCreation(res) {
+  if (res.shouldCreatePackageJson === 'Yes') {
+    exec(`cd ${res.microserviceName} && npm init -y`);
     derived.logGreenBox(messages.PACKAGE_JSON_CREATION);
+    if (res.shouldInstallDependencies === 'Yes') {
+      exec(`cd ${res.microserviceName} && npm i`); // TODO: Carefully have this install actual dependencies only AFTER getting it to generate node_modules in the correct place.
+    }
   }
 }
 
@@ -82,6 +92,7 @@ async function getNameAndHttpMethod() {
     microserviceName: '',
     httpMethod: '',
     shouldCreatePackageJson: '',
+    shouldInstallDependencies: '',
   };
   const queries = Object.values(queryPrompts);
   for (const query of queries) {

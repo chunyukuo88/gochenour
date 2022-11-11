@@ -42,4 +42,12 @@ export const queryPrompts = {
       choices: ['Yes', 'No'],
     },
   ],
+  shouldInstallDependencies: [
+    {
+      type: 'list',
+      message: 'Install common dependencies that our other services use? For example, "@babel/cli", "moment", "dotenv"',
+      name: 'shouldInstallDependencies',
+      choices: ['Yes', 'No'],
+    },
+  ],
 };
