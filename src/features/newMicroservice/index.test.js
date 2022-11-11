@@ -127,28 +127,25 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
           microserviceName: 'woob',
           httpMethod: 'GET',
           shouldCreatePackageJson: 'Yes',
-          shouldInstallDependencies: 'Yes',
         };
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(fs, 'mkdirSync');
         fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
-        exec.mockImplementationOnce(vi.fn());
-
+        exec.mockImplementation(vi.fn());
+        const expectedCommand = 'npm init -y';
+        const expectedOptions = { cwd: `${userResponses.microserviceName}`};
         await createMicroservice();
 
-        expect(exec).toBeCalledWith(`cd ${userResponses.microserviceName} && npm init -y`);
+        expect(exec).toBeCalledWith(expectedCommand, expectedOptions, expect.any(Function));
       });
       test('THEN: it announces the creation of the package.json file, as well.', async () => {
         const userResponses = {
           microserviceName: 'woob',
           httpMethod: 'GET',
           shouldCreatePackageJson: 'Yes',
-          shouldInstallDependencies: 'Yes',
         };
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
@@ -179,51 +176,6 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         await createMicroservice();
 
         expect(exec).not.toBeCalled();
-      });
-    });
-  });
-  describe('WHEN: user makes it run `npm init`, it then asks to install minimum dependencies,', () => {
-    describe('AND: the user selects YES,', () => {
-      test('THEN: it installs the minimum dependencies', async () => {
-        const userResponses = {
-          microserviceName: 'woob',
-          httpMethod: 'GET',
-          shouldCreatePackageJson: 'Yes',
-          shouldInstallDependencies: 'Yes',
-        };
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(fs, 'mkdirSync');
-        fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
-        exec.mockImplementationOnce(vi.fn());
-
-        await createMicroservice();
-
-        expect(exec).toBeCalledTimes(2);
-        expect(exec).toBeCalledWith(`cd ${userResponses.microserviceName} && npm i`);
-      });
-    });
-    describe('AND: the user selects NO,', () => {
-      test('THEN: the application terminates.', async () => {
-        const userResponses = {
-          microserviceName: 'woob',
-          httpMethod: 'GET',
-          shouldCreatePackageJson: 'Yes',
-          shouldInstallDependencies: 'No',
-        };
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(fs, 'mkdirSync');
-        fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
-        exec.mockImplementationOnce(vi.fn());
-
-        await createMicroservice();
-
-        expect(exec).toBeCalledTimes(1);
       });
     });
   });

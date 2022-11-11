@@ -10,10 +10,10 @@ export async function createMicroservice() {
   const thatNameAlreadyExists = checkIfNameAlreadyExists(responses.microserviceName);
   return (thatNameAlreadyExists)
     ? derived.logRedBox(messages.SERVICE_ALREADY_EXISTS)
-    : performCreationTasks(responses);
+    : await performCreationTasks(responses);
 }
 
-function performCreationTasks(responses) {
+async function performCreationTasks(responses) {
   const {
     microserviceName,
     httpMethod,
@@ -24,16 +24,15 @@ function performCreationTasks(responses) {
   createConfigFiles(filePath, httpMethod, microserviceName);
   createTestFiles(filePath, httpMethod);
   derived.logGreenBox(messages.SUCCESS_MESSAGE);
-  queryPackageCreation(responses);
+  await queryPackageCreation(responses);
 }
 
-function queryPackageCreation(res) {
+async function queryPackageCreation(res) {
   if (res.shouldCreatePackageJson === 'Yes') {
-    exec(`cd ${res.microserviceName} && npm init -y`);
+    await exec('npm init -y', { cwd: `${res.microserviceName}`}, () => {
+      exec(`cd ${res.microserviceName} && npm i moment`);
+    });
     derived.logGreenBox(messages.PACKAGE_JSON_CREATION);
-    if (res.shouldInstallDependencies === 'Yes') {
-      exec(`cd ${res.microserviceName} && npm i`); // TODO: Carefully have this install actual dependencies only AFTER getting it to generate node_modules in the correct place.
-    }
   }
 }
 
@@ -92,7 +91,6 @@ async function getNameAndHttpMethod() {
     microserviceName: '',
     httpMethod: '',
     shouldCreatePackageJson: '',
-    shouldInstallDependencies: '',
   };
   const queries = Object.values(queryPrompts);
   for (const query of queries) {
