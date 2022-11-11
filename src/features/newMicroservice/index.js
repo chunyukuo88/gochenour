@@ -15,10 +15,7 @@ export async function createMicroservice() {
 
 function performTasks(responses) {
   const { microserviceName, httpMethod, shouldCreatePackageJson } = responses;
-  fs.mkdirSync(microserviceName);
-  fs.mkdirSync(`${microserviceName}/src`, { recursive: true });
-  fs.mkdirSync(`${microserviceName}/test/unit`, { recursive: true });
-  fs.mkdirSync(`${microserviceName}/test/integration`, { recursive: true });
+  createDirectories(microserviceName);
   const filePath = path.join(process.cwd(), microserviceName);
   createSourceFiles(filePath, httpMethod);
   createConfigFiles(filePath, httpMethod, microserviceName);
@@ -26,7 +23,15 @@ function performTasks(responses) {
   derived.logGreenBox(messages.SUCCESS_MESSAGE);
   if (shouldCreatePackageJson === 'Yes') {
     exec(`cd ${microserviceName} && npm init -y`);
+    derived.logGreenBox(messages.PACKAGE_JSON_CREATION);
   }
+}
+
+function createDirectories(microserviceName) {
+  fs.mkdirSync(microserviceName);
+  fs.mkdirSync(`${microserviceName}/src`, { recursive: true });
+  fs.mkdirSync(`${microserviceName}/test/unit`, { recursive: true });
+  fs.mkdirSync(`${microserviceName}/test/integration`, { recursive: true });
 }
 
 function createSourceFiles(filePath, httpMethod) {

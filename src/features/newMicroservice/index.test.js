@@ -136,23 +136,55 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
 
         expect(exec).toBeCalledWith(`cd ${userResponses.microserviceName} && npm init -y`);
       });
+      test('THEN: it announces the creation of the package.json file, as well.', async () => {
+        const userResponses = {
+          microserviceName: 'woob',
+          httpMethod: 'GET',
+          shouldCreatePackageJson: 'Yes',
+        };
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(fs, 'mkdirSync');
+        fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
+        exec.mockImplementationOnce(vi.fn());
+        const loggerSpy = vi.spyOn(derived, 'logGreenBox');
+
+        await createMicroservice();
+
+        expect(loggerSpy).toBeCalledWith(messages.PACKAGE_JSON_CREATION);
+      });
     });
     describe('AND: the user selects NO,', () => {
-      test('THEN: the application terminates.', () => {
-        //
+      test('THEN: the application terminates.', async () => {
+        const userResponses = {
+          microserviceName: 'woob',
+          httpMethod: 'GET',
+          shouldCreatePackageJson: 'Yes',
+        };
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(fs, 'mkdirSync');
+        fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
+        exec.mockImplementationOnce(vi.fn());
+
+        await createMicroservice();
+
+        expect(exec).toBeCalledWith(`cd ${userResponses.microserviceName} && npm init -y`);
       });
     });
   });
-  describe('WHEN: user makes it run `npm init`, it then asks to install minimum dependencies,', () => {
-    describe('AND: the user selects YES,', () => {
-      test('THEN: it installs the minimum dependencies', () => {
-        //
-      });
-    });
-    describe('AND: the user selects NO,', () => {
-      test('THEN: the application terminates.', () => {
-        //
-      });
-    });
-  });
+  // describe('WHEN: user makes it run `npm init`, it then asks to install minimum dependencies,', () => {
+  //   describe('AND: the user selects YES,', () => {
+  //     test('THEN: it installs the minimum dependencies', () => {
+  //       //
+  //     });
+  //   });
+  //   describe('AND: the user selects NO,', () => {
+  //     test('THEN: the application terminates.', () => {
+  //       //
+  //     });
+  //   });
+  // });
 });

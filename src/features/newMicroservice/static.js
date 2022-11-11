@@ -15,6 +15,7 @@ export const templates = {
 export const messages = {
   SERVICE_ALREADY_EXISTS: ' A service of that name already exists. Please try again. ',
   SUCCESS_MESSAGE: ' Success! Service has been created. ',
+  PACKAGE_JSON_CREATION: ' The package.json file has been generated, too. ',
 };
 
 export const queryPrompts = {
