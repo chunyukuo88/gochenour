@@ -33,4 +33,12 @@ export const queryPrompts = {
       choices: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE' ],
     },
   ],
+  shouldCreatePackageJson: [
+    {
+      type: 'list',
+      message: 'Generate a package.json file?',
+      name: 'shouldCreatePackageJson',
+      choices: ['Yes', 'No'],
+    },
+  ],
 };

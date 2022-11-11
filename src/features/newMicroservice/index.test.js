@@ -6,8 +6,10 @@ import { derived } from '../../common/displayMethods.js';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import path from 'path';
 import fs from 'fs';
+import { exec } from 'child_process';
 
 vi.mock('fs');
+vi.mock('child_process');
 
 describe('GIVEN: The createMicroservice function is invoked,', () => {
   describe('WHEN: the user enters a name for the microservice,', () => {
@@ -111,6 +113,44 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         const controllerFactoryTestPath = `${filePath}/test/unit/controllerFactory.test.js`;
 
         expect(fs.writeFileSync).toBeCalledWith(controllerFactoryTestPath, templates.controllerFactoryTest);
+      });
+    });
+  });
+  describe('WHEN: it asks the user if they want to run `npm init` to create a package.json file,', () =>{
+    describe('AND: the user selects YES,', () => {
+      test('THEN: it creates the package.json file inside the newly created microservice\'s root.', async () => {
+        const userResponses = {
+          microserviceName: 'woob',
+          httpMethod: 'GET',
+          shouldCreatePackageJson: 'Yes',
+        };
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(fs, 'mkdirSync');
+        fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
+        exec.mockImplementationOnce(vi.fn());
+
+        await createMicroservice();
+
+        expect(exec).toBeCalledWith(`cd ${userResponses.microserviceName} && npm init -y`);
+      });
+    });
+    describe('AND: the user selects NO,', () => {
+      test('THEN: the application terminates.', () => {
+        //
+      });
+    });
+  });
+  describe('WHEN: user makes it run `npm init`, it then asks to install minimum dependencies,', () => {
+    describe('AND: the user selects YES,', () => {
+      test('THEN: it installs the minimum dependencies', () => {
+        //
+      });
+    });
+    describe('AND: the user selects NO,', () => {
+      test('THEN: the application terminates.', () => {
+        //
       });
     });
   });

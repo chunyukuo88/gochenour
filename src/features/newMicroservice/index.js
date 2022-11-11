@@ -1,6 +1,7 @@
 import { derived } from '../../common/displayMethods.js';
 import fs from 'fs';
 import path from 'path';
+import { exec } from 'child_process';
 import { getUserResponses } from './utils.js';
 import { templates, queryPrompts, messages } from './static.js';
 
@@ -9,11 +10,11 @@ export async function createMicroservice() {
   const thatNameAlreadyExists = checkIfNameAlreadyExists(responses.microserviceName);
   return (thatNameAlreadyExists)
     ? derived.logRedBox(messages.SERVICE_ALREADY_EXISTS)
-    : createFiles(responses);
+    : performTasks(responses);
 }
 
-function createFiles(responses) {
-  const { microserviceName, httpMethod } = responses;
+function performTasks(responses) {
+  const { microserviceName, httpMethod, shouldCreatePackageJson } = responses;
   fs.mkdirSync(microserviceName);
   fs.mkdirSync(`${microserviceName}/src`, { recursive: true });
   fs.mkdirSync(`${microserviceName}/test/unit`, { recursive: true });
@@ -23,6 +24,9 @@ function createFiles(responses) {
   createConfigFiles(filePath, httpMethod, microserviceName);
   createTestFiles(filePath, httpMethod);
   derived.logGreenBox(messages.SUCCESS_MESSAGE);
+  if (shouldCreatePackageJson === 'Yes') {
+    exec(`cd ${microserviceName} && npm init -y`);
+  }
 }
 
 function createSourceFiles(filePath, httpMethod) {
@@ -72,6 +76,7 @@ async function getNameAndHttpMethod() {
   let userResponses = {
     microserviceName: '',
     httpMethod: '',
+    shouldCreatePackageJson: '',
   };
   const queries = Object.values(queryPrompts);
   for (const query of queries) {
@@ -79,3 +84,5 @@ async function getNameAndHttpMethod() {
   }
   return userResponses;
 }
+
+// await createMicroservice();
