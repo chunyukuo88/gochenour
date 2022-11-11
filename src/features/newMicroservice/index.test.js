@@ -2,7 +2,6 @@ import { createMicroservice } from './index.js';
 import { templates, messages } from './static.js';
 import * as utils from './utils.js';
 import { derived } from '../../common/displayMethods.js';
-
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import path from 'path';
 import fs from 'fs';
@@ -22,6 +21,7 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
 
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         fs.readdirSync.mockImplementationOnce(() => ['index.js', 'index.test.js', 'utils.js']);
         const loggerSpy = vi.spyOn(derived, 'logRedBox');
 
@@ -37,6 +37,7 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
       };
       let loggerSpy;
       beforeEach(async () => {
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => mockUserResponses);
         loggerSpy = vi.spyOn(derived, 'logGreenBox');
