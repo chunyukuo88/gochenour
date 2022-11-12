@@ -6,6 +6,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import path from 'path';
 import fs from 'fs';
 import { exec } from 'child_process';
+import {installDependencies} from "./utils.js";
 
 vi.mock('fs');
 vi.mock('child_process');
@@ -133,12 +134,11 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(fs, 'mkdirSync');
         fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
-        exec.mockImplementation(vi.fn());
-        const expectedCommand = 'npm init -y';
-        const expectedOptions = { cwd: `${userResponses.microserviceName}`};
+        exec.mockImplementationOnce(vi.fn());
+
         await createMicroservice();
 
-        expect(exec).toBeCalledWith(expectedCommand, expectedOptions, expect.any(Function));
+        expect(exec).toBeCalledWith('npm init -y', { cwd: `${userResponses.microserviceName}`}, expect.any(Function));
       });
       test('THEN: it announces the creation of the package.json file, as well.', async () => {
         const userResponses = {
@@ -151,7 +151,7 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(fs, 'mkdirSync');
         fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
-        exec.mockImplementationOnce(vi.fn());
+        vi.spyOn(utils, 'installDependencies').mockImplementationOnce(vi.fn());
         const loggerSpy = vi.spyOn(derived, 'logGreenBox');
 
         await createMicroservice();
@@ -170,12 +170,12 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(fs, 'mkdirSync');
+        const depsSpy = vi.spyOn(utils, 'installDependencies').mockImplementationOnce(vi.fn());
         fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
-        exec.mockImplementationOnce(vi.fn());
 
         await createMicroservice();
 
-        expect(exec).not.toBeCalled();
+        expect(depsSpy).not.toBeCalled();
       });
     });
   });

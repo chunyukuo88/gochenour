@@ -1,9 +1,10 @@
 import { derived } from '../../common/displayMethods.js';
 import fs from 'fs';
 import path from 'path';
-import { exec } from 'child_process';
 import { getUserResponses } from './utils.js';
 import { templates, queryPrompts, messages } from './static.js';
+import { installDependencies } from './utils.js';
+import {exec} from "child_process";
 
 export async function createMicroservice() {
   const responses = await getNameAndHttpMethod();
@@ -29,10 +30,8 @@ async function performCreationTasks(responses) {
 
 async function queryPackageCreation(res) {
   if (res.shouldCreatePackageJson === 'Yes') {
-    await exec('npm init -y', { cwd: `${res.microserviceName}`}, () => {
-      exec(`cd ${res.microserviceName} && npm i --save-dev ${templates.packageJsonDevDependencies}`, {}, () => {
-        exec(`cd ${res.microserviceName} && npm i ${templates.packageJsonDependencies}`);
-      });
+    await exec('npm init -y', { cwd: `${res.microserviceName}`}, async () => {
+      await installDependencies(res.microserviceName);
     });
     derived.logGreenBox(messages.PACKAGE_JSON_CREATION);
   }
@@ -100,5 +99,3 @@ async function getNameAndHttpMethod() {
   }
   return userResponses;
 }
-
-// await createMicroservice();
