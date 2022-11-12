@@ -158,6 +158,24 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
 
         expect(loggerSpy).toBeCalledWith(messages.PACKAGE_JSON_CREATION);
       });
+      test('THEN: it states that the new microservice exists but might take a while to load in the IDE.', async () => {
+        const userResponses = {
+          microserviceName: 'woob',
+          httpMethod: 'GET',
+          shouldCreatePackageJson: 'Yes',
+        };
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
+        vi.spyOn(fs, 'mkdirSync');
+        fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
+        vi.spyOn(utils, 'installDependencies').mockImplementationOnce(vi.fn());
+        const loggerSpy = vi.spyOn(derived, 'logGreenBox');
+
+        await createMicroservice();
+
+        expect(loggerSpy).toBeCalledTimes(2);
+      });
     });
     describe('AND: the user selects NO,', () => {
       test('THEN: the application terminates.', async () => {

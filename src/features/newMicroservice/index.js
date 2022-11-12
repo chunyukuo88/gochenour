@@ -32,6 +32,7 @@ async function queryPackageCreation(res) {
   if (res.shouldCreatePackageJson === 'Yes') {
     await exec('npm init -y', { cwd: `${res.microserviceName}`}, async () => {
       await installDependencies(res.microserviceName);
+      derived.logGreenBox(messages.DEPENDENCIES_DONE);
     });
     derived.logGreenBox(messages.PACKAGE_JSON_CREATION);
   }
@@ -99,3 +100,5 @@ async function getNameAndHttpMethod() {
   }
   return userResponses;
 }
+
+// await createMicroservice();

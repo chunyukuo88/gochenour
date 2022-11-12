@@ -17,7 +17,8 @@ export const templates = {
 export const messages = {
   SERVICE_ALREADY_EXISTS: ' A service of that name already exists. Please try again. ',
   SUCCESS_MESSAGE: ' Success! Service has been created. ',
-  PACKAGE_JSON_CREATION: ' The package.json file has been generated, too. ',
+  PACKAGE_JSON_CREATION: ' The package.json file has been generated, too. Now installing node_modules, please wait... ',
+  DEPENDENCIES_DONE: ' Dependencies installed! The microservice can now be used, although it may take 20 seconds to load as the IDE indexes it. ',
 };
 
 export const queryPrompts = {
