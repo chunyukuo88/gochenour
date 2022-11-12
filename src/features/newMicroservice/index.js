@@ -30,7 +30,9 @@ async function performCreationTasks(responses) {
 async function queryPackageCreation(res) {
   if (res.shouldCreatePackageJson === 'Yes') {
     await exec('npm init -y', { cwd: `${res.microserviceName}`}, () => {
-      exec(`cd ${res.microserviceName} && npm i moment`);
+      exec(`cd ${res.microserviceName} && npm i --save-dev ${templates.packageJsonDevDependencies}`, {}, () => {
+        exec(`cd ${res.microserviceName} && npm i ${templates.packageJsonDependencies}`);
+      });
     });
     derived.logGreenBox(messages.PACKAGE_JSON_CREATION);
   }
