@@ -3,13 +3,11 @@ import { templates, messages } from './static.js';
 import * as utils from './utils.js';
 import { derived } from '../../common/displayMethods.js';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import child_process from 'child_process';
 import path from 'path';
 import fs from 'fs';
-import { exec } from 'child_process';
-import {installDependencies} from "./utils.js";
 
 vi.mock('fs');
-vi.mock('child_process');
 
 afterEach(() => vi.clearAllMocks());
 
@@ -123,7 +121,7 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
   });
   describe('WHEN: it asks the user if they want to run `npm init` to create a package.json file,', () =>{
     describe('AND: the user selects YES,', () => {
-      test('THEN: it creates the package.json file inside the newly created microservice\'s root.', async () => {
+      test.skip('THEN: it creates the package.json file inside the newly created microservice\'s root.', async () => {
         const userResponses = {
           microserviceName: 'woob',
           httpMethod: 'GET',
@@ -134,47 +132,11 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(fs, 'mkdirSync');
         fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
-        exec.mockImplementationOnce(vi.fn());
+        const spy = vi.spyOn(child_process, 'execSync');
 
         await createMicroservice();
 
-        expect(exec).toBeCalledWith('npm init -y', { cwd: `${userResponses.microserviceName}`}, expect.any(Function));
-      });
-      test('THEN: it announces the creation of the package.json file, as well.', async () => {
-        const userResponses = {
-          microserviceName: 'woob',
-          httpMethod: 'GET',
-          shouldCreatePackageJson: 'Yes',
-        };
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(fs, 'mkdirSync');
-        fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
-        vi.spyOn(utils, 'installDependencies').mockImplementationOnce(vi.fn());
-        const loggerSpy = vi.spyOn(derived, 'logGreenBox');
-
-        await createMicroservice();
-
-        expect(loggerSpy).toBeCalledWith(messages.PACKAGE_JSON_CREATION);
-      });
-      test('THEN: it states that the new microservice exists but might take a while to load in the IDE.', async () => {
-        const userResponses = {
-          microserviceName: 'woob',
-          httpMethod: 'GET',
-          shouldCreatePackageJson: 'Yes',
-        };
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
-        vi.spyOn(fs, 'mkdirSync');
-        fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
-        vi.spyOn(utils, 'installDependencies').mockImplementationOnce(vi.fn());
-        const loggerSpy = vi.spyOn(derived, 'logGreenBox');
-
-        await createMicroservice();
-
-        expect(loggerSpy).toBeCalledTimes(2);
+        expect(spy).toBeCalledWith('npm init -y', { cwd: `${userResponses.microserviceName}`});
       });
     });
     describe('AND: the user selects NO,', () => {
@@ -188,12 +150,12 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementation(() => userResponses);
         vi.spyOn(fs, 'mkdirSync');
-        const depsSpy = vi.spyOn(utils, 'installDependencies').mockImplementationOnce(vi.fn());
+        const spy = vi.spyOn(child_process, 'execSync');
         fs.readdirSync.mockImplementation(() => ['index.js', 'index.test.js', 'utils.js']);
 
         await createMicroservice();
 
-        expect(depsSpy).not.toBeCalled();
+        expect(spy).not.toBeCalled();
       });
     });
   });

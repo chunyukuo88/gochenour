@@ -1,10 +1,8 @@
 import { derived } from '../../common/displayMethods.js';
 import fs from 'fs';
 import path from 'path';
-import { getUserResponses } from './utils.js';
+import { getUserResponses, installPackages } from './utils.js';
 import { templates, queryPrompts, messages } from './static.js';
-import { installDependencies } from './utils.js';
-import {exec} from "child_process";
 
 export async function createMicroservice() {
   const responses = await getNameAndHttpMethod();
@@ -25,17 +23,7 @@ async function performCreationTasks(responses) {
   createConfigFiles(filePath, httpMethod, microserviceName);
   createTestFiles(filePath, httpMethod);
   derived.logGreenBox(messages.SUCCESS_MESSAGE);
-  await queryPackageCreation(responses);
-}
-
-async function queryPackageCreation(res) {
-  if (res.shouldCreatePackageJson === 'Yes') {
-    await exec('npm init -y', { cwd: `${res.microserviceName}`}, async () => {
-      await installDependencies(res.microserviceName);
-      derived.logGreenBox(messages.DEPENDENCIES_DONE);
-    });
-    derived.logGreenBox(messages.PACKAGE_JSON_CREATION);
-  }
+  installPackages(responses);
 }
 
 function createDirectories(microserviceName) {
