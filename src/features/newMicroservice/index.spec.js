@@ -17,8 +17,6 @@ describe('GIVEN: The createMicroservice function is invoked,', () => {
       test('THEN: it tells the user to try again.', async () => {
         const mockUserResponses = {};
         mockUserResponses.microserviceName = 'index.js';
-
-        vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
         vi.spyOn(utils, 'getUserResponses').mockImplementationOnce(() => mockUserResponses);
