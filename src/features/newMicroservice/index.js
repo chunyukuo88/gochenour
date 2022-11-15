@@ -4,6 +4,7 @@ import path from 'path';
 import { getUserResponses, installPackages } from './utils.js';
 import { templates, queryPrompts, messages } from './static.js';
 
+// TODO: Refactor to make the `derived` a parameter, so that boxen logs do not clog up unit tests. (Also easier to mock.)
 export async function createMicroservice() {
   const responses = await getNameAndHttpMethod();
   const thatNameAlreadyExists = checkIfNameAlreadyExists(responses.microserviceName);
