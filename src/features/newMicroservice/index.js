@@ -1,39 +1,61 @@
 import { derived } from '../../common/displayMethods.js';
 import fs from 'fs';
 import path from 'path';
-import { getUserResponses } from './utils.js';
+import { getUserResponses, installPackages } from './utils.js';
 import { templates, queryPrompts, messages } from './static.js';
 
+// TODO: Refactor to make the `derived` a parameter, so that boxen logs do not clog up unit tests. (Also easier to mock.)
 export async function createMicroservice() {
   const responses = await getNameAndHttpMethod();
   const thatNameAlreadyExists = checkIfNameAlreadyExists(responses.microserviceName);
   return (thatNameAlreadyExists)
     ? derived.logRedBox(messages.SERVICE_ALREADY_EXISTS)
-    : createFiles(responses);
+    : await performCreationTasks(responses);
 }
 
-function createFiles(responses) {
-  const { microserviceName, httpMethod } = responses;
+async function performCreationTasks(responses) {
+  const {
+    microserviceName,
+    httpMethod,
+  } = responses;
+  createDirectories(microserviceName);
+  const filePath = path.join(process.cwd(), microserviceName);
+  createSourceFiles(filePath, httpMethod);
+  createConfigFiles(filePath, httpMethod, microserviceName);
+  createTestFiles(filePath, httpMethod);
+  derived.logGreenBox(messages.SUCCESS_MESSAGE);
+  installPackages(responses);
+}
+
+function createDirectories(microserviceName) {
   fs.mkdirSync(microserviceName);
   fs.mkdirSync(`${microserviceName}/src`, { recursive: true });
   fs.mkdirSync(`${microserviceName}/test/unit`, { recursive: true });
   fs.mkdirSync(`${microserviceName}/test/integration`, { recursive: true });
-  const filePath = path.join(process.cwd(), microserviceName);
+}
+
+function createSourceFiles(filePath, httpMethod) {
   const nameOfHandler = buildHandlerName(httpMethod);
   fs.writeFileSync(`${filePath}/src/Controller.js`, templates.Controller);
   fs.writeFileSync(`${filePath}/src/${nameOfHandler}.js`, templates.handler(httpMethod));
   fs.writeFileSync(`${filePath}/src/controllerFactory.js`, templates.controllerFactory);
-  fs.writeFileSync(`${filePath}/.env`, ''),
+}
+
+function createConfigFiles(filePath, httpMethod, microserviceName) {
+  fs.writeFileSync(`${filePath}/.env`, '');
   fs.writeFileSync(`${filePath}/.babelrc`, templates.babelrc);
   fs.writeFileSync(`${filePath}/.eslintrc`, templates.eslintrc);
   fs.writeFileSync(`${filePath}/.npmignore`, templates.npmIgnore);
   fs.writeFileSync(`${filePath}/jest.config.js`, templates.jestConfig);
   fs.writeFileSync(`${filePath}/serverless.yml`, templates.serverlessYml(microserviceName, httpMethod));
   fs.writeFileSync(`${filePath}/swagger.yml`, '');
+}
+
+function createTestFiles(filePath, httpMethod) {
+  const nameOfHandler = buildHandlerName(httpMethod);
   fs.writeFileSync(`${filePath}/test/unit/Controller.test.js`, templates.ControllerTest);
   fs.writeFileSync(`${filePath}/test/unit/controllerFactory.test.js`, templates.controllerFactoryTest);
   fs.writeFileSync(`${filePath}/test/unit/${nameOfHandler}.test.js`, templates.handlerTest(httpMethod));
-  derived.logGreenBox(messages.SUCCESS_MESSAGE);
 }
 
 function buildHandlerName(httpMethod){
@@ -59,6 +81,7 @@ async function getNameAndHttpMethod() {
   let userResponses = {
     microserviceName: '',
     httpMethod: '',
+    shouldCreatePackageJson: '',
   };
   const queries = Object.values(queryPrompts);
   for (const query of queries) {
@@ -66,3 +89,5 @@ async function getNameAndHttpMethod() {
   }
   return userResponses;
 }
+
+// await createMicroservice();
