@@ -1,5 +1,6 @@
 import { printAboutText } from '../../features/display/about/about.js';
 import { printHelpText } from '../../features/display/help/help.js';
+import { performGitBranchTreeShaking } from '../../features/gitBranchTreeShaking/index.js';
 import { addBlocksToBuffer } from '../../features/testingSuite/addBlocksToBuffer/index.js';
 import { derived } from '../../common/displayMethods.js';
 import { cleanAllTestSuites } from '../../features/testingSuite/cleanAllSuites/index.js';
@@ -53,6 +54,7 @@ export const flags = {
   NEW_SERVICE: ['new-service', createMicroservice],
   PIXEL: ['--pixel', convertPixelsInAllFiles],
   PIXEL_ALIAS: ['-px', convertPixelsInAllFiles],
+  SHAKE: ['shake', performGitBranchTreeShaking],
   SORT_CSS: ['sort-css', alphabetizeCssInAllFiles],
   TREE: ['tree', copyTreeCommandToBuffer],
   VITEST: ['vitest', copyVitestBoilerplate],
