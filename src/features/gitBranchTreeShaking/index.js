@@ -11,10 +11,6 @@ export const successMsg = ` The following has been copied to your clipboard:
 
 
 export const performGitBranchTreeShaking = () => {
-  console.log('performGitBranchTreeShaking() - gitCommand: ', gitCommand);
   clipboard.writeSync(gitCommand);
-  console.log('performGitBranchTreeShaking() - successMsg: ', successMsg);
   derived.logGreenBox(successMsg);
-  console.log('performGitBranchTreeShaking() - DONE');
 };
-
