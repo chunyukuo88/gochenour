@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { handler, gitCommand, successMsg } from './index';
+import { performGitBranchTreeShaking, gitCommand, successMsg } from './index';
 import { derived } from '../../common/displayMethods.js';
 import clipboard from 'clipboardy';
 
@@ -14,7 +14,7 @@ vi.mock('../../common/displayMethods.js', ()=>({
 
 describe('WHEN: This function is invoked', () => {
   const spy = vi.spyOn(clipboard, 'writeSync');
-  handler();
+  performGitBranchTreeShaking();
 
   it('THEN: It copies the git command that deletes all git branches except the "main" branch.', () => {
     expect(spy).toBeCalledWith(gitCommand);
