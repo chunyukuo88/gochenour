@@ -4,11 +4,11 @@ import { performGitBranchTreeShaking } from '../../features/gitBranchTreeShaking
 import { addBlocksToBuffer } from '../../features/testingSuite/addBlocksToBuffer/index.js';
 import { derived } from '../../common/displayMethods.js';
 import { cleanAllTestSuites } from '../../features/testingSuite/cleanAllSuites/index.js';
-import {copyVitestBoilerplate} from '../../features/testingSuite/copyVitestBoilerplate/index.js';
+import { copyVitestBoilerplate } from '../../features/testingSuite/copyVitestBoilerplate/index.js';
 import { copyTreeCommandToBuffer } from '../../features/copyTreeCommandToBuffer/index.js';
 import { convertPixelsInAllFiles } from '../../features/convertPixelsToRem/index.js';
-import {alphabetizeCssInAllFiles} from "../../features/sortCss/index.js";
-import {createMicroservice} from "../../features/newMicroservice/index.js";
+import { alphabetizeCssInAllFiles } from '../../features/sortCss/index.js';
+import { createMicroservice } from '../../features/newMicroservice/index.js';
 
 const { logBox } = derived;
 
